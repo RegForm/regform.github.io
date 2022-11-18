@@ -6,7 +6,7 @@ function loadFile(url, callback) {
 
 //визовая анкета
 window.generateVisaApplication = function generate() {
-    path = ('../v1/Templates/виза/визовая анкета.docx')
+    path = ('../Templates/виза/визовая анкета.docx')
     var zipDocs = new PizZip();
     loadFile(
         path,
@@ -219,7 +219,7 @@ window.generateVisaApplication = function generate() {
 
 //справка
 window.generateVisaReference = function generate() {
-    path = ('../v1/Templates/виза/справка.docx')
+    path = ('../Templates/виза/справка.docx')
     var zipDocs = new PizZip();
     loadFile(
         path,
@@ -428,7 +428,7 @@ window.generateVisaReference = function generate() {
 
 //ходатайство ВИЗА ТРОПАРЕВО-НИКУЛИНО
 window.generateVisaSolicitaionTroparevo = function generate() {
-    path = ('../v1/Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+    path = ('../Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
     var zipDocs = new PizZip();
     loadFile(
         path,
@@ -643,7 +643,7 @@ window.generateVisaSolicitaionTroparevo = function generate() {
 
 //ходатайство ВИЗА ХАМОВНИКИ
 window.generateVisaSolicitaionKhamovniki = function generate() {
-    path = ('../v1/Templates/виза/ходатайство ХАМОВНИКИ.docx')
+    path = ('../Templates/виза/ходатайство ХАМОВНИКИ.docx')
     var zipDocs = new PizZip();
     loadFile(
         path,
@@ -992,7 +992,7 @@ function generateVisaSolic(x) {
 
 //опись ВИЗА
 window.generateInventoryVisa = function generate() {
-    path = ('../v1/Templates/виза/опись виза.docx')
+    path = ('../Templates/виза/опись виза.docx')
 
     let students = []
 
@@ -1141,16 +1141,16 @@ window.generateRegSolicitaion = function generate() {
     path = ("")
     switch (document.getElementById('ovmByRegion').value) {
         case "Алексеевский":
-            path = ('../v1/Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
+            path = ('../Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
             break
         case "Войковский":
-            path = ('../v1/Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
+            path = ('../Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
             break
         case "МУ МВД РФ Люберецкое":
-            path = ('../v1/Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
+            path = ('../Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
             break
         case "Тропарево-Никулино":
-            path = ('../v1/Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+            path = ('../Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
             break
     }
 
@@ -1514,7 +1514,7 @@ window.generateRegSolicitaion = function generate() {
 
 //опись РЕГИСТРАЦИЯ
 window.generateInventoryReg = function generate() {
-    path = ('../v1/Templates/регистрация/опись регистрация.docx')
+    path = ('../Templates/регистрация/опись регистрация.docx')
 
     let students = []
 
@@ -1653,7 +1653,7 @@ window.generateInventoryReg = function generate() {
 window.generateRegNotif = function generate() {
     let ovmRg = document.getElementById('ovmByRegion').value
     let rgOn = document.getElementById('registrationOn').value
-    path = (`../v1/Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
+    path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
 
     var zipDocs = new PizZip();
     loadFile(
@@ -2487,7 +2487,7 @@ window.generateRegNotif = function generate() {
 
 //опись
 window.generateInventoryRegVisa = function generate() {
-    path = ('../v1/Templates/регистрация И виза/опись.docx')
+    path = ('../Templates/регистрация И виза/опись.docx')
 
     let students = []
 
@@ -2610,7 +2610,7 @@ window.generateInventoryRegVisa = function generate() {
 
 //ходатайство по квартире
 window.generateFlatSolicitaion = function generate() {
-    path = ('../v1/Templates/ходатайство по квартире.docx')
+    path = ('../Templates/ходатайство по квартире.docx')
 
     var zipDocs = new PizZip();
     loadFile(
@@ -2939,7 +2939,7 @@ function generateReg() {
     window.generateRegNotifTotal = function generate() {
         let ovmRg = document.getElementById('ovmByRegion').value
         let rgOn = document.getElementById('registrationOn').value
-        path = (`../v1/Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
+        path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
 
         loadFile(
             path,
@@ -3777,16 +3777,16 @@ function generateReg() {
         path = ("")
         switch (document.getElementById('ovmByRegion').value) {
             case "Алексеевский":
-                path = ('../v1/Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
+                path = ('../Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
                 break
             case "Войковский":
-                path = ('../v1/Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
+                path = ('../Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
                 break
             case "МУ МВД РФ Люберецкое":
-                path = ('../v1/Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
+                path = ('../Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
                 break
             case "Тропарево-Никулино":
-                path = ('../v1/Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+                path = ('../Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
                 break
         }
 
@@ -4158,7 +4158,7 @@ function generateReg() {
 
 //опись РЕГИСТРАЦИЯ
     window.generateInventoryRegTotal = function generate() {
-        path = ('../v1/Templates/регистрация/опись регистрация.docx')
+        path = ('../Templates/регистрация/опись регистрация.docx')
 
         let students = []
 
@@ -4320,7 +4320,7 @@ function generateVisa() {
 
 //визовая анкета
     window.generateVisaApplicationTotal = function generate() {
-        path = ('../v1/Templates/виза/визовая анкета.docx')
+        path = ('../Templates/виза/визовая анкета.docx')
         loadFile(
             path,
             function (error, content) {
@@ -4539,7 +4539,7 @@ function generateVisa() {
 
 //ходатайство ВИЗА ТРОПАРЕВО-НИКУЛИНО
     window.generateVisaSolicitaionTroparevoTotal = function generate() {
-        path = ('../v1/Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+        path = ('../Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
 
         loadFile(
             path,
@@ -4760,7 +4760,7 @@ function generateVisa() {
 
 //ходатайство ВИЗА ХАМОВНИКИ
     window.generateVisaSolicitaionKhamovnikiTotal = function generate() {
-        path = ('../v1/Templates/виза/ходатайство ХАМОВНИКИ.docx')
+        path = ('../Templates/виза/ходатайство ХАМОВНИКИ.docx')
 
         loadFile(
             path,
@@ -5116,7 +5116,7 @@ function generateVisa() {
 
 //справка
     window.generateVisaReferenceTotal = function generate() {
-        path = ('../v1/Templates/виза/справка.docx')
+        path = ('../Templates/виза/справка.docx')
         loadFile(
             path,
             function (error, content) {
@@ -5331,7 +5331,7 @@ function generateVisa() {
 
 //опись ВИЗА
     window.generateInventoryVisaTotal = function generate() {
-        path = ('../v1/Templates/виза/опись виза.docx')
+        path = ('../Templates/виза/опись виза.docx')
 
         let students = []
 
@@ -5501,7 +5501,7 @@ function generateRegVisa() {
     window.generateRegNotifTot = function generate() {
         let ovmRg = document.getElementById('ovmByRegion').value
         let rgOn = document.getElementById('registrationOn').value
-        path = (`../v1/Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
+        path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
 
         loadFile(
             path,
@@ -6339,16 +6339,16 @@ function generateRegVisa() {
         path = ("")
         switch (document.getElementById('ovmByRegion').value) {
             case "Алексеевский":
-                path = ('../v1/Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
+                path = ('../Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
                 break
             case "Войковский":
-                path = ('../v1/Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
+                path = ('../Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
                 break
             case "МУ МВД РФ Люберецкое":
-                path = ('../v1/Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
+                path = ('../Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
                 break
             case "Тропарево-Никулино":
-                path = ('../v1/Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+                path = ('../Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
                 break
         }
 
@@ -6720,7 +6720,7 @@ function generateRegVisa() {
 
 //визовая анкета
     window.generateVisaApplicationTot = function generate() {
-        path = ('../v1/Templates/виза/визовая анкета.docx')
+        path = ('../Templates/виза/визовая анкета.docx')
         loadFile(
             path,
             function (error, content) {
@@ -6939,7 +6939,7 @@ function generateRegVisa() {
 
 //ходатайство ВИЗА ТРОПАРЕВО-НИКУЛИНО
     window.generateVisaSolicitaionTroparevoTot = function generate() {
-        path = ('../v1/Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+        path = ('../Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
 
         loadFile(
             path,
@@ -7160,7 +7160,7 @@ function generateRegVisa() {
 
     //справка
     window.generateVisaReferenceTot = function generate() {
-        path = ('../v1/Templates/виза/справка.docx')
+        path = ('../Templates/виза/справка.docx')
         loadFile(
             path,
             function (error, content) {
@@ -7376,7 +7376,7 @@ function generateRegVisa() {
 
     //опись
     window.generateInventoryRegTot = function generate() {
-        path = ('../v1/Templates/регистрация И виза/опись.docx')
+        path = ('../Templates/регистрация И виза/опись.docx')
 
         let students = []
 
