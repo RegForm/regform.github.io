@@ -314,7 +314,7 @@ function updateNameDisplay() {
             para.textContent = 'File name ' + curFiles[0].name;
             var image = document.createElement('img');
             image.className = 'iconFile'
-            image.src = '../v1/excel.png';
+            image.src = '../excel.png';
 
             preview.appendChild(image);
             preview.appendChild(para);
