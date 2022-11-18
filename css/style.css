@@ -1,0 +1,533 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap'); /* Указываем box sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Убираем внутренние отступы */
+ul[class],
+ol[class] {
+    padding: 0;
+}
+
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+    list-style: none;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+    margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+
+
+/* ---------- */
+* {
+    font-family: 'Inter', sans-serif;
+;
+}
+
+
+.fragment{
+    border-radius: 20px;
+    background: #FFFFFF;
+}
+
+body {
+    background: #F2F2F7;
+    font-size: 10px;
+}
+
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover, .nav-tabs, .nav-tabs>li>a{
+    border: 0
+}
+
+.tab-content {
+    border-top-left-radius: 0;
+}
+
+.container {
+    width: 1075px;
+    padding: 0;
+    margin-top: 40px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.registration, .visa, .registrationAndVisa {
+    width: 345px;
+}
+
+
+.registration {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+
+
+
+.h1Button {
+    border: 0;
+    display: block;
+
+    width: 306px;
+
+    background: #3972C8;
+
+    padding: 14px 35px;
+    cursor: pointer;
+
+    margin: 20px auto 20px;
+
+    font-size: 1.2em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 15px;
+    color: #FFFFFF;
+}
+
+.h1ButtonImport {
+    border: 0;
+
+    background: #3972C8;
+
+    padding: 14px 35px;
+    cursor: pointer;
+
+    margin: 10px 0 20px 0;
+
+    font-size: 1.2em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 15px;
+    color: #FFFFFF;
+}
+
+.buttonName {
+    font-size: 2.2em;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+
+}
+
+.h1Button:hover{
+    background: #28518f;
+}
+
+.h1Button:active {
+    background: #1e3c69;;
+}
+
+.buttonDoc {
+
+    padding: 7px 0 8px 0;
+
+    width: 265px;
+
+    border:0;
+    border-bottom: 1px solid #D6D6D6;
+    background: #FFFFFF;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+
+    text-align: start;
+    vertical-align: center;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.8em;
+    line-height: 150%;
+    /* identical to box height, or 27px */
+
+
+    color: #000000;
+}
+
+
+.buttonDoc:hover {
+    color: #3972C8;
+}
+
+.buttonDoc:active {
+    color: #28518f;
+}
+
+.docGroup {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.docGroup, .docStudent {
+    margin-left: 40px;
+}
+
+.docStudent >.buttonName:first-child {
+    margin-bottom: 16px;
+}
+
+.docGroup >.buttonName:first-child {
+    margin-bottom: 10px;
+}
+
+.docStudent{
+    margin-bottom: 25px;
+}
+
+
+
+
+
+/* importFile */
+
+.importFile {
+    margin-top: 30px;
+}
+
+#excel {
+    display: none;
+}
+
+.preview {
+    display: inline-flex;
+    align-items: center;
+}
+.iconFile {
+    width: 30px;
+}
+
+
+.labelInput {
+    display: block;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.3em;
+    line-height: 150%;
+
+    color: #000000;
+}
+
+.inputStyle, .selectStyle {
+    display: block;
+    width: 160px;
+
+    border: 0;
+    border-bottom: 1px solid #D6D6D6;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+
+    text-align: center;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2em;
+    line-height: 150%;
+    color: #000000;
+
+    padding: 5px;
+}
+
+input[type="date" i] {
+    padding: 4px;
+}
+
+
+/* info */
+.info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+
+    padding: 40px;
+    margin-bottom: 20px;
+}
+
+.infoCol {
+    display: flex;
+}
+
+.desc {
+    margin-left: 40px;
+}
+
+.selectStyleBig, .selectStyleBigInfo {
+    display: block;
+    width: 360px;
+
+    border: 0;
+    border-bottom: 1px solid #D6D6D6;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+
+    text-align: center;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2em;
+    line-height: 150%;
+    color: #000000;
+
+    padding: 5px;
+}
+
+.selectStyleBigInfo {
+    width: 340px;
+}
+
+
+
+.selectStyle {
+    padding: 6px;
+}
+
+.grazdBlock {
+    width: 360px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    padding-top: 40px;
+}
+
+.info > .inputBlock {
+    margin: 0px 20px 10px 0;
+}
+.info > .inputBlock:last-child {
+    margin-bottom: 0;
+}
+
+.regOn {
+    width: 520px;
+}
+
+
+
+
+
+/* personalInfo */
+
+.nav {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    /* identical to box height, or 18px */
+
+    text-align: center;
+
+    color: #000000;
+
+}
+.nav-tabs>li>a {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#createTabButton {
+    font-size: 2em;
+    cursor: pointer;
+
+    padding: 0 5px 0 5px;
+}
+
+
+/*tap-pane*/
+.inputInInfo, .selectInInfo {
+    padding-top: 6px;
+    margin-right: 20px;
+}
+
+.inputInInfo {padding-top: 6px}
+
+.tab-pane>.groupInput {
+    margin: 10px 0px 30px 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.tab-pane>.groupInput:first-child {
+    padding-top: 40px;
+    margin-top: 0px;
+}
+
+
+
+/* nstud */
+
+.nameStud {
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.nameStud> .labelInput {
+    width: 220px;
+}
+
+.findStud {
+
+    display: block;
+
+    border: 0;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #FFFFFF;
+
+    padding: 5px 35px;
+
+    background: #3972C8;
+}
+.findStud:active {
+    background: #1e3c69;
+
+}
+.findStud:hover {
+    background: #28518f;
+}
+
+/* FIO */
+.FIO {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 540px;
+}
+
+.bigInput {
+    width: 340px;
+    margin-bottom: 10px
+}
+
+.infoVisa {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+}
+
+.address {
+    width: 800px;
+}
+
+.passportData {
+    width: 900px;
+}
+.kem {
+    margin-top: 10px;
+}
+/*biginput*/
+.vbInput {
+    width: 700px;
+}
+
+/*facultyinput*/
+
+.vbFaculty {
+    width: 520px;
+}
+
+/*deleteTab*/
+.tab-pane {
+    position: relative;
+}
+
+.deleteTab {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+
+    font-size: 4em;
+    font-weight: 200;
+    line-height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    cursor: pointer;
+}
+
+#deleteButton1 {
+    visibility: hidden;
+}
+
+
+
+
+
+
+
+
+
+

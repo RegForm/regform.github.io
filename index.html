@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Документы на регистрацию</title>
+
+    <!-- SCRIPTS FOR TABS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <!-- SCRIPTS FOR xlsx-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha512-r22gChDnGvBylk90+2e/ycr3RVrDi8DIOkIGNhJlKfuyQM4tIRAI062MaV8sfjQKYVGjOBaZBOA87z+IhZE9DA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="buttons">
+            <div class="registration">
+                <div class="reg fragment">
+                    <button class="h1Button" onclick="generateReg()">Общий экспорт (регистрация)</button>
+
+                    <div class="docStudent">
+                        <p class="buttonName">Документы на студента</p>
+                        <button onclick="generateRegNotif()" class="buttonDoc">Уведомление (регистрация)</button>
+                        <button onclick="generateRegSolicitaion()" class="buttonDoc">Ходатайство (регистрация)</button>
+                    </div>
+
+                    <div class="docGroup">
+                        <p class="buttonName">Документы на группу</p>
+                        <button onclick="generateInventoryReg()" class="buttonDoc">Опись (регистрация)</button>
+                    </div>
+
+                </div>
+                <div class="flat fragment">
+                    <div class="docGroup">
+                        <button onclick="generateFlatSolicitaion()" class="buttonDoc">Ходатайство по квартире</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="visa fragment">
+                <button class="h1Button" onclick="generateVisa()">Общий экспорт (виза)</button>
+
+                <div class="docStudent">
+                    <p class="buttonName">Документы на студента</p>
+                    <button onclick="generateVisaApplication()" class="buttonDoc">Визовая анкета</button>
+                    <button onclick="generateVisaSolic(document.getElementById('ovmByRegion').value)" class="buttonDoc">Ходатайство (виза)</button>
+                    <button onclick="generateVisaReference()" class="buttonDoc">Справка</button>
+                </div>
+
+                <div class="docGroup">
+                    <p class="buttonName">Документы на группу</p>
+                    <button onclick="generateInventoryVisa()" class="buttonDoc">Опись (виза)</button>
+                </div>
+            </div>
+
+            <div class="registrationAndVisa fragment">
+                <button class="h1Button" onclick="generateRegVisa()">Общий экспорт (регистрация + виза)</button>
+
+                <div class="docStudent">
+                    <p class="buttonName">Документы на студента</p>
+                    <button onclick="generateRegNotif()" class="buttonDoc">Уведомление (регистрация)</button>
+                    <button onclick="generateRegSolicitaion()" class="buttonDoc">Ходатайство (регистрация)</button>
+                    <button onclick="generateVisaApplication()" class="buttonDoc">Визовая анкета</button>
+                    <button onclick="generateVisaSolicitaionTroparevo()" class="buttonDoc">Ходатайство (виза)</button>
+                    <button onclick="generateVisaReference()" class="buttonDoc">Справка</button>
+                </div>
+
+                <div class="docGroup">
+                    <p class="buttonName">Документы на группу</p>
+                    <button onclick="generateInventoryRegVisa()" class="buttonDoc">Опись (регистрация + виза)</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="import">
+            <p class="buttonName">Импорт excel файла</p>
+            <label for="excel" class="h1ButtonImport">Выберите файл</label>
+            <div class="preview"></div>
+            <input type="file" id="excel" accept=".xls,.xlsx" onchange="updateNameDisplay()">
+        </div>
+
+        <div class="info fragment">
+
+            <div class="inputBlock">
+                <span class="labelInput">Дата подачи в ОВМ МВД России</span>
+                <input type="date" size="40" id="dateInOvm" class="inputStyle">
+            </div>
+
+            <div class="inputBlock">
+                <span class="labelInput">ОВМ МВД России по району</span>
+                <select id="ovmByRegion" class="selectStyleBig">
+                    <option hidden disabled selected value=""></option>
+                    <option value="Тропарево-Никулино">ОВМ ТРОПАРЕВО-НИКУЛИНО</option>
+                    <option value="Алексеевский">ОВМ АЛЕКСЕЕВСКИЙ</option>
+                    <option value="Войковский">ОВМ ВОЙКОВСКИЙ</option>
+                    <option value="МУ МВД РФ Люберецкое">ОВМ МУ МВД РФ ЛЮБЕРЕЦКОЕ</option>
+                    <option value="Хамовники">ОВМ ХАМОВНИКИ</option>
+                </select>
+            </div>
+
+            <div class="inputBlock">
+                <span class="labelInput">Адрес постановки на миграционный учет</span>
+                <select id="migrationAddress" class="selectStyleBig">
+                    <option hidden disabled selected value=""></option>
+                    <option value="г. Москва, проспект Вернадского, 88 к. 1">г. Москва, проспект Вернадского, 88 к. 1 (№1)</option>
+                    <option value="г. Москва, проспект Вернадского, 88 к. 2">г. Москва, проспект Вернадского, 88 к. 2 (№2)</option>
+                    <option value="г. Москва, проспект Вернадского, 88 к. 3">г. Москва, проспект Вернадского, 88 к. 3 (№3)</option>
+                    <option value="г. Москва, ул. Космонавтов, д. 13">г. Москва, ул. Космонавтов, д. 13 (№4)</option>
+                    <option value="г. Москва, улица Космонавтов, д. 9">г. Москва, улица Космонавтов, д. 9 (№5)</option>
+                    <option value="г. Москва, ул. Клары Цеткин, д. 25, корп. 1">г. Москва, ул. Клары Цеткин, д. 25, корп. 1 (№6)</option>
+                    <option value="Московская область, г. Люберцы, ул. Мира, д.7">Московская область, г. Люберцы, ул. Мира, д.7 (№7)</option>
+                    <option value="Квартира">КВАРТИРА</option>
+                </select>
+            </div>
+
+            <div class="inputBlock">
+                <span class="labelInput">Оформление на</span>
+                <select id="registrationOn" class="selectStyleBig regOn">
+                    <option hidden disabled selected value=""></option>
+                    <option value="Круглов">Начальник УМС  - В.В. Круглов</option>
+                    <option value="Морозова">Заместитель начальника УМС – О.А. Морозова</option>
+                    <option value="Орлова">Начальник Паспортно-визового отдела УМС - С.В. Орлова</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="inform">
+            <div class="nav">
+                <nav class='navigationTab'>
+                    <ul class="nav nav-tabs">
+                        <li class="active" id="li-tab1"><a data-toggle="tab" href="#tab1">Вкладка 1</a></li>
+                        <li><span onclick=createTab()  id="createTabButton">+</span></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="tab-content fragment">
+                <div id="tab1" class="tab-pane fade in active">
+
+                    <div class="groupInput">
+                        <div class="inputBlock nameStud">
+                            <span class="labelInput inInfo">Порядковый номер студента</span>
+                            <input type="text" size="40" id="nStud1" onchange="renameTab(this)" class="inputStyle inputInInfo">
+                            <button id="sFind1" type="button" onclick= findInfo(this.id) class="findStud">Найти</button>
+                        </div>
+                    </div>
+
+                    <div class="groupInput">
+                        <div class="inputBlock ">
+                            <span class="labelInput inInfo">Срок пребывания до</span>
+                            <input type="date" id="dateUntil1" class="inputStyle inputInInfo">
+                        </div>
+
+
+                        <div class="inputBlock">
+                            <!-- purpose -->
+                            <span class="labelInput inInfo">Цель поездки</span>
+                            <select id="purpose1" class="selectStyle inputInInfo">
+                                <option value=""disabled selected hidden></option>
+                                <option value="Учеба">Учеба</option>
+                                <option value="Краткосрочная учеба">Краткосрочная учеба</option>
+                                <option value="(НТС)">Научно-технические связи (НТС)</option>
+                                <option value="Трудовая деятельность">Трудовая деятельность</option>
+                            </select >
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Гражданство, подданство</span>
+                            <input type="text" id="grazd1" class="inputStyle inputInInfo">
+                        </div>
+
+                    </div>
+
+                    <!--faculty-->
+                    <p class="desc">ОБУЧЕНИЕ</p>
+                    <div class="groupInput">
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Институт/факультет</span>
+                            <select id="faculty1" class="selectStyle selectInInfo vbFaculty">
+                                <option value="" disabled selected hidden></option>
+                                <option value="Институт изящных искусств: Факультет музыкального искусства / The Musical Arts Institute">Институт изящных искусств: Факультет музыкального искусства</option>
+                                <option value="Институт изящных искусств: Художественно-графический факультет/ The Institute of Fine Arts">Институт изящных искусств: Художественно-графический факультет</option>
+                                <option value="Институт социально-гуманитарного образования / The Institute of Social Studies and Humanities">Институт социально-гуманитарного образования</option>
+                                <option value="Институт филологии / The Institute of Philology">Институт филологии</option>
+                                <option value="Институт иностранных языков / The Institute of Foreign Languages">Институт иностранных языков</option>
+                                <option value="Институт международного образования / The Institute of International Education">Институт международного образования</option>
+                                <option value="Институт детства / The Institute of Childhood">Институт детства</option>
+                                <option value="Институт биологии и химии / The Institute of Biology and Chemistry">Институт биологии и химии</option>
+                                <option value="Институт физики, технологии и информационных систем / The Institute of Physics, Technology, and Informational Systems">Институт физики, технологии и информационных систем</option>
+                                <option value="Институт физической культуры, спорта и здоровья /The Institute of Physical Education, Sports and Health">Институт физической культуры, спорта и здоровья</option>
+                                <option value="Географический факультет / The Institute of Geography">Географический факультет</option>
+                                <option value="Институт истории и политики / The Institute of History and Politics">Институт истории и политики</option>
+                                <option value="Институт математики и информатики / The Institute of Mathematics and Informatics">Институт математики и информатики</option>
+                                <option value="Факультет дошкольной педагогики и психологии / The Institute of Pre-School Pedagogy and Psychology">Факультет дошкольной педагогики и психологии</option>
+                                <option value="Институт педагогики и психологии / The Institute of Pedagogy and Psychology">Институт педагогики и психологии</option>
+                                <option value="Институт журналистики, коммуникаций и медиаобразования / The Institute of Journalism, Communications and Media Education">Институт журналистики, коммуникаций и медиаобразования</option>
+                                <option value="Институт развития цифрового образования / The Institute of Digital Education Development">Институт развития цифрового образования</option>
+                            </select>
+                        </div>
+
+
+                        <!--the level of education-->
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Уровень образования</span>
+                            <select id="levelEducation1" class="selectStyle selectInInfo">
+                                <option value=" "selected></option>
+                                <option value="Подготовительный факультет (изучаю русский язык)/ The preparatory faculty">Подготовительный факультет</option>
+                                <option value="бакалавриат/bachelor degree">Бакалавриат</option>
+                                <option value="магистратура/master degree">Магистратура</option>
+                                <option value="аспирантура/post-graduate studies">Аспирантура</option>
+                            </select>
+                        </div>
+
+                        <!-- course -->
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Курс</span>
+                            <select id="course1" class="selectStyle selectInInfo">
+                                <option value="" disabled selected hidden></option>
+                                <option value="Подготовительный факультет (изучаю русский язык)/ The preparatory faculty">Подготовительный факультет</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="groupInput">
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">№ Приказа</span>
+                            <input type="text" id="numOrder1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Приказ от</span>
+                            <input type="date" size="40"  id="orderFrom1"  class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Срок обучения до</span>
+                            <input type="date" size="40"  id="orderUntil1"  class="inputStyle inputInInfo">
+                        </div>
+
+                        <!-- type of funding -->
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Тип финансирования</span>
+                            <select id="typeFunding1" class="selectStyle selectInInfo">
+                                <option value="" disabled selected hidden></option>
+                                <option value="бюджет (Государство оплачивает мое обучение)/ state funded (The state pays for my education)">Бюджет (гослиния) - направление</option>
+                                <option value="договор ( я плачу за обучение)/paid tuition (I pay for my education)">Договор</option>
+                            </select>
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput">№ Договора об оказании платных услуг</span>
+                            <input type="text" id="numContract1" class="inputStyle">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Договор от</span>
+                            <input type="text" size="40"  id="contractFrom1"  class="inputStyle inputInInfo" placeholder="дд.мм.гггг" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё]/g,'');" >
+                        </div>
+
+                    </div>
+
+
+
+                    <p class="desc">ЛИЧНАЯ ИНФОРМАЦИЯ</p>
+                    <div class="groupInput">
+                        <div class="FIO">
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Фамилия (рус)</span>
+                                <input type="text" size="40" id="lastNameRu1" class="inputStyle inputInInfo ">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Имя (рус)</span>
+                                <input type="text" size="40" id="firstNameRu1" class="inputStyle inputInInfo ">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Отчество (рус)</span>
+                                <input type="text" size="40" id="patronymicRu1" class="inputStyle inputInInfo ">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Фамилия (англ)</span>
+                                <input type="text" size="40" id="lastNameEn1" class="inputStyle inputInInfo ">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Имя (англ)</span>
+                                <input type="text" size="40" id="firstNameEn1" class="inputStyle inputInInfo ">
+                            </div>
+                        </div>
+
+                        <div class="groupInput">
+                            <!-- date of birth -->
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Дата рождения</span>
+                                <input type="date" size="40" id="dateOfBirth1" class="inputStyle inputInInfo">
+                            </div>
+
+                            <!-- gender -->
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Пол</span>
+                                <select id="gender1" class="selectStyle selectInInfo">
+                                    <option value="" disabled selected hidden></option>
+                                    <option value="Мужской / Male">Мужской</option>
+                                    <option value="Женский / Female">Женский</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- passport -->
+<!--                    <div class="inputBlock">-->
+<!--                        <span class="labelInput inInfo">Документ, удостоверяющий личность</span>-->
+<!--                        <select id="documentPerson1" class="selectStyle selectInInfo">-->
+<!--                            <option value="Заграничный паспорт" selected>Паспорт</option>-->
+<!--                            <option value="Внутренний паспорт ( Украина/ДНР/ЛНР)">Внутренний паспорт</option>-->
+<!--                            <option value="ID - карта (Казахстан/Узбекистан/Киргизстан)">ID-карта</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+
+                    <p class="desc">ДОКУМЕНТ, УДОСТОВЕРЯЮЩИЙ ЛИЧНОСТЬ</p>
+                    <div class="groupInput">
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Место рождения</span>
+                            <input type="text" size="40" id="placeStateBirth1" class="inputStyle inputInInfo bigInput">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Серия</span>
+                            <input type="text" size="40" id="series1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Номер</span>
+                            <input type="text" size="40" id="idPassport1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Дата выдачи</span>
+                            <input type="date" size="40" id="dateOfIssue1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Действителен до</span>
+                            <input type="date" size="40" id="validUntil1" class="inputStyle inputInInfo">
+                        </div>
+                    </div>
+
+
+
+
+                    <p class="desc">ВИД И РЕКВИЗИТЫ ДОКУМЕНТА, ПОДТВЕРЖАЮЩЕГО ПРАВО НА ПРЕБЫВАНИЕ (ПРОЖИВАНИЕ) В РФ</p>
+                    <!-- type of document-->
+                    <div class="groupInput">
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Вид документа</span>
+                            <select id="typeVisa1" class="selectStyleBigInfo selectInInfo">
+                                <option value="ВИЗА" selected>ВИЗА</option>
+                                <option value="Я ГРАЖДАНИН СТРАНЫ, У КОТОРОЙ С РОССИЕЙ БЕЗВИЗОВЫЙ РЕЖИМ (Казахстан, Узбекистан, Украина, Таджикистан, Армения, Азербайджан)">Безвизовый режим</option>
+                                <option value="(ВНЖ) ВИД НА ЖИТЕЛЬСТВО РФ">Вид на жительство РФ</option>
+                                <option value="(РВП) РАЗРЕШЕНИЕ НА ВРЕМЕННОЕ ПРОЖИВАНИЕ РФ">Разрешение на временное проживание РФ</option>
+                            </select>
+                        </div>
+
+                        <div class="infoVisa">
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Серия</span>
+                                <input type="text" size="40" id="seriesVisa1" class="inputStyle inputInInfo">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Номер</span>
+                                <input type="text" size="40" id="idVisa1" class="inputStyle inputInInfo">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Дата выдачи</span>
+                                <input type="date" size="40" id="dateOfIssueVisa1" class="inputStyle inputInInfo">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Срок действия до</span>
+                                <input type="date" size="40" id="validUntilVisa1" class="inputStyle inputInInfo">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">Идентификатор визы</span>
+                                <input type="text" size="40" id="identifierVisa1" class="inputStyle inputInInfo">
+                            </div>
+
+                            <div class="inputBlock">
+                                <span class="labelInput inInfo">№ приглашения</span>
+                                <input type="text" size="40" id="numInvVisa1" class="inputStyle inputInInfo">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <p class="desc">МИГРАЦИОННАЯ КАРТА</p>
+                    <div class="groupInput">
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Серия</span>
+                            <input type="text" size="40" id="seriesMigration1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Номер</span>
+                            <input type="text" size="40" id="idMigration1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Дата въезда</span>
+                            <input type="date" size="40" id="dateArrivalMigration1"  class="inputStyle inputInInfo">
+                        </div>
+
+                    </div>
+
+
+
+
+                    <p class="desc">ПРОЖИВАНИЕ</p>
+
+                    <div class="groupInput">
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Адрес в стране постоянного проживания (на родине)</span>
+                            <span class="labelInput inInfo">Страна, провинция (или область), город, улица, № дома, № квартиры</span>
+                            <input type="text" size="40" id="homeAddress1" class="inputStyle inputInInfo vbInput">
+                        </div>
+                    </div>
+
+
+                    <div class="groupInput address">
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Адрес проживания в России (общежитие)/</span>
+                            <span class="labelInput inInfo">Адрес прежнего места пребывания</span>
+                            <select id="addressHostel1" class="selectStyleBigInfo selectInInfo">
+                                <option value="" disabled selected hidden></option>
+                                <option value="г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)">г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)</option>
+                                <option value="г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)">г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)</option>
+                                <option value="г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)">г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)</option>
+                                <option value="г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)">г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)</option>
+                                <option value="г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)">г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)</option>
+                                <option value="г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)">г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)</option>
+                                <option value="Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)">Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)</option>
+                                <option value="Я ЖИВУ В КВАРТИРЕ">Квартира</option>
+                                <option value="Я ЖИВУ В ОТЕЛЕ">Отель</option>
+                            </select>
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Адрес проживания в России (Квартира)/</span>
+                            <span class="labelInput inInfo">Адрес прежнего места пребывания</span>
+                            <input type="text" size="40" id="addressResidence1" class="inputStyle inputInInfo bigInput">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">№ Комнаты</span>
+                            <input type="text" size="40" id="numRoom1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">№ Договора найма</span>
+                            <input type="text" size="40" id="numRental1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">Сведения о принимающей стороне</span>
+                            <input type="text" size="40" id="infHost1" class="inputStyle inputInInfo bigInput">
+                        </div>
+                    </div>
+
+
+                    <p class="desc">КОНТАКТЫ</p>
+                    <div class="groupInput">
+                        <!--contacts-->
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">№ Телефона</span>
+                            <input type="tel" size="40" id="phone1" class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">E-mail</span>
+                            <input type="email" size="40" id="mail1" class="inputStyle inputInInfo">
+                        </div>
+                    </div>
+
+
+                    <p class="desc">УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА</p>
+                    <div class="groupInput">
+                        <!--notification-->
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">С</span>
+                            <input type="date" size="40" id="notificationFrom1"  class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo">ПО / Дата окончания визы</span>
+                            <input type="date" size="40" id="notificationUntil1"  class="inputStyle inputInInfo">
+                        </div>
+
+                        <div class="inputBlock">
+                            <span class="labelInput inInfo kem">Кем выдан документ</span>
+                            <input type="text" size="40" id="issuedBy1" class="inputStyle inputInInfo bigInput vbInput">
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <!--remove button-->
+                    <span onclick=removeDummy(this)  id="deleteButton1" class="deleteTab">&times</span>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.31.1/docxtemplater.js"></script>
+<script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+<script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
+<!--
+Mandatory in IE 6, 7, 8 and 9.
+-->
+<!--[if IE]>
+<script
+        type="text/javascript"
+        src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils-ie.js"
+></script>
+<![endif]-->
+
+<script type="text/javascript" src="js/excel.js"></script>
+<script type="text/javascript" src="js/tab.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</html>
