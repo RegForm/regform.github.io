@@ -371,6 +371,8 @@ window.generateVisaReference = function generate() {
                 }
 
 
+                let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+
                 doc.setData({
 
                     grazd: document.getElementById('grazd' + indexTab).value.toUpperCase(),
@@ -383,7 +385,7 @@ window.generateVisaReference = function generate() {
                     idPassport: document.getElementById('idPassport' + indexTab).value,
                     dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
                     validUntil: validUntil,
-                    dateUntil: new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString(),
+                    dateUntil: dateUnt,
                     ovmByRegion: ovmByRegion,
                     registrationOn: registrationOn,
                     nStud: document.getElementById('nStud' + indexTab).value,
@@ -1814,14 +1816,14 @@ window.generateRegNotif = function generate() {
 
                 // dateOfBirth {dOB1-8}
                 let dOB = new Date(document.getElementById('dateOfBirth'+indexTab).value).toLocaleDateString().split('.')
-                let dOB1 = (dOB[0][0]) ? (dOB[0][0]) : ''
-                let dOB2 = (dOB[0][1]) ? (dOB[0][1]) : ''
-                let dOB3 = (dOB[1][0]) ? (dOB[1][0]) : ''
-                let dOB4 = (dOB[1][1]) ? (dOB[1][1]) : ''
-                let dOB5 = (dOB[2][0]) ? (dOB[2][0]) : ''
-                let dOB6 = (dOB[2][1]) ? (dOB[2][1]) : ''
-                let dOB7 = (dOB[2][2]) ? (dOB[2][2]) : ''
-                let dOB8 = (dOB[2][3]) ? (dOB[2][3]) : ''
+                let dOB1 = (dOB) ? (dOB[0][0]) : ''
+                let dOB2 = (dOB) ? (dOB[0][1]) : ''
+                let dOB3 = (dOB) ? (dOB[1][0]) : ''
+                let dOB4 = (dOB) ? (dOB[1][1]) : ''
+                let dOB5 = (dOB) ? (dOB[2][0]) : ''
+                let dOB6 = (dOB) ? (dOB[2][1]) : ''
+                let dOB7 = (dOB) ? (dOB[2][2]) : ''
+                let dOB8 = (dOB) ? (dOB[2][3]) : ''
 
                 // gender
                 let genM = ''
@@ -1836,7 +1838,8 @@ window.generateRegNotif = function generate() {
                 }
 
                 // placeStateBirth {pSBS1-24} для страны И {pSBG1-24} для города
-                let pSBS = document.getElementById('placeStateBirth'+indexTab).value.toUpperCase().split(', ')
+                let pSBS = document.getElementById('placeStateBirth'+indexTab).value.toUpperCase().split(' ')
+                
                 let pSBS1 = (pSBS[0][0]) ? (pSBS[0][0]) : ''
                 let pSBS2 = (pSBS[0][1]) ? (pSBS[0][1]) : ''
                 let pSBS3 = (pSBS[0][2]) ? (pSBS[0][2]) : ''
@@ -1957,27 +1960,27 @@ window.generateRegNotif = function generate() {
 
                 // dateOfIssue {dOI1-8}
                 let dOI = new Date(document.getElementById('dateOfIssue'+indexTab).value).toLocaleDateString().split('.')
-                let dOI1 = (dOI[0][0]) ? (dOI[0][0]) : ''
-                let dOI2 = (dOI[0][1]) ? (dOI[0][1]) : ''
-                let dOI3 = (dOI[1][0]) ? (dOI[1][0]) : ''
-                let dOI4 = (dOI[1][1]) ? (dOI[1][1]) : ''
-                let dOI5 = (dOI[2][0]) ? (dOI[2][0]) : ''
-                let dOI6 = (dOI[2][1]) ? (dOI[2][1]) : ''
-                let dOI7 = (dOI[2][2]) ? (dOI[2][2]) : ''
-                let dOI8 = (dOI[2][3]) ? (dOI[2][3]) : ''
+                let dOI1 = (dOI) ? (dOI[0][0]) : ''
+                let dOI2 = (dOI) ? (dOI[0][1]) : ''
+                let dOI3 = (dOI) ? (dOI[1][0]) : ''
+                let dOI4 = (dOI) ? (dOI[1][1]) : ''
+                let dOI5 = (dOI) ? (dOI[2][0]) : ''
+                let dOI6 = (dOI) ? (dOI[2][1]) : ''
+                let dOI7 = (dOI) ? (dOI[2][2]) : ''
+                let dOI8 = (dOI) ? (dOI[2][3]) : ''
 
 
                 // validUntil {vU1-8}
                 let vU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString().split(".") : ''
-                let vU1 = (vU[0][0]) ? (vU[0][0]) : ''
-                let vU2 = (vU[0][1]) ? (vU[0][1]) : ''
-                let vU3 = (vU[1][0]) ? (vU[1][0]) : ''
-                let vU4 = (vU[1][1]) ? (vU[1][1]) : ''
-                let vU5 = (vU[2][0]) ? (vU[2][0]) : ''
-                let vU6 = (vU[2][1]) ? (vU[2][1]) : ''
-                let vU7 = (vU[2][2]) ? (vU[2][2]) : ''
-                let vU8 = (vU[2][3]) ? (vU[2][3]) : ''
+                let vU1 = (vU) ? (vU[0][0]) : ''
+                let vU2 = (vU) ? (vU[0][1]) : ''
+                let vU3 = (vU) ? (vU[1][0]) : ''
+                let vU4 = (vU) ? (vU[1][1]) : ''
+                let vU5 = (vU) ? (vU[2][0]) : ''
+                let vU6 = (vU) ? (vU[2][1]) : ''
+                let vU7 = (vU) ? (vU[2][2]) : ''
+                let vU8 = (vU) ? (vU[2][3]) : ''
 
 
                 // typeVisa
@@ -2046,26 +2049,26 @@ window.generateRegNotif = function generate() {
                 // dateOfIssueVisa {dOIV1-8}
                 let dOIV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString().split(".") : ''
-                let dOIV1 = (dOIV[0][0]) ? (dOIV[0][0]) : ''
-                let dOIV2 = (dOIV[0][1]) ? (dOIV[0][1]) : ''
-                let dOIV3 = (dOIV[1][0]) ? (dOIV[1][0]) : ''
-                let dOIV4 = (dOIV[1][1]) ? (dOIV[1][1]) : ''
-                let dOIV5 = (dOIV[2][0]) ? (dOIV[2][0]) : ''
-                let dOIV6 = (dOIV[2][1]) ? (dOIV[2][1]) : ''
-                let dOIV7 = (dOIV[2][2]) ? (dOIV[2][2]) : ''
-                let dOIV8 = (dOIV[2][3]) ? (dOIV[2][3]) : ''
+                let dOIV1 = (dOIV) ? (dOIV[0][0]) : ''
+                let dOIV2 = (dOIV) ? (dOIV[0][1]) : ''
+                let dOIV3 = (dOIV) ? (dOIV[1][0]) : ''
+                let dOIV4 = (dOIV) ? (dOIV[1][1]) : ''
+                let dOIV5 = (dOIV) ? (dOIV[2][0]) : ''
+                let dOIV6 = (dOIV) ? (dOIV[2][1]) : ''
+                let dOIV7 = (dOIV) ? (dOIV[2][2]) : ''
+                let dOIV8 = (dOIV) ? (dOIV[2][3]) : ''
 
                 // validUntilVisa {vUV1-8}
                 let vUV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString().split(".") : ''
-                let vUV1 = (vUV[0][0]) ? (vUV[0][0]) : ''
-                let vUV2 = (vUV[0][1]) ? (vUV[0][1]) : ''
-                let vUV3 = (vUV[1][0]) ? (vUV[1][0]) : ''
-                let vUV4 = (vUV[1][1]) ? (vUV[1][1]) : ''
-                let vUV5 = (vUV[2][0]) ? (vUV[2][0]) : ''
-                let vUV6 = (vUV[2][1]) ? (vUV[2][1]) : ''
-                let vUV7 = (vUV[2][2]) ? (vUV[2][2]) : ''
-                let vUV8 = (vUV[2][3]) ? (vUV[2][3]) : ''
+                let vUV1 = (vUV) ? (vUV[0][0]) : ''
+                let vUV2 = (vUV) ? (vUV[0][1]) : ''
+                let vUV3 = (vUV) ? (vUV[1][0]) : ''
+                let vUV4 = (vUV) ? (vUV[1][1]) : ''
+                let vUV5 = (vUV) ? (vUV[2][0]) : ''
+                let vUV6 = (vUV) ? (vUV[2][1]) : ''
+                let vUV7 = (vUV) ? (vUV[2][2]) : ''
+                let vUV8 = (vUV) ? (vUV[2][3]) : ''
 
                 // purpose
                 let purposeG = ""
@@ -2106,26 +2109,27 @@ window.generateRegNotif = function generate() {
                 // dateArrivalMigration {dAM1-8}
                 let dAM = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString().split(".") : ''
-                let dAM1 = (dAM[0][0]) ? (dAM[0][0]) : ''
-                let dAM2 = (dAM[0][1]) ? (dAM[0][1]) : ''
-                let dAM3 = (dAM[1][0]) ? (dAM[1][0]) : ''
-                let dAM4 = (dAM[1][1]) ? (dAM[1][1]) : ''
-                let dAM5 = (dAM[2][0]) ? (dAM[2][0]) : ''
-                let dAM6 = (dAM[2][1]) ? (dAM[2][1]) : ''
-                let dAM7 = (dAM[2][2]) ? (dAM[2][2]) : ''
-                let dAM8 = (dAM[2][3]) ? (dAM[2][3]) : ''
+                let dAM1 = (dAM) ? (dAM[0][0]) : ''
+                let dAM2 = (dAM) ? (dAM[0][1]) : ''
+                let dAM3 = (dAM) ? (dAM[1][0]) : ''
+                let dAM4 = (dAM) ? (dAM[1][1]) : ''
+                let dAM5 = (dAM) ? (dAM[2][0]) : ''
+                let dAM6 = (dAM) ? (dAM[2][1]) : ''
+                let dAM7 = (dAM) ? (dAM[2][2]) : ''
+                let dAM8 = (dAM) ? (dAM[2][3]) : ''
 
                 // dateUntil {dU1-8}
                 let dU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString().split(".") : ''
-                let dU1 = (dU[0][0]) ? (dU[0][0]) : ''
-                let dU2 = (dU[0][1]) ? (dU[0][1]) : ''
-                let dU3 = (dU[1][0]) ? (dU[1][0]) : ''
-                let dU4 = (dU[1][1]) ? (dU[1][1]) : ''
-                let dU5 = (dU[2][0]) ? (dU[2][0]) : ''
-                let dU6 = (dU[2][1]) ? (dU[2][1]) : ''
-                let dU7 = (dU[2][2]) ? (dU[2][2]) : ''
-                let dU8 = (dU[2][3]) ? (dU[2][3]) : ''
+
+                let dU1 = (dU) ? (dU[0][0]) : ''
+                let dU2 = (dU) ? (dU[0][1]) : ''
+                let dU3 = (dU) ? (dU[1][0]) : ''
+                let dU4 = (dU) ? (dU[1][1]) : ''
+                let dU5 = (dU) ? (dU[2][0]) : ''
+                let dU6 = (dU) ? (dU[2][1]) : ''
+                let dU7 = (dU) ? (dU[2][2]) : ''
+                let dU8 = (dU) ? (dU[2][3]) : ''
 
                 // seriesMigration {sM1-4}
                 let sM = document.getElementById('seriesMigration' + indexTab).value
@@ -3099,14 +3103,14 @@ function generateReg() {
 
                     // dateOfBirth {dOB1-8}
                     let dOB = new Date(document.getElementById('dateOfBirth'+indexTab).value).toLocaleDateString().split('.')
-                    let dOB1 = (dOB[0][0]) ? (dOB[0][0]) : ''
-                    let dOB2 = (dOB[0][1]) ? (dOB[0][1]) : ''
-                    let dOB3 = (dOB[1][0]) ? (dOB[1][0]) : ''
-                    let dOB4 = (dOB[1][1]) ? (dOB[1][1]) : ''
-                    let dOB5 = (dOB[2][0]) ? (dOB[2][0]) : ''
-                    let dOB6 = (dOB[2][1]) ? (dOB[2][1]) : ''
-                    let dOB7 = (dOB[2][2]) ? (dOB[2][2]) : ''
-                    let dOB8 = (dOB[2][3]) ? (dOB[2][3]) : ''
+                    let dOB1 = (dOB) ? (dOB[0][0]) : ''
+                    let dOB2 = (dOB) ? (dOB[0][1]) : ''
+                    let dOB3 = (dOB) ? (dOB[1][0]) : ''
+                    let dOB4 = (dOB) ? (dOB[1][1]) : ''
+                    let dOB5 = (dOB) ? (dOB[2][0]) : ''
+                    let dOB6 = (dOB) ? (dOB[2][1]) : ''
+                    let dOB7 = (dOB) ? (dOB[2][2]) : ''
+                    let dOB8 = (dOB) ? (dOB[2][3]) : ''
 
                     // gender
                     let genM = ''
@@ -3121,7 +3125,7 @@ function generateReg() {
                     }
 
                     // placeStateBirth {pSBS1-24} для страны И {pSBG1-24} для города
-                    let pSBS = document.getElementById('placeStateBirth'+indexTab).value.toUpperCase().split(', ')
+                    let pSBS = document.getElementById('placeStateBirth'+indexTab).value.toUpperCase().split(' ')
                     let pSBS1 = (pSBS[0][0]) ? (pSBS[0][0]) : ''
                     let pSBS2 = (pSBS[0][1]) ? (pSBS[0][1]) : ''
                     let pSBS3 = (pSBS[0][2]) ? (pSBS[0][2]) : ''
@@ -3242,27 +3246,27 @@ function generateReg() {
 
                     // dateOfIssue {dOI1-8}
                     let dOI = new Date(document.getElementById('dateOfIssue'+indexTab).value).toLocaleDateString().split('.')
-                    let dOI1 = (dOI[0][0]) ? (dOI[0][0]) : ''
-                    let dOI2 = (dOI[0][1]) ? (dOI[0][1]) : ''
-                    let dOI3 = (dOI[1][0]) ? (dOI[1][0]) : ''
-                    let dOI4 = (dOI[1][1]) ? (dOI[1][1]) : ''
-                    let dOI5 = (dOI[2][0]) ? (dOI[2][0]) : ''
-                    let dOI6 = (dOI[2][1]) ? (dOI[2][1]) : ''
-                    let dOI7 = (dOI[2][2]) ? (dOI[2][2]) : ''
-                    let dOI8 = (dOI[2][3]) ? (dOI[2][3]) : ''
+                    let dOI1 = (dOI) ? (dOI[0][0]) : ''
+                    let dOI2 = (dOI) ? (dOI[0][1]) : ''
+                    let dOI3 = (dOI) ? (dOI[1][0]) : ''
+                    let dOI4 = (dOI) ? (dOI[1][1]) : ''
+                    let dOI5 = (dOI) ? (dOI[2][0]) : ''
+                    let dOI6 = (dOI) ? (dOI[2][1]) : ''
+                    let dOI7 = (dOI) ? (dOI[2][2]) : ''
+                    let dOI8 = (dOI) ? (dOI[2][3]) : ''
 
 
                     // validUntil {vU1-8}
                     let vU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let vU1 = (vU[0][0]) ? (vU[0][0]) : ''
-                    let vU2 = (vU[0][1]) ? (vU[0][1]) : ''
-                    let vU3 = (vU[1][0]) ? (vU[1][0]) : ''
-                    let vU4 = (vU[1][1]) ? (vU[1][1]) : ''
-                    let vU5 = (vU[2][0]) ? (vU[2][0]) : ''
-                    let vU6 = (vU[2][1]) ? (vU[2][1]) : ''
-                    let vU7 = (vU[2][2]) ? (vU[2][2]) : ''
-                    let vU8 = (vU[2][3]) ? (vU[2][3]) : ''
+                    let vU1 = (vU) ? (vU[0][0]) : ''
+                    let vU2 = (vU) ? (vU[0][1]) : ''
+                    let vU3 = (vU) ? (vU[1][0]) : ''
+                    let vU4 = (vU) ? (vU[1][1]) : ''
+                    let vU5 = (vU) ? (vU[2][0]) : ''
+                    let vU6 = (vU) ? (vU[2][1]) : ''
+                    let vU7 = (vU) ? (vU[2][2]) : ''
+                    let vU8 = (vU) ? (vU[2][3]) : ''
 
 
                     // typeVisa
@@ -3331,26 +3335,26 @@ function generateReg() {
                     // dateOfIssueVisa {dOIV1-8}
                     let dOIV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let dOIV1 = (dOIV[0][0]) ? (dOIV[0][0]) : ''
-                    let dOIV2 = (dOIV[0][1]) ? (dOIV[0][1]) : ''
-                    let dOIV3 = (dOIV[1][0]) ? (dOIV[1][0]) : ''
-                    let dOIV4 = (dOIV[1][1]) ? (dOIV[1][1]) : ''
-                    let dOIV5 = (dOIV[2][0]) ? (dOIV[2][0]) : ''
-                    let dOIV6 = (dOIV[2][1]) ? (dOIV[2][1]) : ''
-                    let dOIV7 = (dOIV[2][2]) ? (dOIV[2][2]) : ''
-                    let dOIV8 = (dOIV[2][3]) ? (dOIV[2][3]) : ''
+                    let dOIV1 = (dOIV) ? (dOIV[0][0]) : ''
+                    let dOIV2 = (dOIV) ? (dOIV[0][1]) : ''
+                    let dOIV3 = (dOIV) ? (dOIV[1][0]) : ''
+                    let dOIV4 = (dOIV) ? (dOIV[1][1]) : ''
+                    let dOIV5 = (dOIV) ? (dOIV[2][0]) : ''
+                    let dOIV6 = (dOIV) ? (dOIV[2][1]) : ''
+                    let dOIV7 = (dOIV) ? (dOIV[2][2]) : ''
+                    let dOIV8 = (dOIV) ? (dOIV[2][3]) : ''
 
                     // validUntilVisa {vUV1-8}
                     let vUV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let vUV1 = (vUV[0][0]) ? (vUV[0][0]) : ''
-                    let vUV2 = (vUV[0][1]) ? (vUV[0][1]) : ''
-                    let vUV3 = (vUV[1][0]) ? (vUV[1][0]) : ''
-                    let vUV4 = (vUV[1][1]) ? (vUV[1][1]) : ''
-                    let vUV5 = (vUV[2][0]) ? (vUV[2][0]) : ''
-                    let vUV6 = (vUV[2][1]) ? (vUV[2][1]) : ''
-                    let vUV7 = (vUV[2][2]) ? (vUV[2][2]) : ''
-                    let vUV8 = (vUV[2][3]) ? (vUV[2][3]) : ''
+                    let vUV1 = (vUV) ? (vUV[0][0]) : ''
+                    let vUV2 = (vUV) ? (vUV[0][1]) : ''
+                    let vUV3 = (vUV) ? (vUV[1][0]) : ''
+                    let vUV4 = (vUV) ? (vUV[1][1]) : ''
+                    let vUV5 = (vUV) ? (vUV[2][0]) : ''
+                    let vUV6 = (vUV) ? (vUV[2][1]) : ''
+                    let vUV7 = (vUV) ? (vUV[2][2]) : ''
+                    let vUV8 = (vUV) ? (vUV[2][3]) : ''
 
                     // purpose
                     let purposeG = ""
@@ -3391,26 +3395,26 @@ function generateReg() {
                     // dateArrivalMigration {dAM1-8}
                     let dAM = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let dAM1 = (dAM[0][0]) ? (dAM[0][0]) : ''
-                    let dAM2 = (dAM[0][1]) ? (dAM[0][1]) : ''
-                    let dAM3 = (dAM[1][0]) ? (dAM[1][0]) : ''
-                    let dAM4 = (dAM[1][1]) ? (dAM[1][1]) : ''
-                    let dAM5 = (dAM[2][0]) ? (dAM[2][0]) : ''
-                    let dAM6 = (dAM[2][1]) ? (dAM[2][1]) : ''
-                    let dAM7 = (dAM[2][2]) ? (dAM[2][2]) : ''
-                    let dAM8 = (dAM[2][3]) ? (dAM[2][3]) : ''
+                    let dAM1 = (dAM) ? (dAM[0][0]) : ''
+                    let dAM2 = (dAM) ? (dAM[0][1]) : ''
+                    let dAM3 = (dAM) ? (dAM[1][0]) : ''
+                    let dAM4 = (dAM) ? (dAM[1][1]) : ''
+                    let dAM5 = (dAM) ? (dAM[2][0]) : ''
+                    let dAM6 = (dAM) ? (dAM[2][1]) : ''
+                    let dAM7 = (dAM) ? (dAM[2][2]) : ''
+                    let dAM8 = (dAM) ? (dAM[2][3]) : ''
 
                     // dateUntil {dU1-8}
                     let dU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let dU1 = (dU[0][0]) ? (dU[0][0]) : ''
-                    let dU2 = (dU[0][1]) ? (dU[0][1]) : ''
-                    let dU3 = (dU[1][0]) ? (dU[1][0]) : ''
-                    let dU4 = (dU[1][1]) ? (dU[1][1]) : ''
-                    let dU5 = (dU[2][0]) ? (dU[2][0]) : ''
-                    let dU6 = (dU[2][1]) ? (dU[2][1]) : ''
-                    let dU7 = (dU[2][2]) ? (dU[2][2]) : ''
-                    let dU8 = (dU[2][3]) ? (dU[2][3]) : ''
+                    let dU1 = (dU) ? (dU[0][0]) : ''
+                    let dU2 = (dU) ? (dU[0][1]) : ''
+                    let dU3 = (dU) ? (dU[1][0]) : ''
+                    let dU4 = (dU) ? (dU[1][1]) : ''
+                    let dU5 = (dU) ? (dU[2][0]) : ''
+                    let dU6 = (dU) ? (dU[2][1]) : ''
+                    let dU7 = (dU) ? (dU[2][2]) : ''
+                    let dU8 = (dU) ? (dU[2][3]) : ''
 
                     // seriesMigration {sM1-4}
                     let sM = document.getElementById('seriesMigration' + indexTab).value
@@ -5266,6 +5270,8 @@ function generateVisa() {
                             break
                     }
 
+                    let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+
 
                     doc.setData({
 
@@ -5279,7 +5285,7 @@ function generateVisa() {
                         idPassport: document.getElementById('idPassport' + indexTab).value,
                         dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
                         validUntil: validUntil,
-                        dateUntil: new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString(),
+                        dateUntil: dateUnt,
                         ovmByRegion: ovmByRegion,
                         registrationOn: registrationOn,
                         nStud: document.getElementById('nStud' + indexTab).value,
@@ -5661,14 +5667,14 @@ function generateRegVisa() {
 
                     // dateOfBirth {dOB1-8}
                     let dOB = new Date(document.getElementById('dateOfBirth'+indexTab).value).toLocaleDateString().split('.')
-                    let dOB1 = (dOB[0][0]) ? (dOB[0][0]) : ''
-                    let dOB2 = (dOB[0][1]) ? (dOB[0][1]) : ''
-                    let dOB3 = (dOB[1][0]) ? (dOB[1][0]) : ''
-                    let dOB4 = (dOB[1][1]) ? (dOB[1][1]) : ''
-                    let dOB5 = (dOB[2][0]) ? (dOB[2][0]) : ''
-                    let dOB6 = (dOB[2][1]) ? (dOB[2][1]) : ''
-                    let dOB7 = (dOB[2][2]) ? (dOB[2][2]) : ''
-                    let dOB8 = (dOB[2][3]) ? (dOB[2][3]) : ''
+                    let dOB1 = (dOB) ? (dOB[0][0]) : ''
+                    let dOB2 = (dOB) ? (dOB[0][1]) : ''
+                    let dOB3 = (dOB) ? (dOB[1][0]) : ''
+                    let dOB4 = (dOB) ? (dOB[1][1]) : ''
+                    let dOB5 = (dOB) ? (dOB[2][0]) : ''
+                    let dOB6 = (dOB) ? (dOB[2][1]) : ''
+                    let dOB7 = (dOB) ? (dOB[2][2]) : ''
+                    let dOB8 = (dOB) ? (dOB[2][3]) : ''
 
                     // gender
                     let genM = ''
@@ -5804,27 +5810,27 @@ function generateRegVisa() {
 
                     // dateOfIssue {dOI1-8}
                     let dOI = new Date(document.getElementById('dateOfIssue'+indexTab).value).toLocaleDateString().split('.')
-                    let dOI1 = (dOI[0][0]) ? (dOI[0][0]) : ''
-                    let dOI2 = (dOI[0][1]) ? (dOI[0][1]) : ''
-                    let dOI3 = (dOI[1][0]) ? (dOI[1][0]) : ''
-                    let dOI4 = (dOI[1][1]) ? (dOI[1][1]) : ''
-                    let dOI5 = (dOI[2][0]) ? (dOI[2][0]) : ''
-                    let dOI6 = (dOI[2][1]) ? (dOI[2][1]) : ''
-                    let dOI7 = (dOI[2][2]) ? (dOI[2][2]) : ''
-                    let dOI8 = (dOI[2][3]) ? (dOI[2][3]) : ''
+                    let dOI1 = (dOI) ? (dOI[0][0]) : ''
+                    let dOI2 = (dOI) ? (dOI[0][1]) : ''
+                    let dOI3 = (dOI) ? (dOI[1][0]) : ''
+                    let dOI4 = (dOI) ? (dOI[1][1]) : ''
+                    let dOI5 = (dOI) ? (dOI[2][0]) : ''
+                    let dOI6 = (dOI) ? (dOI[2][1]) : ''
+                    let dOI7 = (dOI) ? (dOI[2][2]) : ''
+                    let dOI8 = (dOI) ? (dOI[2][3]) : ''
 
 
                     // validUntil {vU1-8}
                     let vU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let vU1 = (vU[0][0]) ? (vU[0][0]) : ''
-                    let vU2 = (vU[0][1]) ? (vU[0][1]) : ''
-                    let vU3 = (vU[1][0]) ? (vU[1][0]) : ''
-                    let vU4 = (vU[1][1]) ? (vU[1][1]) : ''
-                    let vU5 = (vU[2][0]) ? (vU[2][0]) : ''
-                    let vU6 = (vU[2][1]) ? (vU[2][1]) : ''
-                    let vU7 = (vU[2][2]) ? (vU[2][2]) : ''
-                    let vU8 = (vU[2][3]) ? (vU[2][3]) : ''
+                    let vU1 = (vU) ? (vU[0][0]) : ''
+                    let vU2 = (vU) ? (vU[0][1]) : ''
+                    let vU3 = (vU) ? (vU[1][0]) : ''
+                    let vU4 = (vU) ? (vU[1][1]) : ''
+                    let vU5 = (vU) ? (vU[2][0]) : ''
+                    let vU6 = (vU) ? (vU[2][1]) : ''
+                    let vU7 = (vU) ? (vU[2][2]) : ''
+                    let vU8 = (vU) ? (vU[2][3]) : ''
 
 
                     // typeVisa
@@ -5893,26 +5899,26 @@ function generateRegVisa() {
                     // dateOfIssueVisa {dOIV1-8}
                     let dOIV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let dOIV1 = (dOIV[0][0]) ? (dOIV[0][0]) : ''
-                    let dOIV2 = (dOIV[0][1]) ? (dOIV[0][1]) : ''
-                    let dOIV3 = (dOIV[1][0]) ? (dOIV[1][0]) : ''
-                    let dOIV4 = (dOIV[1][1]) ? (dOIV[1][1]) : ''
-                    let dOIV5 = (dOIV[2][0]) ? (dOIV[2][0]) : ''
-                    let dOIV6 = (dOIV[2][1]) ? (dOIV[2][1]) : ''
-                    let dOIV7 = (dOIV[2][2]) ? (dOIV[2][2]) : ''
-                    let dOIV8 = (dOIV[2][3]) ? (dOIV[2][3]) : ''
+                    let dOIV1 = (dOIV) ? (dOIV[0][0]) : ''
+                    let dOIV2 = (dOIV) ? (dOIV[0][1]) : ''
+                    let dOIV3 = (dOIV) ? (dOIV[1][0]) : ''
+                    let dOIV4 = (dOIV) ? (dOIV[1][1]) : ''
+                    let dOIV5 = (dOIV) ? (dOIV[2][0]) : ''
+                    let dOIV6 = (dOIV) ? (dOIV[2][1]) : ''
+                    let dOIV7 = (dOIV) ? (dOIV[2][2]) : ''
+                    let dOIV8 = (dOIV) ? (dOIV[2][3]) : ''
 
                     // validUntilVisa {vUV1-8}
                     let vUV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let vUV1 = (vUV[0][0]) ? (vUV[0][0]) : ''
-                    let vUV2 = (vUV[0][1]) ? (vUV[0][1]) : ''
-                    let vUV3 = (vUV[1][0]) ? (vUV[1][0]) : ''
-                    let vUV4 = (vUV[1][1]) ? (vUV[1][1]) : ''
-                    let vUV5 = (vUV[2][0]) ? (vUV[2][0]) : ''
-                    let vUV6 = (vUV[2][1]) ? (vUV[2][1]) : ''
-                    let vUV7 = (vUV[2][2]) ? (vUV[2][2]) : ''
-                    let vUV8 = (vUV[2][3]) ? (vUV[2][3]) : ''
+                    let vUV1 = (vUV) ? (vUV[0][0]) : ''
+                    let vUV2 = (vUV) ? (vUV[0][1]) : ''
+                    let vUV3 = (vUV) ? (vUV[1][0]) : ''
+                    let vUV4 = (vUV) ? (vUV[1][1]) : ''
+                    let vUV5 = (vUV) ? (vUV[2][0]) : ''
+                    let vUV6 = (vUV) ? (vUV[2][1]) : ''
+                    let vUV7 = (vUV) ? (vUV[2][2]) : ''
+                    let vUV8 = (vUV) ? (vUV[2][3]) : ''
 
                     // purpose
                     let purposeG = ""
@@ -5953,26 +5959,26 @@ function generateRegVisa() {
                     // dateArrivalMigration {dAM1-8}
                     let dAM = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let dAM1 = (dAM[0][0]) ? (dAM[0][0]) : ''
-                    let dAM2 = (dAM[0][1]) ? (dAM[0][1]) : ''
-                    let dAM3 = (dAM[1][0]) ? (dAM[1][0]) : ''
-                    let dAM4 = (dAM[1][1]) ? (dAM[1][1]) : ''
-                    let dAM5 = (dAM[2][0]) ? (dAM[2][0]) : ''
-                    let dAM6 = (dAM[2][1]) ? (dAM[2][1]) : ''
-                    let dAM7 = (dAM[2][2]) ? (dAM[2][2]) : ''
-                    let dAM8 = (dAM[2][3]) ? (dAM[2][3]) : ''
+                    let dAM1 = (dAM) ? (dAM[0][0]) : ''
+                    let dAM2 = (dAM) ? (dAM[0][1]) : ''
+                    let dAM3 = (dAM) ? (dAM[1][0]) : ''
+                    let dAM4 = (dAM) ? (dAM[1][1]) : ''
+                    let dAM5 = (dAM) ? (dAM[2][0]) : ''
+                    let dAM6 = (dAM) ? (dAM[2][1]) : ''
+                    let dAM7 = (dAM) ? (dAM[2][2]) : ''
+                    let dAM8 = (dAM) ? (dAM[2][3]) : ''
 
                     // dateUntil {dU1-8}
                     let dU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString().split(".") : ''
-                    let dU1 = (dU[0][0]) ? (dU[0][0]) : ''
-                    let dU2 = (dU[0][1]) ? (dU[0][1]) : ''
-                    let dU3 = (dU[1][0]) ? (dU[1][0]) : ''
-                    let dU4 = (dU[1][1]) ? (dU[1][1]) : ''
-                    let dU5 = (dU[2][0]) ? (dU[2][0]) : ''
-                    let dU6 = (dU[2][1]) ? (dU[2][1]) : ''
-                    let dU7 = (dU[2][2]) ? (dU[2][2]) : ''
-                    let dU8 = (dU[2][3]) ? (dU[2][3]) : ''
+                    let dU1 = (dU) ? (dU[0][0]) : ''
+                    let dU2 = (dU) ? (dU[0][1]) : ''
+                    let dU3 = (dU) ? (dU[1][0]) : ''
+                    let dU4 = (dU) ? (dU[1][1]) : ''
+                    let dU5 = (dU) ? (dU[2][0]) : ''
+                    let dU6 = (dU) ? (dU[2][1]) : ''
+                    let dU7 = (dU) ? (dU[2][2]) : ''
+                    let dU8 = (dU) ? (dU[2][3]) : ''
 
                     // seriesMigration {sM1-4}
                     let sM = document.getElementById('seriesMigration' + indexTab).value
@@ -7310,6 +7316,8 @@ function generateRegVisa() {
                             break
                     }
 
+                    let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+
 
                     doc.setData({
 
@@ -7323,7 +7331,7 @@ function generateRegVisa() {
                         idPassport: document.getElementById('idPassport' + indexTab).value,
                         dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
                         validUntil: validUntil,
-                        dateUntil: new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString(),
+                        dateUntil: dateUnt,
                         ovmByRegion: ovmByRegion,
                         registrationOn: registrationOn,
                         nStud: document.getElementById('nStud' + indexTab).value,

@@ -98,9 +98,7 @@ function findInfo(id) {
 
 
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['СРОК ОБУЧЕНИЯ ДО'])
-                    dateUntil.value = dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
+
 
                     //purpose.value	=	totalInfo[i]['']
                     switch (totalInfo[i]['Гражданство (подданство)/ Citizenship']) {
@@ -142,23 +140,80 @@ function findInfo(id) {
 
 
 
+                    if (totalInfo[i]['Зачислен Приказом от']>20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Зачислен Приказом от'])
+                        orderFrom.value = dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
+                    else {orderFrom.value = new Date()}
+                    if (totalInfo[i]['СРОК ОБУЧЕНИЯ ДО']>20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['СРОК ОБУЧЕНИЯ ДО'])
+                        dateUntil.value = dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['СРОК ОБУЧЕНИЯ ДО'])
+                        orderUntil.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
+                    else {dateUntil.value = new Date()
+                        orderUntil.value = new Date()}
+                    if (totalInfo[i]['Срок действия (если есть) / Date of expiry']>20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия (если есть) / Date of expiry'])
+                        validUntil.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
+                    else {validUntil.value = new Date()}
+                    if (totalInfo[i]['Дата выдачи / Date of issue *']>20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Дата выдачи / Date of issue *'])
+                        dateOfIssueVisa.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
+                    else {dateOfIssueVisa.value = new Date()}
+                    if (totalInfo[i]['Срок действия / Date of expiry *']>20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия / Date of expiry *'])
+                        validUntilVisa.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия / Date of expiry *'])
+                        notificationUntil.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
+                    else {validUntilVisa.value = new Date()
+                        notificationUntil.value = new Date()}
+                    if (totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА С ...']>20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА С ...'])
+                        notificationFrom.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
+                    else {notificationFrom.value = new Date()}
+
+                    if (totalInfo[i]['Срок пребывания: С /Duration of stay: From'] > 20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок пребывания: С /Duration of stay: From'])
+                        dateArrivalMigration.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    } else {dateArrivalMigration.value = new Date()}
+
+
+
+
+
+
+
                     faculty.value	=	totalInfo[i]['Институт & Факультет  / Institute & Faculty ']
                     levelEducation.value	=	totalInfo[i]['УРОВЕНЬ ОБРАЗОВАНИЯ/ LEVEL OF EDUCATION']
                     course.value	=	totalInfo[i]['КУРС ОБУЧЕНИЯ/YEAR OF STUDYING']
-                    numOrder.value	=	totalInfo[i]['№ Приказа']
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Зачислен Приказом от'])
-                    orderFrom.value = dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['СРОК ОБУЧЕНИЯ ДО'])
-                    orderUntil.value	=	dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
+                    numOrder.value	=	totalInfo[i]['№ Приказа'] ? totalInfo[i]['№ Приказа'] : ''
 
 
 
-                    typeFunding.value	=	totalInfo[i]['Тип финансирования/Type of Funding (state funded / paid tuition)']
-                    numContract.value	=	totalInfo[i]['№ ДОГОВОРА ОБ ОКАЗАНИИ ПЛАТНЫХ ОБРАЗОВАТЕЛЬНЫХ УСЛУГ']
+
+
+
+
+                    typeFunding.value	=	totalInfo[i]['Тип финансирования/Type of Funding (state funded / paid tuition)'] ? totalInfo[i]['Тип финансирования/Type of Funding (state funded / paid tuition)'] : ''
+                    numContract.value	=	totalInfo[i]['№ ДОГОВОРА ОБ ОКАЗАНИИ ПЛАТНЫХ ОБРАЗОВАТЕЛЬНЫХ УСЛУГ'] ? totalInfo[i]['№ ДОГОВОРА ОБ ОКАЗАНИИ ПЛАТНЫХ ОБРАЗОВАТЕЛЬНЫХ УСЛУГ'] : ""
 
                     if (totalInfo[i]['Договор от']>20000) {
                         let dateStartCont = new Date(1900,0,-1)
@@ -166,21 +221,20 @@ function findInfo(id) {
                         dateEndCont.setDate(dateStartCont.getDate()+totalInfo[i]['Договор от'])
                         contractFrom.value = dateEndCont.toLocaleDateString()
                         dateEndCont = new Date(dateStartCont)
-
                     }
                     else {
-                        contractFrom.value	=	totalInfo[i]['Договор от']
+                        contractFrom.value	=	""
                     }
 
 
                     lastNameRu.value	=	totalInfo[i]['ФАМИЛИЯ (На русском языке) /SECOND NAME (in Russian)']
                     firstNameRu.value	=	totalInfo[i]['ИМЯ  (На русском языке) / FIRST NAME (in Russian)']
-                    patronymicRu.value	=	totalInfo[i]['ОТЧЕСТВО  (На русском языке) ']
-                    lastNameEn.value	=	totalInfo[i]['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)']
-                    firstNameEn.value	=	totalInfo[i]['ИМЯ  (На английском языке) / FIRST NAME (in English)']
+                    patronymicRu.value	=	totalInfo[i]['ОТЧЕСТВО  (На русском языке) '] ? totalInfo[i]['ОТЧЕСТВО  (На русском языке) '] : ""
+                    lastNameEn.value	=	totalInfo[i]['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)'] ? totalInfo[i]['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)'] : ''
+                    firstNameEn.value	=	totalInfo[i]['ИМЯ  (На английском языке) / FIRST NAME (in English)'] ? totalInfo[i]['ИМЯ  (На английском языке) / FIRST NAME (in English)'] : ''
 
                     dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Год рождения / Date of birth'])
-                    dateOfBirth.value	=	dateEnd.toISOString().split('T')[0]
+                    dateOfBirth.value	=	dateEnd.toISOString().slice(0,10)
                     dateEnd = new Date(dateStart)
 
                     gender.value	=	totalInfo[i]['Пол / Sex']
@@ -190,54 +244,42 @@ function findInfo(id) {
                     idPassport.value	=	totalInfo[i]['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *']
 
                     dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Дата выдачи / Date of issue'])
-                    dateOfIssue.value	=	dateEnd.toISOString().split('T')[0]
+                    dateOfIssue.value	=	dateEnd.toISOString().slice(0,10)
                     dateEnd = new Date(dateStart)
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия (если есть) / Date of expiry'])
-                    validUntil.value	=	dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
+
 
                     typeVisa.value	=	totalInfo[i]['ВИД И РЕКВИЗИТЫ ДОКУМЕНТА, ПОДТВЕРЖДАЮЩЕГО ПРАВО НА ПРЕБЫВАНИЕ (ПРОЖИВАНИЕ) В РОССИЙСКОЙ ФЕДЕРАЦИИ ']
-                    seriesVisa.value	=	totalInfo[i]['СЕРИЯ ВИЗЫ/VISA SERIES *']
-                    idVisa.value	=	totalInfo[i]['НОМЕР ВИЗЫ №/ VISA NUMBER № *']
+                    seriesVisa.value	=	totalInfo[i]['СЕРИЯ ВИЗЫ/VISA SERIES *'] ? totalInfo[i]['СЕРИЯ ВИЗЫ/VISA SERIES *'] : ''
+                    idVisa.value	=	totalInfo[i]['НОМЕР ВИЗЫ №/ VISA NUMBER № *'] ? totalInfo[i]['НОМЕР ВИЗЫ №/ VISA NUMBER № *'] : ''
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Дата выдачи / Date of issue *'])
-                    dateOfIssueVisa.value	=	dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия / Date of expiry *'])
-                    validUntilVisa.value	=	dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
 
-                    identifierVisa.value	=	totalInfo[i]['Идентификатор визы/ Visa ID №']
-                    numInvVisa.value	=	totalInfo[i]['№ приглашения']
-                    seriesMigration.value	=	totalInfo[i]['СЕРИЯ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD SERIES']
-                    idMigration.value	=	totalInfo[i]['№ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD NUMBER']
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок пребывания: С /Duration of stay: From'])
-                    dateArrivalMigration.value	=	dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
+
+                    identifierVisa.value	=	totalInfo[i]['Идентификатор визы/ Visa ID №'] ? totalInfo[i]['Идентификатор визы/ Visa ID №'] : ''
+                    numInvVisa.value	=	totalInfo[i]['№ приглашения'] ? totalInfo[i]['№ приглашения'] : ""
+                    seriesMigration.value	=	totalInfo[i]['СЕРИЯ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD SERIES'] ? totalInfo[i]['СЕРИЯ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD SERIES'] : ""
+                    idMigration.value	=	totalInfo[i]['№ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD NUMBER'] ? totalInfo[i]['№ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD NUMBER'] : ""
+
+
 
                     homeAddress.value	=	totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\r\n1)Cтрана/Country of origin\r\n2)Провинция (или область) / Province\r\n3)Город / City \r\n4)Улица / Street\r\n5)№ дома / building №\r\n6)№ Квартиры / Apt №"]
 
                     addressHostel.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)']
                     numRoom.value	=	totalInfo[i]['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *']
                     numRental.value	=	totalInfo[i]['№ Договора найма *']
-                    addressResidence.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:']
-                    infHost.value	=	totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)']
+                    addressResidence.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] ? totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] :  ""
+                    infHost.value	=	totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] ? totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] : ""
                     phone.value	=	totalInfo[i]['Номер телефона/Phone number ']
                     mail.value	=	totalInfo[i]['Ваш E-mail ']
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА С ...'])
-                    notificationFrom.value	=	dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
-
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия / Date of expiry *'])
-                    notificationUntil.value	=	dateEnd.toISOString().split('T')[0]
-                    dateEnd = new Date(dateStart)
 
 
-                    issuedBy.value	=	totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА (КЕМ ВЫДАН ДОКУМЕНТ)']
+
+
+
+                    issuedBy.value	=	totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА (КЕМ ВЫДАН ДОКУМЕНТ)'] ? totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА (КЕМ ВЫДАН ДОКУМЕНТ)'] : ""
 
 
 
