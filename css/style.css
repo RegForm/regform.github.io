@@ -523,6 +523,10 @@ input[type="date" i] {
 }
 
 
+/*скрыть комнату и номер*/
+.hid {
+    visibility: hidden;
+}
 
 
 

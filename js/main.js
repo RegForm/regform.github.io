@@ -165,7 +165,7 @@ window.generateVisaApplication = function generate() {
                     infHost1: infHost1,
                     infHost2: infHost2,
                     addressResidence: addressResidence,
-                    numRoom: numRoom,
+                    numRoom: '',
 
                     homeAddress: document.getElementById('homeAddress' + indexTab).value,
                     purposeS: purposeS,
@@ -360,13 +360,13 @@ window.generateVisaReference = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                        registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                        registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                        registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                         break
                 }
 
@@ -520,15 +520,15 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                 let registrationOn2 = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn1 = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                        registrationOn1 = 'Начальник УМС                                                    Круглов В.В.'
                         registrationOn2 = 'Начальник УМС                                                                          В. В. Круглов'
                         break
                     case "Морозова":
-                        registrationOn1 = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                        registrationOn1 = 'Заместитель начальника УМС                Морозова О.А.'
                         registrationOn2 = 'Заместитель начальника УМС                                                Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn1 = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                        registrationOn1 = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                         registrationOn2 = 'Начальник паспортно-визового отдела УМС                              Орлова С.В.'
                         break
                 }
@@ -545,7 +545,7 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                     ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
                 // order
-                let numOrder = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numOrder' + indexTab).value)
+                let numOrder = document.getElementById('numOrder' + indexTab).value
                     ? document.getElementById('numOrder' + indexTab).value : ''
                 let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
@@ -562,7 +562,7 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                         typeFunding = 'ДОГОВОР №'
                         break
                 }
-                let numContract = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numContract' + indexTab).value)
+                let numContract = document.getElementById('numContract' + indexTab).value
                     ? document.getElementById('numContract' + indexTab).value : ''
                 let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                     document.getElementById('contractFrom' + indexTab).value : ''
@@ -791,13 +791,13 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                        registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                        registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                        registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                         break
                 }
 
@@ -813,7 +813,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                     ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
                 // order
-                let numOrder = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numOrder' + indexTab).value)
+                let numOrder = document.getElementById('numOrder' + indexTab).value
                     ? document.getElementById('numOrder' + indexTab).value : ''
                 let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
@@ -890,7 +890,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                         typeFundingNap1 = "направление"
                         break
                 }
-                let numContract = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numContract' + indexTab).value)
+                let numContract = document.getElementById('numContract' + indexTab).value
                     ? document.getElementById('numContract' + indexTab).value : ''
                 let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                     document.getElementById('contractFrom' + indexTab).value : ''
@@ -1002,13 +1002,13 @@ window.generateInventoryVisa = function generate() {
     let registrationOn = ''
     switch (document.getElementById('registrationOn').value) {
         case "Круглов":
-            registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
             break
         case "Морозова":
-            registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
             break
         case "Орлова":
-            registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
             break
     }
 
@@ -1294,13 +1294,13 @@ window.generateRegSolicitaion = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                        registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                        registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                        registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                         break
                 }
 
@@ -1329,7 +1329,7 @@ window.generateRegSolicitaion = function generate() {
                     ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
                 // order
-                let numOrder = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numOrder' + indexTab).value)
+                let numOrder = document.getElementById('numOrder' + indexTab).value
                     ? document.getElementById('numOrder' + indexTab).value : ''
                 let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
@@ -1408,7 +1408,7 @@ window.generateRegSolicitaion = function generate() {
                         typeFundingNap1 = "направление"
                         break
                 }
-                let numContract = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numContract' + indexTab).value)
+                let numContract = document.getElementById('numContract' + indexTab).value
                     ? document.getElementById('numContract' + indexTab).value : ''
                 let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                     document.getElementById('contractFrom' + indexTab).value : ''
@@ -1454,7 +1454,7 @@ window.generateRegSolicitaion = function generate() {
 
 
                     migrationAddress: document.getElementById('migrationAddress').value,
-                    numRoom: numRoom,
+                    numRoom: '',
                     faculty: faculty,
                     numOrder: numOrder,
                     orderFrom: orderFrom,
@@ -1468,7 +1468,7 @@ window.generateRegSolicitaion = function generate() {
                     numContract: numContract,
                     contractFrom: contractFrom,
 
-                    numRental: numRental,
+                    numRental: '',
 
                 });
 
@@ -1524,13 +1524,13 @@ window.generateInventoryReg = function generate() {
     let registrationOn = ''
     switch (document.getElementById('registrationOn').value) {
         case "Круглов":
-            registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
             break
         case "Морозова":
-            registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
             break
         case "Орлова":
-            registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
             break
     }
 
@@ -2007,7 +2007,7 @@ window.generateRegNotif = function generate() {
                 let sV3 = ''
                 let sV4 = ''
                 if (sV) {
-                    switch (sP.length) {
+                    switch (sV.length) {
                         case 1:
                             sV4 = sV[0]
                             break
@@ -2139,7 +2139,7 @@ window.generateRegNotif = function generate() {
                 let sM3 = ''
                 let sM4 = ''
                 if (sM) {
-                    switch (sP.length) {
+                    switch (sM.length) {
                         case 1:
                             sM4 = sM[0]
                             break
@@ -2499,13 +2499,13 @@ window.generateInventoryRegVisa = function generate() {
     let registrationOn = ''
     switch (document.getElementById('registrationOn').value) {
         case "Круглов":
-            registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
             break
         case "Морозова":
-            registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
             break
         case "Орлова":
-            registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
             break
     }
 
@@ -2754,13 +2754,13 @@ window.generateFlatSolicitaion = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                        registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                        registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                        registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                         break
                 }
 
@@ -3293,7 +3293,7 @@ function generateReg() {
                     let sV3 = ''
                     let sV4 = ''
                     if (sV) {
-                        switch (sP.length) {
+                        switch (sV.length) {
                             case 1:
                                 sV4 = sV[0]
                                 break
@@ -3424,7 +3424,7 @@ function generateReg() {
                     let sM3 = ''
                     let sM4 = ''
                     if (sM) {
-                        switch (sP.length) {
+                        switch (sM.length) {
                             case 1:
                                 sM4 = sM[0]
                                 break
@@ -3931,13 +3931,13 @@ function generateReg() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                             break
                     }
 
@@ -3966,7 +3966,7 @@ function generateReg() {
                         ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
                     // order
-                    let numOrder = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numOrder' + indexTab).value)
+                    let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
                     let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
@@ -4045,7 +4045,7 @@ function generateReg() {
                             typeFundingNap1 = "направление"
                             break
                     }
-                    let numContract = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numContract' + indexTab).value)
+                    let numContract = document.getElementById('numContract' + indexTab).value
                         ? document.getElementById('numContract' + indexTab).value : ''
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
@@ -4091,7 +4091,7 @@ function generateReg() {
 
 
                         migrationAddress: document.getElementById('migrationAddress').value,
-                        numRoom: numRoom,
+                        numRoom: '',
                         faculty: faculty,
                         numOrder: numOrder,
                         orderFrom: orderFrom,
@@ -4105,7 +4105,7 @@ function generateReg() {
                         numContract: numContract,
                         contractFrom: contractFrom,
 
-                        numRental: numRental,
+                        numRental: '',
 
                     });
 
@@ -4170,13 +4170,13 @@ function generateReg() {
         let registrationOn = ''
         switch (document.getElementById('registrationOn').value) {
             case "Круглов":
-                registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                 break
             case "Морозова":
-                registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                 break
             case "Орлова":
-                registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                 break
         }
 
@@ -4482,7 +4482,7 @@ function generateVisa() {
                         infHost1: infHost1,
                         infHost2: infHost2,
                         addressResidence: addressResidence,
-                        numRoom: numRoom,
+                        numRoom: '',
 
                         homeAddress: document.getElementById('homeAddress' + indexTab).value,
                         purposeS: purposeS,
@@ -4633,15 +4633,15 @@ function generateVisa() {
                     let registrationOn2 = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn1 = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                            registrationOn1 = 'Начальник УМС                                                    Круглов В.В.'
                             registrationOn2 = 'Начальник УМС                                                                          В. В. Круглов'
                             break
                         case "Морозова":
-                            registrationOn1 = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                            registrationOn1 = 'Заместитель начальника УМС                Морозова О.А.'
                             registrationOn2 = 'Заместитель начальника УМС                                                Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn1 = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                            registrationOn1 = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                             registrationOn2 = 'Начальник паспортно-визового отдела УМС                              Орлова С.В.'
                             break
                     }
@@ -4658,7 +4658,7 @@ function generateVisa() {
                         ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
                     // order
-                    let numOrder = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numOrder' + indexTab).value)
+                    let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
                     let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
@@ -4675,7 +4675,7 @@ function generateVisa() {
                             typeFunding = 'ДОГОВОР №'
                             break
                     }
-                    let numContract = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numContract' + indexTab).value)
+                    let numContract = document.getElementById('numContract' + indexTab).value
                         ? document.getElementById('numContract' + indexTab).value : ''
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
@@ -4910,13 +4910,13 @@ function generateVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                             break
                     }
 
@@ -4932,7 +4932,7 @@ function generateVisa() {
                         ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
                     // order
-                    let numOrder = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numOrder' + indexTab).value)
+                    let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
                     let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
@@ -5009,7 +5009,7 @@ function generateVisa() {
                             typeFundingNap1 = "направление"
                             break
                     }
-                    let numContract = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numContract' + indexTab).value)
+                    let numContract = document.getElementById('numContract' + indexTab).value
                         ? document.getElementById('numContract' + indexTab).value : ''
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
@@ -5260,13 +5260,13 @@ function generateVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                             break
                     }
 
@@ -5345,13 +5345,13 @@ function generateVisa() {
         let registrationOn = ''
         switch (document.getElementById('registrationOn').value) {
             case "Круглов":
-                registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                 break
             case "Морозова":
-                registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                 break
             case "Орлова":
-                registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                 break
         }
 
@@ -5857,7 +5857,7 @@ function generateRegVisa() {
                     let sV3 = ''
                     let sV4 = ''
                     if (sV) {
-                        switch (sP.length) {
+                        switch (sV.length) {
                             case 1:
                                 sV4 = sV[0]
                                 break
@@ -5988,7 +5988,7 @@ function generateRegVisa() {
                     let sM3 = ''
                     let sM4 = ''
                     if (sM) {
-                        switch (sP.length) {
+                        switch (sM.length) {
                             case 1:
                                 sM4 = sM[0]
                                 break
@@ -6495,13 +6495,13 @@ function generateRegVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                             break
                     }
 
@@ -6530,7 +6530,7 @@ function generateRegVisa() {
                         ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
                     // order
-                    let numOrder = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numOrder' + indexTab).value)
+                    let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
                     let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
@@ -6609,7 +6609,7 @@ function generateRegVisa() {
                             typeFundingNap1 = "направление"
                             break
                     }
-                    let numContract = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numContract' + indexTab).value)
+                    let numContract = document.getElementById('numContract' + indexTab).value
                         ? document.getElementById('numContract' + indexTab).value : ''
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
@@ -6655,7 +6655,7 @@ function generateRegVisa() {
 
 
                         migrationAddress: document.getElementById('migrationAddress').value,
-                        numRoom: numRoom,
+                        numRoom: '',
                         faculty: faculty,
                         numOrder: numOrder,
                         orderFrom: orderFrom,
@@ -6669,7 +6669,7 @@ function generateRegVisa() {
                         numContract: numContract,
                         contractFrom: contractFrom,
 
-                        numRental: numRental,
+                        numRental: '',
 
                     });
 
@@ -6884,7 +6884,7 @@ function generateRegVisa() {
                         infHost1: infHost1,
                         infHost2: infHost2,
                         addressResidence: addressResidence,
-                        numRoom: numRoom,
+                        numRoom: '',
 
                         homeAddress: document.getElementById('homeAddress' + indexTab).value,
                         purposeS: purposeS,
@@ -7035,15 +7035,15 @@ function generateRegVisa() {
                     let registrationOn2 = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn1 = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                            registrationOn1 = 'Начальник УМС                                                    Круглов В.В.'
                             registrationOn2 = 'Начальник УМС                                                                          В. В. Круглов'
                             break
                         case "Морозова":
-                            registrationOn1 = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                            registrationOn1 = 'Заместитель начальника УМС                Морозова О.А.'
                             registrationOn2 = 'Заместитель начальника УМС                                                Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn1 = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                            registrationOn1 = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                             registrationOn2 = 'Начальник паспортно-визового отдела УМС                              Орлова С.В.'
                             break
                     }
@@ -7060,7 +7060,7 @@ function generateRegVisa() {
                         ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
                     // order
-                    let numOrder = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numOrder' + indexTab).value)
+                    let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
                     let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
@@ -7077,7 +7077,7 @@ function generateRegVisa() {
                             typeFunding = 'ДОГОВОР №'
                             break
                     }
-                    let numContract = /^[a-zA-Z0-9а-яёА-ЯЁ.]+$/.test(document.getElementById('numContract' + indexTab).value)
+                    let numContract = document.getElementById('numContract' + indexTab).value
                         ? document.getElementById('numContract' + indexTab).value : ''
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
@@ -7306,13 +7306,13 @@ function generateRegVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                             break
                     }
 
@@ -7392,13 +7392,13 @@ function generateRegVisa() {
         let registrationOn = ''
         switch (document.getElementById('registrationOn').value) {
             case "Круглов":
-                registrationOn = 'НАЧАЛЬНИК УМС                                                    КРУГЛОВ В.В.'
+                registrationOn = 'Начальник УМС                                                    Круглов В.В.'
                 break
             case "Морозова":
-                registrationOn = 'ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УМС                МОРОЗОВА О.А.'
+                registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
                 break
             case "Орлова":
-                registrationOn = 'НАЧАЛЬНИК ПАСПОРТНО-ВИЗОВОГО ОТДЕЛА УМС ОРЛОВА С.В.'
+                registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
                 break
         }
 

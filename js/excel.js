@@ -240,8 +240,8 @@ function findInfo(id) {
                     gender.value	=	totalInfo[i]['Пол / Sex']
                     // documentPerson.value	=	totalInfo[i]['ДОКУМЕНТ, УДОСТОВЕРЯЮЩИЙ ЛИЧНОСТЬ/IDENTITY DOCUMENT']
                     placeStateBirth.value	=	totalInfo[i]['Место рождения (Страна, город) / Place of birth (Country, city/town)']
-                    series.value	=	totalInfo[i]['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *']
-                    idPassport.value	=	totalInfo[i]['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *']
+                    series.value	=	totalInfo[i]['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *'] ? totalInfo[i]['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *'] : ""
+                    idPassport.value	=	totalInfo[i]['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *'] ? totalInfo[i]['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *'] : ""
 
                     dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Дата выдачи / Date of issue'])
                     dateOfIssue.value	=	dateEnd.toISOString().slice(0,10)
@@ -264,11 +264,12 @@ function findInfo(id) {
 
 
 
-                    homeAddress.value	=	totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\r\n1)Cтрана/Country of origin\r\n2)Провинция (или область) / Province\r\n3)Город / City \r\n4)Улица / Street\r\n5)№ дома / building №\r\n6)№ Квартиры / Apt №"]
+                    homeAddress.value	=	totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\r\n1)Cтрана/Country of origin\r\n2)Провинция (или область) / Province\r\n3)Город / City \r\n4)Улица / Street\r\n5)№ дома / building №\r\n6)№ Квартиры / Apt №"] ?
+                        totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\r\n1)Cтрана/Country of origin\r\n2)Провинция (или область) / Province\r\n3)Город / City \r\n4)Улица / Street\r\n5)№ дома / building №\r\n6)№ Квартиры / Apt №"] : ""
 
-                    addressHostel.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)']
-                    numRoom.value	=	totalInfo[i]['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *']
-                    numRental.value	=	totalInfo[i]['№ Договора найма *']
+                    addressHostel.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)'] ? totalInfo[i]['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)'] : ""
+                    numRoom.value	=	totalInfo[i]['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *'] ? totalInfo[i]['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *'] : ""
+                    numRental.value	=	totalInfo[i]['№ Договора найма *'] ? totalInfo[i]['№ Договора найма *'] : ""
                     addressResidence.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] ? totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] :  ""
                     infHost.value	=	totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] ? totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] : ""
                     phone.value	=	totalInfo[i]['Номер телефона/Phone number ']
