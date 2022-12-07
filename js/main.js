@@ -140,6 +140,8 @@ window.generateVisaApplication = function generate() {
 
                 }
 
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+
                 doc.setData({
 
 
@@ -177,7 +179,7 @@ window.generateVisaApplication = function generate() {
                     dateOfIssueVisa: dateOfIssueVisa,
                     validUntilVisa: validUntilVisa,
                     numInvVisa: numInvVisa,
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
 
                 });
 
@@ -195,7 +197,7 @@ window.generateVisaApplication = function generate() {
                     document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                    dateInOvm +
                     " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + ".docx"
                     , out, {base64: true}
                 );
@@ -372,6 +374,7 @@ window.generateVisaReference = function generate() {
 
 
                 let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
                 doc.setData({
 
@@ -389,7 +392,7 @@ window.generateVisaReference = function generate() {
                     ovmByRegion: ovmByRegion,
                     registrationOn: registrationOn,
                     nStud: document.getElementById('nStud' + indexTab).value,
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
                 });
 
 
@@ -406,7 +409,7 @@ window.generateVisaReference = function generate() {
                     document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                    dateInOvm +
                     " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + ".docx"
                     , out, {base64: true}
                 );
@@ -567,10 +570,11 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                 let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                     document.getElementById('contractFrom' + indexTab).value : ''
 
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
 
                 doc.setData({
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
                     nStud: document.getElementById('nStud' + indexTab).value,
                     grazd: document.getElementById('grazd' + indexTab).value,
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -621,7 +625,7 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                     document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                    dateInOvm +
                     " - " + "ОВМ ТРОПАРЕВО-НИКУЛИНО" + ".docx"
                     , out, {base64: true}
                 );
@@ -894,11 +898,12 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                     ? document.getElementById('numContract' + indexTab).value : ''
                 let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                     document.getElementById('contractFrom' + indexTab).value : ''
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
 
 
                 doc.setData({
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
                     nStud: document.getElementById('nStud' + indexTab).value,
                     grazd: document.getElementById('grazd' + indexTab).value,
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -960,7 +965,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                     document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                    dateInOvm +
                     " - " + "ОВМ ХАМОВНИКИ" + ".docx"
                     , out, {base64: true}
                 );
@@ -1081,8 +1086,9 @@ window.generateInventoryVisa = function generate() {
                 linebreaks: true,
             });
 
+            let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
             doc.render({
-                dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                dateInOvm: dateInOvm,
                 nStud1: nStud1,
                 nStud2: nStud2,
                 tir: tir,
@@ -1108,7 +1114,7 @@ window.generateInventoryVisa = function generate() {
                 nameFile = "ОПИСЬ (ВИЗА) - студент " +
                     document.getElementById('nStud1').value
                     +" - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                    dateInOvm
                     +" - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -1119,7 +1125,7 @@ window.generateInventoryVisa = function generate() {
                     +"-"+
                     document.getElementById('nStud'+(lastTab()-1)).value
                     +" - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                    dateInOvm
                     +" - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -1418,9 +1424,11 @@ window.generateRegSolicitaion = function generate() {
 
                 let numRental = document.getElementById('numRental' + indexTab).value != "-" ? document.getElementById('numRental' + indexTab).value : ''
 
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+
 
                 doc.setData({
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
                     nStud: document.getElementById('nStud' + indexTab).value,
                     grazd: document.getElementById('grazd' + indexTab).value,
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -1486,7 +1494,7 @@ window.generateRegSolicitaion = function generate() {
                     document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                    dateInOvm +
                     " - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -1573,13 +1581,15 @@ window.generateInventoryReg = function generate() {
         let dateUntil = document.getElementById('dateUntil' + indexTab).value != '-' ?
             new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
 
+        let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+
         //students
         students.push({
             nStud: document.getElementById('nStud' + indexTab).value,
             lastNameRu: document.getElementById('lastNameRu' + indexTab).value.toUpperCase(),
             firstNameRu: document.getElementById('firstNameRu'+indexTab).value.toUpperCase(),
             patronymicRu: document.getElementById('patronymicRu'+indexTab).value.toUpperCase(),
-            dateInOv: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+            dateInOv: dateInOvm,
             dateUntil: dateUntil,
             grazd: document.getElementById('grazd' + indexTab).value,
             phone: document.getElementById('phone' + indexTab).value,
@@ -1600,8 +1610,9 @@ window.generateInventoryReg = function generate() {
                 linebreaks: true,
             });
 
+            let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
             doc.render({
-                dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                dateInOvm: dateInOvm,
                 nStud1: nStud1,
                 nStud2: nStud2,
                 tir: tir,
@@ -1627,7 +1638,7 @@ window.generateInventoryReg = function generate() {
                 nameFile = "ОПИСЬ (РЕГИСТРАЦИЯ) - студент " +
                     document.getElementById('nStud1').value
                     +" - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                    dateInOvm
                     +" - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -1638,7 +1649,7 @@ window.generateInventoryReg = function generate() {
                     +"-"+
                     document.getElementById('nStud'+(lastTab()-1)).value
                     +" - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                    dateInOvm
                     +" - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -2398,6 +2409,8 @@ window.generateRegNotif = function generate() {
 
 
 
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+
 
 
                 doc.setData({
@@ -2454,7 +2467,7 @@ window.generateRegNotif = function generate() {
                     document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                    dateInOvm +
                     " - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -2558,8 +2571,9 @@ window.generateInventoryRegVisa = function generate() {
                 linebreaks: true,
             });
 
+            let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
             doc.render({
-                dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                dateInOvm: dateInOvm,
                 nStud1: nStud1,
                 nStud2: nStud2,
                 tir: tir,
@@ -2584,7 +2598,7 @@ window.generateInventoryRegVisa = function generate() {
                 nameFile = "ОПИСЬ (РЕГИСТРАЦИЯ + ВИЗА) - студент " +
                     document.getElementById('nStud1').value
                     +" - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                    dateInOvm
                     +" - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -2595,7 +2609,7 @@ window.generateInventoryRegVisa = function generate() {
                     +"-"+
                     document.getElementById('nStud'+(lastTab()-1)).value
                     +" - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                    dateInOvm
                     +" - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -2845,9 +2859,10 @@ window.generateFlatSolicitaion = function generate() {
                         break
                 }
 
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
                 doc.setData({
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
                     nStud: document.getElementById('nStud' + indexTab).value,
                     grazd: document.getElementById('grazd' + indexTab).value,
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -2895,7 +2910,7 @@ window.generateFlatSolicitaion = function generate() {
                     document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                     document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                    new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                    dateInOvm +
                     " - " +
                     document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                     + ".docx"
@@ -3682,6 +3697,7 @@ function generateReg() {
 
 
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
 
 
@@ -3740,7 +3756,7 @@ function generateReg() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + "/"+
@@ -3748,7 +3764,7 @@ function generateReg() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -4056,8 +4072,9 @@ function generateReg() {
                     let numRental = document.getElementById('numRental' + indexTab).value != "-" ? document.getElementById('numRental' + indexTab).value : ''
 
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
                     doc.setData({
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         grazd: document.getElementById('grazd' + indexTab).value,
                         lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -4123,7 +4140,7 @@ function generateReg() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + "/" +
@@ -4132,7 +4149,7 @@ function generateReg() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -4219,19 +4236,21 @@ function generateReg() {
             let dateUntil = document.getElementById('dateUntil' + indexTab).value != '-' ?
                 new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
 
+            let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
             //students
             students.push({
                 nStud: document.getElementById('nStud' + indexTab).value,
                 lastNameRu: document.getElementById('lastNameRu' + indexTab).value.toUpperCase(),
                 firstNameRu: document.getElementById('firstNameRu'+indexTab).value.toUpperCase(),
                 patronymicRu: document.getElementById('patronymicRu'+indexTab).value.toUpperCase(),
-                dateInOv: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                dateInOv: dateInOvm,
                 dateUntil: dateUntil,
                 grazd: document.getElementById('grazd' + indexTab).value,
                 phone: document.getElementById('phone' + indexTab).value,
                 mail: document.getElementById('mail' + indexTab).value,
             })
         }
+
 
 
         loadFile(
@@ -4246,8 +4265,9 @@ function generateReg() {
                     linebreaks: true,
                 });
 
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
                 doc.render({
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
                     nStud1: nStud1,
                     nStud2: nStud2,
                     tir: tir,
@@ -4266,7 +4286,7 @@ function generateReg() {
                     nameFile = "ОПИСЬ (РЕГИСТРАЦИЯ) - студент " +
                         document.getElementById('nStud1').value
                         +" - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                        dateInOvm
                         +" - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -4277,7 +4297,7 @@ function generateReg() {
                         +"-"+
                         document.getElementById('nStud'+(lastTab()-1)).value
                         +" - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                        dateInOvm
                         +" - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -4457,6 +4477,7 @@ function generateVisa() {
 
                     }
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
                     doc.setData({
 
 
@@ -4494,7 +4515,7 @@ function generateVisa() {
                         dateOfIssueVisa: dateOfIssueVisa,
                         validUntilVisa: validUntilVisa,
                         numInvVisa: numInvVisa,
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
 
                     });
 
@@ -4512,14 +4533,14 @@ function generateVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + "/" +
 
                         "ВИЗОВАЯ АНКЕТА - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + ".docx"
                         , out, {base64: true}
                     );
@@ -4682,8 +4703,9 @@ function generateVisa() {
 
 
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
                     doc.setData({
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         grazd: document.getElementById('grazd' + indexTab).value,
                         lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -4734,13 +4756,13 @@ function generateVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + "ОВМ ТРОПАРЕВО-НИКУЛИНО" + "/" +
                         "ХОДАТАЙСТВО (ВИЗА) - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + "ОВМ ТРОПАРЕВО-НИКУЛИНО" + ".docx"
                         , out, {base64: true}
                     );
@@ -5014,10 +5036,11 @@ function generateVisa() {
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
 
                     doc.setData({
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         grazd: document.getElementById('grazd' + indexTab).value,
                         lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -5079,13 +5102,13 @@ function generateVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + "ОВМ ХАМОВНИКИ" + "/" +
                         "ХОДАТАЙСТВО (ВИЗА) - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + "ОВМ ХАМОВНИКИ" + ".docx"
                         , out, {base64: true}
                     );
@@ -5272,6 +5295,7 @@ function generateVisa() {
 
                     let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
                     doc.setData({
 
@@ -5289,7 +5313,7 @@ function generateVisa() {
                         ovmByRegion: ovmByRegion,
                         registrationOn: registrationOn,
                         nStud: document.getElementById('nStud' + indexTab).value,
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
                     });
 
 
@@ -5306,14 +5330,14 @@ function generateVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + "/" +
 
                         "СПРАВКА - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + ".docx"
                         , out, {base64: true}
                     );
@@ -5424,8 +5448,9 @@ function generateVisa() {
                     linebreaks: true,
                 });
 
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
                 doc.render({
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
                     nStud1: nStud1,
                     nStud2: nStud2,
                     tir: tir,
@@ -5445,7 +5470,7 @@ function generateVisa() {
                     nameFile = "ОПИСЬ (ВИЗА) - студент " +
                         document.getElementById('nStud1').value
                         +" - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                        dateInOvm
                         +" - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -5456,7 +5481,7 @@ function generateVisa() {
                         +"-"+
                         document.getElementById('nStud'+(lastTab()-1)).value
                         +" - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                        dateInOvm
                         +" - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -6246,7 +6271,7 @@ function generateRegVisa() {
 
 
 
-
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
 
                     doc.setData({
@@ -6304,7 +6329,7 @@ function generateRegVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + "/"+
@@ -6312,7 +6337,7 @@ function generateRegVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -6619,9 +6644,10 @@ function generateRegVisa() {
 
                     let numRental = document.getElementById('numRental' + indexTab).value != "-" ? document.getElementById('numRental' + indexTab).value : ''
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
                     doc.setData({
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         grazd: document.getElementById('grazd' + indexTab).value,
                         lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -6687,7 +6713,7 @@ function generateRegVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + "/" +
@@ -6696,7 +6722,7 @@ function generateRegVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -6859,6 +6885,7 @@ function generateRegVisa() {
 
                     }
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
                     doc.setData({
 
 
@@ -6896,7 +6923,7 @@ function generateRegVisa() {
                         dateOfIssueVisa: dateOfIssueVisa,
                         validUntilVisa: validUntilVisa,
                         numInvVisa: numInvVisa,
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
 
                     });
 
@@ -6914,14 +6941,14 @@ function generateRegVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + "/" +
 
                         "ВИЗОВАЯ АНКЕТА - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + ".docx"
                         , out, {base64: true}
                     );
@@ -7082,10 +7109,11 @@ function generateRegVisa() {
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
 
                     doc.setData({
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         grazd: document.getElementById('grazd' + indexTab).value,
                         lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
@@ -7136,13 +7164,13 @@ function generateRegVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + "ОВМ ТРОПАРЕВО-НИКУЛИНО" + "/" +
                         "ХОДАТАЙСТВО (ВИЗА) - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + "ОВМ ТРОПАРЕВО-НИКУЛИНО" + ".docx"
                         , out, {base64: true}
                     );
@@ -7318,6 +7346,7 @@ function generateRegVisa() {
 
                     let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
 
+                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
                     doc.setData({
 
@@ -7335,7 +7364,7 @@ function generateRegVisa() {
                         ovmByRegion: ovmByRegion,
                         registrationOn: registrationOn,
                         nStud: document.getElementById('nStud' + indexTab).value,
-                        dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                        dateInOvm: dateInOvm,
                     });
 
 
@@ -7352,14 +7381,14 @@ function generateRegVisa() {
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + "/" +
 
                         "СПРАВКА - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
                         document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
                         document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString() +
+                        dateInOvm +
                         " - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + ".docx"
                         , out, {base64: true}
                     );
@@ -7451,8 +7480,9 @@ function generateRegVisa() {
                     linebreaks: true,
                 });
 
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
                 doc.render({
-                    dateInOvm: new Date(document.getElementById('dateInOvm').value).toLocaleDateString(),
+                    dateInOvm: dateInOvm,
                     nStud1: nStud1,
                     nStud2: nStud2,
                     tir: tir,
@@ -7470,7 +7500,7 @@ function generateRegVisa() {
                     nameFile = "ОПИСЬ (РЕГИСТРАЦИЯ + ВИЗА) - студент " +
                         document.getElementById('nStud1').value
                         +" - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                        dateInOvm
                         +" - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
@@ -7481,7 +7511,7 @@ function generateRegVisa() {
                         +"-"+
                         document.getElementById('nStud'+(lastTab()-1)).value
                         +" - " +
-                        new Date(document.getElementById('dateInOvm').value).toLocaleDateString()
+                        dateInOvm
                         +" - " +
                         document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
                         + ".docx"
