@@ -4328,8 +4328,8 @@ function generateReg() {
 
 
 
-    setTimeout(generateRegNotifTotal, 30)
-    setTimeout(generateRegSolicitaionTotal, 30)
+    setTimeout(generateRegNotifTotal, 60)
+    setTimeout(generateRegSolicitaionTotal, 60)
     setTimeout(generateInventoryRegTotal, 300)
 }
 
@@ -5513,9 +5513,9 @@ function generateVisa() {
 
 
 
-    setTimeout(generateVisaApplicationTotal, 30)
-    setTimeout(generateVisaSolicTotal, 30)
-    setTimeout(generateVisaReferenceTotal, 30)
+    setTimeout(generateVisaApplicationTotal, 60)
+    setTimeout(generateVisaSolicTotal, 60)
+    setTimeout(generateVisaReferenceTotal, 60)
     setTimeout(generateInventoryVisaTotal, 300)
 
 }
@@ -7544,13 +7544,14 @@ function generateRegVisa() {
 
 
 
-    setTimeout(generateRegNotifTot, 30)
-    setTimeout(generateRegSolicitaionTot, 30)
-    setTimeout(generateVisaApplicationTot, 30)
-    setTimeout(generateVisaSolicitaionTroparevoTot, 30)
-    setTimeout(generateVisaReferenceTot, 30)
+    setTimeout(generateRegNotifTot, 60)
+    setTimeout(generateRegSolicitaionTot, 60)
+    setTimeout(generateVisaApplicationTot, 60)
+    setTimeout(generateVisaSolicitaionTroparevoTot, 60)
+    setTimeout(generateVisaReferenceTot, 60)
     setTimeout(generateInventoryRegTot, 300)
 }
+
 
 
 
