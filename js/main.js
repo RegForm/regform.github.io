@@ -362,13 +362,13 @@ window.generateVisaReference = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                        registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                        registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                        registrationOn = 'Начальник ПВО УМС                                                                        Орлова С.В.'
                         break
                 }
 
@@ -523,16 +523,16 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                 let registrationOn2 = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn1 = 'Начальник УМС                                                    Круглов В.В.'
-                        registrationOn2 = 'Начальник УМС                                                                          В. В. Круглов'
+                        registrationOn1 = 'Начальник УМС                                                                                  Круглов В.В.'
+                        registrationOn2 = 'Начальник УМС                                                                         Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn1 = 'Заместитель начальника УМС                Морозова О.А.'
-                        registrationOn2 = 'Заместитель начальника УМС                                                Морозова О.А.'
+                        registrationOn1 = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                        registrationOn2 = 'Заместитель начальника УМС                                               Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn1 = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
-                        registrationOn2 = 'Начальник паспортно-визового отдела УМС                              Орлова С.В.'
+                        registrationOn1 = "Начальник ПВО УМС                                                                        Орлова С.В."
+                        registrationOn2 = 'Начальник ПВО УМС                                                                   Орлова С.В.'
                         break
                 }
 
@@ -795,13 +795,13 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                        registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                        registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                        registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                         break
                 }
 
@@ -1007,13 +1007,13 @@ window.generateInventoryVisa = function generate() {
     let registrationOn = ''
     switch (document.getElementById('registrationOn').value) {
         case "Круглов":
-            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
             break
         case "Морозова":
-            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
             break
         case "Орлова":
-            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
             break
     }
 
@@ -1300,13 +1300,13 @@ window.generateRegSolicitaion = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                        registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                        registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                        registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                         break
                 }
 
@@ -1532,13 +1532,13 @@ window.generateInventoryReg = function generate() {
     let registrationOn = ''
     switch (document.getElementById('registrationOn').value) {
         case "Круглов":
-            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
             break
         case "Морозова":
-            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
             break
         case "Орлова":
-            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
             break
     }
 
@@ -2512,13 +2512,13 @@ window.generateInventoryRegVisa = function generate() {
     let registrationOn = ''
     switch (document.getElementById('registrationOn').value) {
         case "Круглов":
-            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
             break
         case "Морозова":
-            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
             break
         case "Орлова":
-            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
             break
     }
 
@@ -2768,13 +2768,13 @@ window.generateFlatSolicitaion = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                        registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                         break
                     case "Морозова":
-                        registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                        registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                         break
                     case "Орлова":
-                        registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                        registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                         break
                 }
 
@@ -3947,13 +3947,13 @@ function generateReg() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                             break
                     }
 
@@ -4187,13 +4187,13 @@ function generateReg() {
         let registrationOn = ''
         switch (document.getElementById('registrationOn').value) {
             case "Круглов":
-                registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                 break
             case "Морозова":
-                registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                 break
             case "Орлова":
-                registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                 break
         }
 
@@ -4654,16 +4654,16 @@ function generateVisa() {
                     let registrationOn2 = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn1 = 'Начальник УМС                                                    Круглов В.В.'
-                            registrationOn2 = 'Начальник УМС                                                                          В. В. Круглов'
+                            registrationOn1 = 'Начальник УМС                                                                                  Круглов В.В.'
+                            registrationOn2 = 'Начальник УМС                                                                         Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn1 = 'Заместитель начальника УМС                Морозова О.А.'
-                            registrationOn2 = 'Заместитель начальника УМС                                                Морозова О.А.'
+                            registrationOn1 = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                            registrationOn2 = 'Заместитель начальника УМС                                               Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn1 = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
-                            registrationOn2 = 'Начальник паспортно-визового отдела УМС                              Орлова С.В.'
+                            registrationOn1 = "Начальник ПВО УМС                                                                        Орлова С.В."
+                            registrationOn2 = 'Начальник ПВО УМС                                                                   Орлова С.В.'
                             break
                     }
 
@@ -4932,13 +4932,13 @@ function generateVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                             break
                     }
 
@@ -5283,13 +5283,13 @@ function generateVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                             break
                     }
 
@@ -5369,13 +5369,13 @@ function generateVisa() {
         let registrationOn = ''
         switch (document.getElementById('registrationOn').value) {
             case "Круглов":
-                registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                 break
             case "Морозова":
-                registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                 break
             case "Орлова":
-                registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                 break
         }
 
@@ -6520,13 +6520,13 @@ function generateRegVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                             break
                     }
 
@@ -7062,16 +7062,16 @@ function generateRegVisa() {
                     let registrationOn2 = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn1 = 'Начальник УМС                                                    Круглов В.В.'
-                            registrationOn2 = 'Начальник УМС                                                                          В. В. Круглов'
+                            registrationOn1 = 'Начальник УМС                                                                                  Круглов В.В.'
+                            registrationOn2 = 'Начальник УМС                                                                         Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn1 = 'Заместитель начальника УМС                Морозова О.А.'
-                            registrationOn2 = 'Заместитель начальника УМС                                                Морозова О.А.'
+                            registrationOn1 = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                            registrationOn2 = 'Заместитель начальника УМС                                               Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn1 = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
-                            registrationOn2 = 'Начальник паспортно-визового отдела УМС                              Орлова С.В.'
+                            registrationOn1 = "Начальник ПВО УМС                                                                        Орлова С.В."
+                            registrationOn2 = 'Начальник ПВО УМС                                                                   Орлова С.В.'
                             break
                     }
 
@@ -7334,13 +7334,13 @@ function generateRegVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                             break
                         case "Морозова":
-                            registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             break
                         case "Орлова":
-                            registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                             break
                     }
 
@@ -7421,13 +7421,13 @@ function generateRegVisa() {
         let registrationOn = ''
         switch (document.getElementById('registrationOn').value) {
             case "Круглов":
-                registrationOn = 'Начальник УМС                                                    Круглов В.В.'
+                registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
                 break
             case "Морозова":
-                registrationOn = 'Заместитель начальника УМС                Морозова О.А.'
+                registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                 break
             case "Орлова":
-                registrationOn = 'Начальник паспортно-визового отдела УМС Орлова С.В.'
+                registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
                 break
         }
 
