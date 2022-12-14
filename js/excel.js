@@ -194,8 +194,20 @@ function findInfo(id) {
                     } else {dateArrivalMigration.value = new Date()}
 
 
+                    if (totalInfo[i]['Дата выдачи / Date of issue'] > 20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Дата выдачи / Date of issue'])
+                        dateOfIssue.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
 
+                    else {dateOfIssue.value = new Date()}
 
+                    if (totalInfo[i]['Год рождения / Date of birth']>20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Год рождения / Date of birth'])
+                        dateOfBirth.value	=	dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
+                    else {dateOfBirth.value = new Date()}
 
 
 
@@ -227,25 +239,22 @@ function findInfo(id) {
                     }
 
 
-                    lastNameRu.value	=	totalInfo[i]['ФАМИЛИЯ (На русском языке) /SECOND NAME (in Russian)']
-                    firstNameRu.value	=	totalInfo[i]['ИМЯ  (На русском языке) / FIRST NAME (in Russian)']
+                    lastNameRu.value	=	totalInfo[i]['ФАМИЛИЯ (На русском языке) /SECOND NAME (in Russian)'] ? totalInfo[i]['ФАМИЛИЯ (На русском языке) /SECOND NAME (in Russian)'] : ""
+                    firstNameRu.value	=	totalInfo[i]['ИМЯ  (На русском языке) / FIRST NAME (in Russian)'] ? totalInfo[i]['ИМЯ  (На русском языке) / FIRST NAME (in Russian)'] : ""
                     patronymicRu.value	=	totalInfo[i]['ОТЧЕСТВО  (На русском языке) '] ? totalInfo[i]['ОТЧЕСТВО  (На русском языке) '] : ""
                     lastNameEn.value	=	totalInfo[i]['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)'] ? totalInfo[i]['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)'] : ''
                     firstNameEn.value	=	totalInfo[i]['ИМЯ  (На английском языке) / FIRST NAME (in English)'] ? totalInfo[i]['ИМЯ  (На английском языке) / FIRST NAME (in English)'] : ''
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Год рождения / Date of birth'])
-                    dateOfBirth.value	=	dateEnd.toISOString().slice(0,10)
-                    dateEnd = new Date(dateStart)
+
 
                     gender.value	=	totalInfo[i]['Пол / Sex']
                     // documentPerson.value	=	totalInfo[i]['ДОКУМЕНТ, УДОСТОВЕРЯЮЩИЙ ЛИЧНОСТЬ/IDENTITY DOCUMENT']
-                    placeStateBirth.value	=	totalInfo[i]['Место рождения (Страна, город) / Place of birth (Country, city/town)']
+                    placeStateBirth.value	=	totalInfo[i]['Место рождения (Страна, город) / Place of birth (Country, city/town)'] ? totalInfo[i]['Место рождения (Страна, город) / Place of birth (Country, city/town)'] : ""
                     series.value	=	totalInfo[i]['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *'] ? totalInfo[i]['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *'] : ""
                     idPassport.value	=	totalInfo[i]['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *'] ? totalInfo[i]['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *'] : ""
 
-                    dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Дата выдачи / Date of issue'])
-                    dateOfIssue.value	=	dateEnd.toISOString().slice(0,10)
-                    dateEnd = new Date(dateStart)
+
+
 
 
 
@@ -272,8 +281,8 @@ function findInfo(id) {
                     numRental.value	=	totalInfo[i]['№ Договора найма *'] ? totalInfo[i]['№ Договора найма *'] : ""
                     addressResidence.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] ? totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] :  ""
                     infHost.value	=	totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] ? totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] : ""
-                    phone.value	=	totalInfo[i]['Номер телефона/Phone number ']
-                    mail.value	=	totalInfo[i]['Ваш E-mail ']
+                    phone.value	=	totalInfo[i]['Номер телефона/Phone number '] ? totalInfo[i]['Номер телефона/Phone number '] : ""
+                    mail.value	=	totalInfo[i]['Ваш E-mail '] ? totalInfo[i]['Ваш E-mail '] : ""
 
 
 
