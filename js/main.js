@@ -95,9 +95,9 @@ window.generateVisaApplication = function generate() {
                     ? document.getElementById('seriesVisa' + indexTab).value : ''
                 let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                     ? document.getElementById('idVisa' + indexTab).value : ''
-                let identifierVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('identifierVisa' + indexTab).value)
+                let identifierVisa = document.getElementById('identifierVisa' + indexTab).value
                     ? document.getElementById('identifierVisa' + indexTab).value : ''
-                let numInvVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('numInvVisa' + indexTab).value)
+                let numInvVisa = document.getElementById('numInvVisa' + indexTab).value
                     ? document.getElementById('numInvVisa' + indexTab).value : ''
 
                 let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
@@ -4432,9 +4432,9 @@ function generateVisa() {
                         ? document.getElementById('seriesVisa' + indexTab).value : ''
                     let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                         ? document.getElementById('idVisa' + indexTab).value : ''
-                    let identifierVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('identifierVisa' + indexTab).value)
+                    let identifierVisa = document.getElementById('identifierVisa' + indexTab).value
                         ? document.getElementById('identifierVisa' + indexTab).value : ''
-                    let numInvVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('numInvVisa' + indexTab).value)
+                    let numInvVisa = document.getElementById('numInvVisa' + indexTab).value
                         ? document.getElementById('numInvVisa' + indexTab).value : ''
 
                     let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
@@ -6840,9 +6840,9 @@ function generateRegVisa() {
                         ? document.getElementById('seriesVisa' + indexTab).value : ''
                     let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                         ? document.getElementById('idVisa' + indexTab).value : ''
-                    let identifierVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('identifierVisa' + indexTab).value)
+                    let identifierVisa = document.getElementById('identifierVisa' + indexTab).value
                         ? document.getElementById('identifierVisa' + indexTab).value : ''
-                    let numInvVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('numInvVisa' + indexTab).value)
+                    let numInvVisa = document.getElementById('numInvVisa' + indexTab).value
                         ? document.getElementById('numInvVisa' + indexTab).value : ''
 
                     let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
