@@ -146,17 +146,26 @@ function findInfo(id) {
                         dateEnd = new Date(dateStart)
                     }
                     else {orderFrom.value = new Date()}
-                    if (totalInfo[i]['СРОК ОБУЧЕНИЯ ДО']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['СРОК ОБУЧЕНИЯ ДО'])
-                        dateUntil.value = dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
 
+                    if (totalInfo[i]['СРОК ОБУЧЕНИЯ ДО']>20000) {
                         dateEnd.setDate(dateStart.getDate()+totalInfo[i]['СРОК ОБУЧЕНИЯ ДО'])
                         orderUntil.value	=	dateEnd.toISOString().slice(0,10)
                         dateEnd = new Date(dateStart)
                     }
-                    else {dateUntil.value = new Date()
+                    else {
                         orderUntil.value = new Date()}
+
+                    /* new */
+                    if (totalInfo[i]['ПО']>20000) {
+                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['ПО'])
+                        dateUntil.value = dateEnd.toISOString().slice(0,10)
+                        dateEnd = new Date(dateStart)
+                    }
+                    else {
+                        dateUntil.value = new Date()
+                    }
+
+                    /* !new */
                     if (totalInfo[i]['Срок действия (если есть) / Date of expiry']>20000) {
                         dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия (если есть) / Date of expiry'])
                         validUntil.value	=	dateEnd.toISOString().slice(0,10)

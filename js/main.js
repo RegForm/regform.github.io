@@ -572,8 +572,16 @@ window.generateVisaSolicitaionTroparevo = function generate() {
 
                 let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
+                let validUntilVisaAQ = ''
+                if (document.getElementById('validUntilVisa' + indexTab).value) {
+                    validUntilVisaAQ = new Date(document.getElementById('validUntilVisa' + indexTab).value)
+                    validUntilVisaAQ.setDate(validUntilVisaAQ.getDate()+1)
+                    validUntilVisaAQ = validUntilVisaAQ.toLocaleDateString()
+                }
 
                 doc.setData({
+                    validUntilVisaAQ: validUntilVisaAQ,
+
                     dateInOvm: dateInOvm,
                     nStud: document.getElementById('nStud' + indexTab).value,
                     grazd: document.getElementById('grazd' + indexTab).value,
@@ -4703,8 +4711,18 @@ function generateVisa() {
 
 
 
+
                     let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+
+                    let validUntilVisaAQ = ''
+                    if (document.getElementById('validUntilVisa' + indexTab).value) {
+                        validUntilVisaAQ = new Date(document.getElementById('validUntilVisa' + indexTab).value)
+                        validUntilVisaAQ.setDate(validUntilVisaAQ.getDate()+1)
+                        validUntilVisaAQ = validUntilVisaAQ.toLocaleDateString()
+                    }
+
                     doc.setData({
+                        validUntilVisaAQ: validUntilVisaAQ,
                         dateInOvm: dateInOvm,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         grazd: document.getElementById('grazd' + indexTab).value,
@@ -7112,7 +7130,15 @@ function generateRegVisa() {
                     let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
 
 
+                    let validUntilVisaAQ = ''
+                    if (document.getElementById('validUntilVisa' + indexTab).value) {
+                        validUntilVisaAQ = new Date(document.getElementById('validUntilVisa' + indexTab).value)
+                        validUntilVisaAQ.setDate(validUntilVisaAQ.getDate()+1)
+                        validUntilVisaAQ = validUntilVisaAQ.toLocaleDateString()
+                    }
+
                     doc.setData({
+                        validUntilVisaAQ: validUntilVisaAQ,
                         dateInOvm: dateInOvm,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         grazd: document.getElementById('grazd' + indexTab).value,
