@@ -1308,7 +1308,7 @@ window.generateRegSolicitaion = function generate() {
                 let registrationOn = ''
                 switch (document.getElementById('registrationOn').value) {
                     case "Круглов":
-                        registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
+                        registrationOn = 'Начальник УМС                                                                               Круглов В.В.'
                         break
                     case "Морозова":
                         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
@@ -3955,7 +3955,7 @@ function generateReg() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
+                            registrationOn = 'Начальник УМС                                                                               Круглов В.В.'
                             break
                         case "Морозова":
                             registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
@@ -6538,7 +6538,7 @@ function generateRegVisa() {
                     let registrationOn = ''
                     switch (document.getElementById('registrationOn').value) {
                         case "Круглов":
-                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
+                            registrationOn = 'Начальник УМС                                                                               Круглов В.В.'
                             break
                         case "Морозова":
                             registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
