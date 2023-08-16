@@ -282,14 +282,14 @@ function findInfo(id) {
 
 
 
-                    homeAddress.value	=	totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\r\n1)Cтрана/Country of origin\r\n2)Провинция (или область) / Province\r\n3)Город / City \r\n4)Улица / Street\r\n5)№ дома / building №\r\n6)№ Квартиры / Apt №"] ?
-                        totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\r\n1)Cтрана/Country of origin\r\n2)Провинция (или область) / Province\r\n3)Город / City \r\n4)Улица / Street\r\n5)№ дома / building №\r\n6)№ Квартиры / Apt №"] : ""
-
+                    homeAddress.value	=	totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\n1)Cтрана/Country of origin\n2)Провинция (или область) / Province\n3)Город / City \n4)Улица / Street\n5)№ дома / building №\n6)№ Квартиры / Apt №"] ?
+                        totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\n1)Cтрана/Country of origin\n2)Провинция (или область) / Province\n3)Город / City \n4)Улица / Street\n5)№ дома / building №\n6)№ Квартиры / Apt №"] : ""
+                    
                     addressHostel.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)'] ? totalInfo[i]['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)'] : ""
                     numRoom.value	=	totalInfo[i]['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *'] ? totalInfo[i]['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *'] : ""
                     numRental.value	=	totalInfo[i]['№ Договора найма *'] ? totalInfo[i]['№ Договора найма *'] : ""
                     addressResidence.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] ? totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] :  ""
-                    infHost.value	=	totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] ? totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] : ""
+                    infHost.value	=	totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЗАПОЛНИТЕ ЭТО ПОЛЕ ТОЛЬКО ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] ? totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЗАПОЛНИТЕ ЭТО ПОЛЕ ТОЛЬКО ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] : ""
                     phone.value	=	totalInfo[i]['Номер телефона/Phone number '] ? totalInfo[i]['Номер телефона/Phone number '] : ""
                     mail.value	=	totalInfo[i]['Ваш E-mail '] ? totalInfo[i]['Ваш E-mail '] : ""
 
