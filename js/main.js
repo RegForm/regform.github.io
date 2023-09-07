@@ -1347,8 +1347,22 @@ window.generateRegSolicitaion = function generate() {
                     ? document.getElementById('numOrder' + indexTab).value : ''
                 let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
+
+
+                //07.09
                 let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                switch (document.getElementById('ovmByRegion').value) {
+                    case "Алексеевский":
+                        orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
+                        ? new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear() : ''
+                        break
+                    case "Войковский":
+                        orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
+                        ? new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear() : ''
+                        break
+                }
+                
 
                 // faculty
                 let faculty = ''
@@ -3994,8 +4008,20 @@ function generateReg() {
                         ? document.getElementById('numOrder' + indexTab).value : ''
                     let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
+                    
+                    // 07.09
                     let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                    switch (document.getElementById('ovmByRegion').value) {
+                        case "Алексеевский":
+                            orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
+                            ? new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear() : ''
+                            break
+                        case "Войковский":
+                            orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
+                            ? new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear() : ''
+                            break
+                    }
 
                     // faculty
                     let faculty = ''
@@ -6577,8 +6603,20 @@ function generateRegVisa() {
                         ? document.getElementById('numOrder' + indexTab).value : ''
                     let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
+                    
+                    // 07.09
                     let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                    switch (document.getElementById('ovmByRegion').value) {
+                        case "Алексеевский":
+                            orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
+                            ? new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear() : ''
+                            break
+                        case "Войковский":
+                            orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
+                            ? new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear() : ''
+                            break
+                    }
 
                     // faculty
                     let faculty = ''
