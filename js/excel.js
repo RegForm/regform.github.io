@@ -81,13 +81,20 @@ function findInfo(id) {
             let data = event.target.result;
             let workbook = XLSX.read(data,{type:"binary"});
 
-            let sheet = Object.keys(workbook.Sheets)[0]
+            let indSheet = Object.keys(workbook.Sheets).indexOf('Ответы на форму (1)') // ПОИСК ИНДЕКСА ЛИСТА ПО НАЗВАНИЮ
+            //console.log(indSheet)
+            let sheet = Object.keys(workbook.Sheets)[indSheet]
+            
+
+            
+            
             let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
+            //console.log(rowObject)
             totalInfo = JSON.stringify(rowObject, undefined, 1)
 
             totalInfo = JSON.parse(totalInfo)
 
-            // console.log(totalInfo)
+            //console.log(totalInfo)
             for (let i = 0; i<totalInfo.length; i++) {
                 if (totalInfo[i]['Порядковый номер'] == nStud.value) {
 
