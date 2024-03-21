@@ -2699,6 +2699,8 @@ window.generateFlatSolicitaion = function generate() {
                 let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
 
+
+
                 // purpose
                 let purpose = ''
                 let purposeS = ''
@@ -2825,6 +2827,10 @@ window.generateFlatSolicitaion = function generate() {
                     ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
 
+                if (dateUntil=='') {
+                    dateUntil = validUntilVisa
+                }
+                
                 // faculty
                 let faculty = ''
                 switch (document.getElementById('faculty' + indexTab).value) {
