@@ -2967,7 +2967,190 @@ window.generateFlatSolicitaion = function generate() {
 };
 
 
+// new
+//уведомление о завершении
+window.generateComplNotice = function generate() {
+    path = ('../Templates/Уведомление о завершении.docx')
 
+    var zipDocs = new PizZip();
+    loadFile(
+        path,
+        function (error, content) {
+            if (error) {
+                throw error;
+            }
+
+            function replaceErrors(key, value) {
+                if (value instanceof Error) {
+                    return Object.getOwnPropertyNames(value).reduce(function(error, key) {
+                        error[key] = value[key];
+                        return error;
+                    }, {});
+                }
+                return value;
+            }
+            function errorHandler(error) {
+                console.log(JSON.stringify({error: error}, replaceErrors));
+
+                if (error.properties && error.properties.errors instanceof Array) {
+                    const errorMessages = error.properties.errors.map(function (error) {
+                        return error.properties.explanation;
+                    }).join("\n");
+                    console.log('errorMessages', errorMessages);
+                }
+                throw error;
+            }
+
+            for (let i =0; i<countTab();i++) {
+                var zip = new PizZip(content);
+                var doc = new window.docxtemplater(zip, {
+                    paragraphLoop: true,
+                    linebreaks: true,
+                });
+
+                let tabs = document.getElementsByClassName('nav-tabs')[0].getElementsByTagName('li')
+                let elem = tabs[i]
+                let indexTab = parseInt(elem.id.match(/\d+/))
+
+
+                //dateUntil
+                let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
+                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+
+
+
+
+                // addressHostel
+                let addressHostel = ''
+                switch (document.getElementById('addressHostel'+indexTab).value) {
+                    case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
+                        addressHostel = 'г. Москва, проспект Вернадского, 88 к. 1'
+                        break
+                    case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
+                        addressHostel = 'г. Москва, проспект Вернадского, 88 к. 2'
+                        break
+                    case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
+                        addressHostel = 'г. Москва, проспект Вернадского, 88 к. 3'
+                        break
+                    case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
+                        addressHostel = 'г. Москва, улица Космонавтов, д. 13'
+                        break
+                    case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
+                        addressHostel = 'г. Москва, улица Космонавтов, д. 9'
+                        break
+                    case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
+                        addressHostel = 'г. Москва, улица Клары Цеткин, д. 25'
+                        break
+                    case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
+                        addressHostel = 'Московская область, г. Люберцы, ул. Мира, д.7'
+                        break
+                    default:
+                        addressHostel = document.getElementById('addressResidence'+indexTab).value
+                }
+
+                // Passport
+                let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
+                    ? document.getElementById('series' + indexTab).value : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
+                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+
+                // gender
+                let genM = ''
+                let genW = ''
+                switch (document.getElementById('gender' + indexTab).value) {
+                    case "Мужской / Male":
+                        genM = 'Х'
+                        break
+                    case "Женский / Female":
+                        genW = 'Х'
+                        break
+                }
+
+                let seriesVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('seriesVisa' + indexTab).value)
+                    ? document.getElementById('seriesVisa' + indexTab).value : ''
+                let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
+                    ? document.getElementById('idVisa' + indexTab).value : ''
+
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
+                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
+                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+
+                
+                doc.setData({
+                    lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
+                    firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
+                    patronymicRu: document.getElementById('patronymicRu' + indexTab).value?document.getElementById('patronymicRu' + indexTab).value: "-",
+                    firstNameEn: document.getElementById('firstNameEn' + indexTab).value,
+                    lastNameEn: document.getElementById('lastNameEn' + indexTab).value,
+                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    placeStateBirth: document.getElementById('placeStateBirth' + indexTab).value,
+                    grazd: document.getElementById('grazd' + indexTab).value,
+
+                    genM: genM,
+                    genW: genW,
+
+                    series: series,
+                    idPassport: document.getElementById('idPassport' + indexTab).value,
+                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    validUntil: validUntil,
+
+                    addressHostel: addressHostel,
+                    dateArrivalMigration: /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString())
+                        ? new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString() : '',
+                    notificationUntil: /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString())
+                        ? new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString() : '',
+
+                    identifierVisa: document.getElementById('identifierVisa' + indexTab).value
+                        ? document.getElementById('identifierVisa' + indexTab).value : '',
+                    seriesVisa: seriesVisa,
+                    idVisa: idVisa,
+                    dateOfIssueVisa: dateOfIssueVisa,
+                    validUntilVisa: validUntilVisa,
+
+                    numContract: document.getElementById('numContract' + indexTab).value
+                        ? document.getElementById('numContract' + indexTab).value : '',
+                    contractFrom: document.getElementById('contractFrom' + indexTab).value != '-' ?
+                        document.getElementById('contractFrom' + indexTab).value : '',
+
+                });
+
+
+
+                try {
+                    doc.render();
+                }
+                catch (error) {
+                    // Catch rendering errors (errors relating to the rendering of the template : angularParser throws an error)
+                    errorHandler(error);
+                }
+                var out = doc.getZip().generate();
+                zipDocs.file("УВЕДОМЛЕНИЕ О ЗАВЕРШЕНИИ - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
+                    document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
+                    document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
+                    ".docx"
+                    , out, {base64: true}
+                );
+            } // end for
+
+
+            let nameFile = ''
+            if (countTab()==1) {
+                nameFile = document.getElementById('nStud1').value
+                    +" УВЕДОМЛЕНИЕ О ЗАВЕРШЕНИИ"
+                    +".zip"
+            }
+            else {
+                nameFile = document.getElementById('nStud1').value + '-'+
+                    document.getElementById('nStud'+(lastTab()-1)).value
+                    +" УВЕДОМЛЕНИЕ О ЗАВЕРШЕНИИ"
+                    + ".zip"
+            }
+            var content = zipDocs.generate({ type: "blob" });
+            saveAs(content,nameFile);
+        });
+};
+//!new
 
 
 
