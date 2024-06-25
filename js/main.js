@@ -3066,6 +3066,34 @@ window.generateComplNotice = function generate() {
                         break
                 }
 
+
+                let typeFunding = ''
+                switch (document.getElementById('typeFunding' + indexTab).value) {
+                    case "бюджет (Государство оплачивает мое обучение)/ state funded (The state pays for my education)":
+                        typeFunding = 'Направление'
+                        break
+                    case 'договор ( я плачу за обучение)/paid tuition (I pay for my education)':
+                        typeFunding = 'Договор'
+                        break
+                    case 'Приказ Минобр ФГОС':
+                        typeFunding = 'Приказ Минобр ФГОС'
+                        break
+                }
+                let registrationOn = ''
+                switch (document.getElementById('registrationOn').value) {
+                    case "Круглов":
+                        registrationOn = 'Начальник УМС Круглов В.В.'
+                        break
+                    case "Морозова":
+                        registrationOn = 'Заместитель начальника УМС Морозова О.А.'
+                        break
+                    case "Орлова":
+                        registrationOn = "Начальник ПВО УМС Орлова С.В."
+                        break
+                }
+                
+                
+                
                 let seriesVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('seriesVisa' + indexTab).value)
                     ? document.getElementById('seriesVisa' + indexTab).value : ''
                 let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
@@ -3108,10 +3136,13 @@ window.generateComplNotice = function generate() {
                     dateOfIssueVisa: dateOfIssueVisa,
                     validUntilVisa: validUntilVisa,
 
+                    typeFunding:typeFunding,
                     numContract: document.getElementById('numContract' + indexTab).value
                         ? document.getElementById('numContract' + indexTab).value : '',
                     contractFrom: document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : '',
+                    registrationOn:registrationOn,
+                    dateInOvm: document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : "",
 
                 });
 
