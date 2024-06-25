@@ -3096,8 +3096,8 @@ window.generateComplNotice = function generate() {
                     validUntil: validUntil,
 
                     addressHostel: addressHostel,
-                    dateArrivalMigration: /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString() : '',
+                    notificationFrom: /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString())
+                        ? new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString() : '',
                     notificationUntil: /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString() : '',
 
