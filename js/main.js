@@ -1747,6 +1747,57 @@ window.generateRegNotif = function generate() {
                 let elem = tabs[i]
                 let indexTab = parseInt(elem.id.match(/\d+/))
 
+                // lastName {lN1-27} LATINICA
+                let llN = document.getElementById('lastNameEn'+indexTab).value.toUpperCase().split('')
+                let llN1 = (llN[0]) ? (llN[0]) : ''
+                let llN2 = (llN[1]) ? (llN[1]) : ''
+                let llN3 = (llN[2]) ? (llN[2]) : ''
+                let llN4 = (llN[3]) ? (llN[3]) : ''
+                let llN5 = (llN[4]) ? (llN[4]) : ''
+                let llN6 = (llN[5]) ? (llN[5]) : ''
+                let llN7 = (llN[6]) ? (llN[6]) : ''
+                let llN8 = (llN[7]) ? (llN[7]) : ''
+                let llN9 = (llN[8]) ? (llN[8]) : ''
+                let llN10 = (llN[9]) ? (llN[9]) : ''
+                let llN11 = (llN[10]) ? (llN[10]) : ''
+                let llN12 = (llN[11]) ? (llN[11]) : ''
+                let llN13 = (llN[12]) ? (llN[12]) : ''
+                let llN14 = (llN[13]) ? (llN[13]) : ''
+                let llN15 = (llN[14]) ? (llN[14]) : ''
+                let llN16 = (llN[15]) ? (llN[15]) : ''
+                let llN17 = (llN[16]) ? (llN[16]) : ''
+                let llN18 = (llN[17]) ? (llN[17]) : ''
+                let llN19 = (llN[18]) ? (llN[18]) : ''
+                let llN20 = (llN[19]) ? (llN[19]) : ''
+                let llN21 = (llN[20]) ? (llN[20]) : ''
+
+
+                // firstName {fN1-f27} LATINICA
+                let lfN = document.getElementById('firstNameEn' + indexTab).value.toUpperCase().split('')
+                let lfN1 = (lfN[0]) ? (lfN[0]) : ''
+                let lfN2 = (lfN[1]) ? (lfN[1]) : ''
+                let lfN3 = (lfN[2]) ? (lfN[2]) : ''
+                let lfN4 = (lfN[3]) ? (lfN[3]) : ''
+                let lfN5 = (lfN[4]) ? (lfN[4]) : ''
+                let lfN6 = (lfN[5]) ? (lfN[5]) : ''
+                let lfN7 = (lfN[6]) ? (lfN[6]) : ''
+                let lfN8 = (lfN[7]) ? (lfN[7]) : ''
+                let lfN9 = (lfN[8]) ? (lfN[8]) : ''
+                let lfN10 = (lfN[9]) ? (lfN[9]) : ''
+                let lfN11 = (lfN[10]) ? (lfN[10]) : ''
+                let lfN12 = (lfN[11]) ? (lfN[11]) : ''
+                let lfN13 = (lfN[12]) ? (lfN[12]) : ''
+                let lfN14 = (lfN[13]) ? (lfN[13]) : ''
+                let lfN15 = (lfN[14]) ? (lfN[14]) : ''
+                let lfN16 = (lfN[15]) ? (lfN[15]) : ''
+                let lfN17 = (lfN[16]) ? (lfN[16]) : ''
+                let lfN18 = (lfN[17]) ? (lfN[17]) : ''
+                let lfN19 = (lfN[18]) ? (lfN[18]) : ''
+                let lfN20 = (lfN[19]) ? (lfN[19]) : ''
+                let lfN21 = (lfN[20]) ? (lfN[20]) : ''
+
+
+
                 // lastName {lN1-27}
                 let lN = document.getElementById('lastNameRu'+indexTab).value.toUpperCase().split('')
                 let lN1 = (lN[0]) ? (lN[0]) : ''
@@ -2451,6 +2502,8 @@ window.generateRegNotif = function generate() {
 
 
                 doc.setData({
+                    llN1, llN2: llN2, llN3: llN3, llN4: llN4, llN5: llN5, llN6: llN6, llN7: llN7, llN8: llN8, llN9: llN9, llN10: llN10, llN11: llN11, llN12: llN12, llN13: llN13, llN14: llN14, llN15: llN15, llN16: llN16, llN17: llN17, llN18: llN18, llN19: llN19, llN20: llN20, llN21: llN21,
+                    lfN1: lfN1, lfN2: lfN2, lfN3: lfN3, lfN4: lfN4, lfN5: lfN5, lfN6: lfN6, lfN7: lfN7, lfN8: lfN8, lfN9: lfN9, lfN10: lfN10, lfN11: lfN11, lfN12: lfN12, lfN13: lfN13, lfN14: lfN14, lfN15: lfN15, lfN16: lfN16, lfN17: lfN17, lfN18: lfN18, lfN19: lfN19, lfN20: lfN20, lfN21: lfN21,
                     lN1: lN1, lN2: lN2, lN3: lN3, lN4: lN4, lN5: lN5, lN6: lN6, lN7: lN7, lN8: lN8, lN9: lN9, lN10: lN10, lN11: lN11, lN12: lN12, lN13: lN13, lN14: lN14, lN15: lN15, lN16: lN16, lN17: lN17, lN18: lN18, lN19: lN19, lN20: lN20, lN21: lN21, lN22: lN22, lN23: lN23, lN24: lN24, lN25: lN25, lN26: lN26, lN27: lN27,
                     fN1: fN1, fN2: fN2, fN3: fN3, fN4: fN4, fN5: fN5, fN6: fN6, fN7: fN7, fN8: fN8, fN9: fN9, fN10: fN10, fN11: fN11, fN12: fN12, fN13: fN13, fN14: fN14, fN15: fN15, fN16: fN16, fN17: fN17, fN18: fN18, fN19: fN19, fN20: fN20, fN21: fN21, fN22: fN22, fN23: fN23, fN24: fN24, fN25: fN25, fN26: fN26, fN27: fN27,
                     patr1: patr1, patr2: patr2, patr3: patr3, patr4: patr4, patr5: patr5, patr6: patr6, patr7: patr7, patr8: patr8, patr9: patr9, patr10: patr10, patr11: patr11, patr12: patr12, patr13: patr13, patr14: patr14, patr15: patr15, patr16: patr16, patr17: patr17, patr18: patr18, patr19: patr19, patr20: patr20, patr21: patr21, patr22: patr22, patr23: patr23, patr24: patr24,
@@ -3215,7 +3268,8 @@ function generateReg() {
     window.generateRegNotifTotal = function generate() {
         let ovmRg = document.getElementById('ovmByRegion').value
         let rgOn = document.getElementById('registrationOn').value
-        path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
+        let uvedTemp = document.getElementById('uvedTemp').value
+        path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
         loadFile(
             path,
@@ -3258,6 +3312,58 @@ function generateReg() {
                     let elem = tabs[i]
                     let indexTab = parseInt(elem.id.match(/\d+/))
 
+                    // lastName {lN1-27} LATINICA
+                    let llN = document.getElementById('lastNameEn'+indexTab).value.toUpperCase().split('')
+                    let llN1 = (llN[0]) ? (llN[0]) : ''
+                    let llN2 = (llN[1]) ? (llN[1]) : ''
+                    let llN3 = (llN[2]) ? (llN[2]) : ''
+                    let llN4 = (llN[3]) ? (llN[3]) : ''
+                    let llN5 = (llN[4]) ? (llN[4]) : ''
+                    let llN6 = (llN[5]) ? (llN[5]) : ''
+                    let llN7 = (llN[6]) ? (llN[6]) : ''
+                    let llN8 = (llN[7]) ? (llN[7]) : ''
+                    let llN9 = (llN[8]) ? (llN[8]) : ''
+                    let llN10 = (llN[9]) ? (llN[9]) : ''
+                    let llN11 = (llN[10]) ? (llN[10]) : ''
+                    let llN12 = (llN[11]) ? (llN[11]) : ''
+                    let llN13 = (llN[12]) ? (llN[12]) : ''
+                    let llN14 = (llN[13]) ? (llN[13]) : ''
+                    let llN15 = (llN[14]) ? (llN[14]) : ''
+                    let llN16 = (llN[15]) ? (llN[15]) : ''
+                    let llN17 = (llN[16]) ? (llN[16]) : ''
+                    let llN18 = (llN[17]) ? (llN[17]) : ''
+                    let llN19 = (llN[18]) ? (llN[18]) : ''
+                    let llN20 = (llN[19]) ? (llN[19]) : ''
+                    let llN21 = (llN[20]) ? (llN[20]) : ''
+
+
+                    // firstName {fN1-f27} LATINICA
+                    let lfN = document.getElementById('firstNameEn' + indexTab).value.toUpperCase().split('')
+                    let lfN1 = (lfN[0]) ? (lfN[0]) : ''
+                    let lfN2 = (lfN[1]) ? (lfN[1]) : ''
+                    let lfN3 = (lfN[2]) ? (lfN[2]) : ''
+                    let lfN4 = (lfN[3]) ? (lfN[3]) : ''
+                    let lfN5 = (lfN[4]) ? (lfN[4]) : ''
+                    let lfN6 = (lfN[5]) ? (lfN[5]) : ''
+                    let lfN7 = (lfN[6]) ? (lfN[6]) : ''
+                    let lfN8 = (lfN[7]) ? (lfN[7]) : ''
+                    let lfN9 = (lfN[8]) ? (lfN[8]) : ''
+                    let lfN10 = (lfN[9]) ? (lfN[9]) : ''
+                    let lfN11 = (lfN[10]) ? (lfN[10]) : ''
+                    let lfN12 = (lfN[11]) ? (lfN[11]) : ''
+                    let lfN13 = (lfN[12]) ? (lfN[12]) : ''
+                    let lfN14 = (lfN[13]) ? (lfN[13]) : ''
+                    let lfN15 = (lfN[14]) ? (lfN[14]) : ''
+                    let lfN16 = (lfN[15]) ? (lfN[15]) : ''
+                    let lfN17 = (lfN[16]) ? (lfN[16]) : ''
+                    let lfN18 = (lfN[17]) ? (lfN[17]) : ''
+                    let lfN19 = (lfN[18]) ? (lfN[18]) : ''
+                    let lfN20 = (lfN[19]) ? (lfN[19]) : ''
+                    let lfN21 = (lfN[20]) ? (lfN[20]) : ''
+
+
+
+
                     // lastName {lN1-27}
                     let lN = document.getElementById('lastNameRu'+indexTab).value.toUpperCase().split('')
                     let lN1 = (lN[0]) ? (lN[0]) : ''
@@ -3287,6 +3393,8 @@ function generateReg() {
                     let lN25 = (lN[24]) ? (lN[24]) : ''
                     let lN26 = (lN[25]) ? (lN[25]) : ''
                     let lN27 = (lN[26]) ? (lN[26]) : ''
+
+
 
                     // firstName {fN1-f27}
                     let fN = document.getElementById('firstNameRu' + indexTab).value.toUpperCase().split('')
@@ -3959,6 +4067,8 @@ function generateReg() {
 
 
                     doc.setData({
+                        llN1, llN2: llN2, llN3: llN3, llN4: llN4, llN5: llN5, llN6: llN6, llN7: llN7, llN8: llN8, llN9: llN9, llN10: llN10, llN11: llN11, llN12: llN12, llN13: llN13, llN14: llN14, llN15: llN15, llN16: llN16, llN17: llN17, llN18: llN18, llN19: llN19, llN20: llN20, llN21: llN21,
+                        lfN1: lfN1, lfN2: lfN2, lfN3: lfN3, lfN4: lfN4, lfN5: lfN5, lfN6: lfN6, lfN7: lfN7, lfN8: lfN8, lfN9: lfN9, lfN10: lfN10, lfN11: lfN11, lfN12: lfN12, lfN13: lfN13, lfN14: lfN14, lfN15: lfN15, lfN16: lfN16, lfN17: lfN17, lfN18: lfN18, lfN19: lfN19, lfN20: lfN20, lfN21: lfN21,
                         lN1: lN1, lN2: lN2, lN3: lN3, lN4: lN4, lN5: lN5, lN6: lN6, lN7: lN7, lN8: lN8, lN9: lN9, lN10: lN10, lN11: lN11, lN12: lN12, lN13: lN13, lN14: lN14, lN15: lN15, lN16: lN16, lN17: lN17, lN18: lN18, lN19: lN19, lN20: lN20, lN21: lN21, lN22: lN22, lN23: lN23, lN24: lN24, lN25: lN25, lN26: lN26, lN27: lN27,
                         fN1: fN1, fN2: fN2, fN3: fN3, fN4: fN4, fN5: fN5, fN6: fN6, fN7: fN7, fN8: fN8, fN9: fN9, fN10: fN10, fN11: fN11, fN12: fN12, fN13: fN13, fN14: fN14, fN15: fN15, fN16: fN16, fN17: fN17, fN18: fN18, fN19: fN19, fN20: fN20, fN21: fN21, fN22: fN22, fN23: fN23, fN24: fN24, fN25: fN25, fN26: fN26, fN27: fN27,
                         patr1: patr1, patr2: patr2, patr3: patr3, patr4: patr4, patr5: patr5, patr6: patr6, patr7: patr7, patr8: patr8, patr9: patr9, patr10: patr10, patr11: patr11, patr12: patr12, patr13: patr13, patr14: patr14, patr15: patr15, patr16: patr16, patr17: patr17, patr18: patr18, patr19: patr19, patr20: patr20, patr21: patr21, patr22: patr22, patr23: patr23, patr24: patr24,
@@ -5824,7 +5934,8 @@ function generateRegVisa() {
     window.generateRegNotifTot = function generate() {
         let ovmRg = document.getElementById('ovmByRegion').value
         let rgOn = document.getElementById('registrationOn').value
-        path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
+        let uvedTemp = document.getElementById('uvedTemp').value
+        path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
         loadFile(
             path,
@@ -5866,6 +5977,56 @@ function generateRegVisa() {
                     let tabs = document.getElementsByClassName('nav-tabs')[0].getElementsByTagName('li')
                     let elem = tabs[i]
                     let indexTab = parseInt(elem.id.match(/\d+/))
+
+                    // lastName {lN1-27} LATINICA
+                    let llN = document.getElementById('lastNameEn'+indexTab).value.toUpperCase().split('')
+                    let llN1 = (llN[0]) ? (llN[0]) : ''
+                    let llN2 = (llN[1]) ? (llN[1]) : ''
+                    let llN3 = (llN[2]) ? (llN[2]) : ''
+                    let llN4 = (llN[3]) ? (llN[3]) : ''
+                    let llN5 = (llN[4]) ? (llN[4]) : ''
+                    let llN6 = (llN[5]) ? (llN[5]) : ''
+                    let llN7 = (llN[6]) ? (llN[6]) : ''
+                    let llN8 = (llN[7]) ? (llN[7]) : ''
+                    let llN9 = (llN[8]) ? (llN[8]) : ''
+                    let llN10 = (llN[9]) ? (llN[9]) : ''
+                    let llN11 = (llN[10]) ? (llN[10]) : ''
+                    let llN12 = (llN[11]) ? (llN[11]) : ''
+                    let llN13 = (llN[12]) ? (llN[12]) : ''
+                    let llN14 = (llN[13]) ? (llN[13]) : ''
+                    let llN15 = (llN[14]) ? (llN[14]) : ''
+                    let llN16 = (llN[15]) ? (llN[15]) : ''
+                    let llN17 = (llN[16]) ? (llN[16]) : ''
+                    let llN18 = (llN[17]) ? (llN[17]) : ''
+                    let llN19 = (llN[18]) ? (llN[18]) : ''
+                    let llN20 = (llN[19]) ? (llN[19]) : ''
+                    let llN21 = (llN[20]) ? (llN[20]) : ''
+
+
+                    // firstName {fN1-f27} LATINICA
+                    let lfN = document.getElementById('firstNameEn' + indexTab).value.toUpperCase().split('')
+                    let lfN1 = (lfN[0]) ? (lfN[0]) : ''
+                    let lfN2 = (lfN[1]) ? (lfN[1]) : ''
+                    let lfN3 = (lfN[2]) ? (lfN[2]) : ''
+                    let lfN4 = (lfN[3]) ? (lfN[3]) : ''
+                    let lfN5 = (lfN[4]) ? (lfN[4]) : ''
+                    let lfN6 = (lfN[5]) ? (lfN[5]) : ''
+                    let lfN7 = (lfN[6]) ? (lfN[6]) : ''
+                    let lfN8 = (lfN[7]) ? (lfN[7]) : ''
+                    let lfN9 = (lfN[8]) ? (lfN[8]) : ''
+                    let lfN10 = (lfN[9]) ? (lfN[9]) : ''
+                    let lfN11 = (lfN[10]) ? (lfN[10]) : ''
+                    let lfN12 = (lfN[11]) ? (lfN[11]) : ''
+                    let lfN13 = (lfN[12]) ? (lfN[12]) : ''
+                    let lfN14 = (lfN[13]) ? (lfN[13]) : ''
+                    let lfN15 = (lfN[14]) ? (lfN[14]) : ''
+                    let lfN16 = (lfN[15]) ? (lfN[15]) : ''
+                    let lfN17 = (lfN[16]) ? (lfN[16]) : ''
+                    let lfN18 = (lfN[17]) ? (lfN[17]) : ''
+                    let lfN19 = (lfN[18]) ? (lfN[18]) : ''
+                    let lfN20 = (lfN[19]) ? (lfN[19]) : ''
+                    let lfN21 = (lfN[20]) ? (lfN[20]) : ''
+
 
                     // lastName {lN1-27}
                     let lN = document.getElementById('lastNameRu'+indexTab).value.toUpperCase().split('')
@@ -6567,6 +6728,8 @@ function generateRegVisa() {
 
 
                     doc.setData({
+                        llN1, llN2: llN2, llN3: llN3, llN4: llN4, llN5: llN5, llN6: llN6, llN7: llN7, llN8: llN8, llN9: llN9, llN10: llN10, llN11: llN11, llN12: llN12, llN13: llN13, llN14: llN14, llN15: llN15, llN16: llN16, llN17: llN17, llN18: llN18, llN19: llN19, llN20: llN20, llN21: llN21,
+                        lfN1: lfN1, lfN2: lfN2, lfN3: lfN3, lfN4: lfN4, lfN5: lfN5, lfN6: lfN6, lfN7: lfN7, lfN8: lfN8, lfN9: lfN9, lfN10: lfN10, lfN11: lfN11, lfN12: lfN12, lfN13: lfN13, lfN14: lfN14, lfN15: lfN15, lfN16: lfN16, lfN17: lfN17, lfN18: lfN18, lfN19: lfN19, lfN20: lfN20, lfN21: lfN21,
                         lN1: lN1, lN2: lN2, lN3: lN3, lN4: lN4, lN5: lN5, lN6: lN6, lN7: lN7, lN8: lN8, lN9: lN9, lN10: lN10, lN11: lN11, lN12: lN12, lN13: lN13, lN14: lN14, lN15: lN15, lN16: lN16, lN17: lN17, lN18: lN18, lN19: lN19, lN20: lN20, lN21: lN21, lN22: lN22, lN23: lN23, lN24: lN24, lN25: lN25, lN26: lN26, lN27: lN27,
                         fN1: fN1, fN2: fN2, fN3: fN3, fN4: fN4, fN5: fN5, fN6: fN6, fN7: fN7, fN8: fN8, fN9: fN9, fN10: fN10, fN11: fN11, fN12: fN12, fN13: fN13, fN14: fN14, fN15: fN15, fN16: fN16, fN17: fN17, fN18: fN18, fN19: fN19, fN20: fN20, fN21: fN21, fN22: fN22, fN23: fN23, fN24: fN24, fN25: fN25, fN26: fN26, fN27: fN27,
                         patr1: patr1, patr2: patr2, patr3: patr3, patr4: patr4, patr5: patr5, patr6: patr6, patr7: patr7, patr8: patr8, patr9: patr9, patr10: patr10, patr11: patr11, patr12: patr12, patr13: patr13, patr14: patr14, patr15: patr15, patr16: patr16, patr17: patr17, patr18: patr18, patr19: patr19, patr20: patr20, patr21: patr21, patr22: patr22, patr23: patr23, patr24: patr24,
