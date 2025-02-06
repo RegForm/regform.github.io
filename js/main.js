@@ -359,19 +359,32 @@ window.generateVisaReference = function generate() {
                 }
 
                 // registration On
-                let registrationOn = ''
-                switch (document.getElementById('registrationOn').value) {
-                    case "Круглов":
-                        registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
-                        break
-                    case "Морозова":
-                        registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
-                        break
-                    case "Орлова":
-                        registrationOn = 'Начальник ПВО УМС                                                                        Орлова С.В.'
-                        break
-                }
+                // let registrationOn = ''
+                // switch (document.getElementById('registrationOn').value) {
+                //     case "Круглов":
+                //         registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
+                //         break
+                //     case "Морозова":
+                //         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                //         break
+                //     case "Орлова":
+                //         registrationOn = 'Начальник ПВО УМС                                                                        Орлова С.В.'
+                //         break
+                // }
 
+                // regBy 
+                let regBy = ''
+                switch (document.getElementById('regBy').value) {
+                        case "1":
+                            regBy = '11'
+                            break
+                        case "2":
+                            regBy = '22'
+                            break
+                        case "3":
+                            regBy = '33'
+                            break
+                    }
 
                 let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
                 let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
@@ -390,7 +403,8 @@ window.generateVisaReference = function generate() {
                     validUntil: validUntil,
                     dateUntil: dateUnt,
                     ovmByRegion: ovmByRegion,
-                    registrationOn: registrationOn,
+                    // registrationOn: registrationOn,
+                    regBy: regBy,
                     nStud: document.getElementById('nStud' + indexTab).value,
                     dateInOvm: dateInOvm,
                 });
@@ -1688,7 +1702,8 @@ window.generateInventoryReg = function generate() {
 window.generateRegNotif = function generate() {
     let ovmRg = document.getElementById('ovmByRegion').value
     let rgOn = document.getElementById('registrationOn').value
-    path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}.docx`)
+    let uvedTemp = document.getElementById('uvedTemp').value
+    path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
     var zipDocs = new PizZip();
     loadFile(
@@ -5544,16 +5559,28 @@ function generateVisa() {
                     }
 
                     // registration On
-                    let registrationOn = ''
-                    switch (document.getElementById('registrationOn').value) {
-                        case "Круглов":
-                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
+                    // let registrationOn = ''
+                    // switch (document.getElementById('registrationOn').value) {
+                    //     case "Круглов":
+                    //         registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
+                    //         break
+                    //     case "Морозова":
+                    //         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                    //         break
+                    //     case "Орлова":
+                    //         registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                    //         break
+                    // }
+                    let regBy = ''
+                    switch (document.getElementById('regBy').value) {
+                        case "1":
+                            regBy = '11'
                             break
-                        case "Морозова":
-                            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                        case "2":
+                            regBy = '22'
                             break
-                        case "Орлова":
-                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                        case "3":
+                            regBy = '33'
                             break
                     }
 
@@ -5575,7 +5602,8 @@ function generateVisa() {
                         validUntil: validUntil,
                         dateUntil: dateUnt,
                         ovmByRegion: ovmByRegion,
-                        registrationOn: registrationOn,
+                        // registrationOn: registrationOn,
+                        regBy: regBy,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         dateInOvm: dateInOvm,
                     });
@@ -7615,16 +7643,29 @@ function generateRegVisa() {
                     }
 
                     // registration On
-                    let registrationOn = ''
-                    switch (document.getElementById('registrationOn').value) {
-                        case "Круглов":
-                            registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
+                    // let registrationOn = ''
+                    // switch (document.getElementById('registrationOn').value) {
+                    //     case "Круглов":
+                    //         registrationOn = 'Начальник УМС                                                                                  Круглов В.В.'
+                    //         break
+                    //     case "Морозова":
+                    //         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                    //         break
+                    //     case "Орлова":
+                    //         registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                    //         break
+                    // }
+
+                    let regBy = ''
+                    switch (document.getElementById('regBy').value) {
+                        case "1":
+                            regBy = '11'
                             break
-                        case "Морозова":
-                            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                        case "2":
+                            regBy = '22'
                             break
-                        case "Орлова":
-                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                        case "3":
+                            regBy = '33'
                             break
                     }
 
@@ -7646,7 +7687,8 @@ function generateRegVisa() {
                         validUntil: validUntil,
                         dateUntil: dateUnt,
                         ovmByRegion: ovmByRegion,
-                        registrationOn: registrationOn,
+                        // registrationOn: registrationOn,
+                        regBy: regBy,
                         nStud: document.getElementById('nStud' + indexTab).value,
                         dateInOvm: dateInOvm,
                     });
