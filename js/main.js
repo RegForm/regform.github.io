@@ -367,24 +367,30 @@ window.generateVisaReference = function generate() {
                 //     case "Морозова":
                 //         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                 //         break
-                //     case "Орлова":
-                //         registrationOn = 'Начальник ПВО УМС                                                                        Орлова С.В.'
+                //     case "Колпакова":
+                //         registrationOn = 'Начальник ПВО УМС                                                                        Колпакова Т.А.'
                 //         break
                 // }
 
                 // regBy 
                 let regBy = ''
                 switch (document.getElementById('regBy').value) {
-                        case "1":
-                            regBy = '11'
-                            break
-                        case "2":
-                            regBy = '22'
-                            break
-                        case "3":
-                            regBy = '33'
-                            break
-                    }
+                    case "Колпакова":
+                        regBy = 'Начальник ПВО УМС                                                Колпакова Т.А.'
+                        break
+                    case "Ключников":
+                        regBy = 'Документовед ПВО УМС                                       Ключников К.В.'
+                        break
+                    case "Елисеев":
+                        regBy = 'Документовед ПВО УМС                                           Елисеев М.О.'
+                        break
+                    case "Нурмухаметова":
+                        regBy = 'Старший инспектор ПВО УМС                       Нурмухаметова Н.А.'
+                        break
+                    case "Зелиховский":
+                        regBy = 'Инспектор ОРСИУ УМС                                     Зелиховский А.А.'
+                        break
+                }
 
                 let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
                 let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
@@ -544,9 +550,9 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                         registrationOn1 = 'Заместитель начальника УМС                                                    Морозова О.А.'
                         registrationOn2 = 'Заместитель начальника УМС                                               Морозова О.А.'
                         break
-                    case "Орлова":
-                        registrationOn1 = "Начальник ПВО УМС                                                                        Орлова С.В."
-                        registrationOn2 = 'Начальник ПВО УМС                                                                   Орлова С.В.'
+                    case "Колпакова":
+                        registrationOn1 = "Начальник ПВО УМС                                                                        Колпакова Т.А."
+                        registrationOn2 = 'Начальник ПВО УМС                                                                   Колпакова Т.А.'
                         break
                 }
 
@@ -822,8 +828,8 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                     case "Морозова":
                         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                         break
-                    case "Орлова":
-                        registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                    case "Колпакова":
+                        registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                         break
                 }
 
@@ -1034,8 +1040,8 @@ window.generateInventoryVisa = function generate() {
         case "Морозова":
             registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
             break
-        case "Орлова":
-            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+        case "Колпакова":
+            registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
             break
     }
 
@@ -1327,8 +1333,8 @@ window.generateRegSolicitaion = function generate() {
                     case "Морозова":
                         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                         break
-                    case "Орлова":
-                        registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                    case "Колпакова":
+                        registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                         break
                 }
 
@@ -1573,8 +1579,8 @@ window.generateInventoryReg = function generate() {
         case "Морозова":
             registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
             break
-        case "Орлова":
-            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+        case "Колпакова":
+            registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
             break
     }
 
@@ -2338,38 +2344,44 @@ window.generateRegNotif = function generate() {
                     case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                        aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                        aHD1 = '88'; aHK1 = 'КОРП. 1'
                         break
                     case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                        aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                        aHD1 = '88'; aHK1 = 'КОРП. 2'
                         break
                     case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                        aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                        aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
                         break
                     case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                        aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                        aHD1 = 'Д. 13'
                         break
                     case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                        aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                        aHD1 = 'Д. 9'
                         break
                     case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'К'; aHU2 = 'Л'; aHU3 = 'А'; aHU4 = 'Р'; aHU5 = 'Ы'; aHU6 = ''; aHU7 = 'Ц'; aHU8 = 'Е'; aHU9 = 'Т'; aHU10 = 'К'; aHU11 = 'И'; aHU12 = 'Н';
-                        aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
+                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
+                        aHD1 = 'Д. 25'
                         break
                     case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                         aHG1 = 'М'; aHG2 = 'О'; aHG3 = 'С'; aHG4 = 'К'; aHG5 = 'О'; aHG6 = 'В'; aHG7 = 'С'; aHG8 = 'К'; aHG9 = 'А'; aHG10 = 'Я'; aHG12 = 'О'; aHG13 = 'Б'; aHG14 = 'Л'; aHG15 = 'А'; aHG16 = 'С'; aHG17 = 'Т'; aHG18 = 'Ь';
                         aHU1 = 'Л'; aHU2 = 'Ю'; aHU3 = 'Б'; aHU4 = 'Е'; aHU5 = 'Р'; aHU6 = 'Ц'; aHU7 = 'Ы';
-                        aHD1 = 'М'; aHD2 = 'И'; aHD3 = 'Р'; aHD4 = 'А';
-                        aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
+                        aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
+                        aHD1 = 'Д. 7'
                         break
                 }
 
@@ -2607,8 +2619,8 @@ window.generateInventoryRegVisa = function generate() {
         case "Морозова":
             registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
             break
-        case "Орлова":
-            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+        case "Колпакова":
+            registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
             break
     }
 
@@ -2865,8 +2877,8 @@ window.generateFlatSolicitaion = function generate() {
                     case "Морозова":
                         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                         break
-                    case "Орлова":
-                        registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                    case "Колпакова":
+                        registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                         break
                 }
 
@@ -3155,8 +3167,8 @@ window.generateComplNotice = function generate() {
                     case "Морозова":
                         registrationOn = 'Заместитель начальника УМС Морозова О.А.'
                         break
-                    case "Орлова":
-                        registrationOn = "Начальник ПВО УМС Орлова С.В."
+                    case "Колпакова":
+                        registrationOn = "Начальник ПВО УМС Колпакова Т.А."
                         break
                 }
                 
@@ -3904,38 +3916,44 @@ function generateReg() {
                         case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                            aHD1 = '88'; aHK1 = 'КОРП. 1'
                             break
                         case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                            aHD1 = '88'; aHK1 = 'КОРП. 2'
                             break
                         case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                            aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
                             break
                         case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                            aHD1 = 'Д. 13'
                             break
                         case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                            aHD1 = 'Д. 9'
                             break
                         case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'Л'; aHU3 = 'А'; aHU4 = 'Р'; aHU5 = 'Ы'; aHU6 = ''; aHU7 = 'Ц'; aHU8 = 'Е'; aHU9 = 'Т'; aHU10 = 'К'; aHU11 = 'И'; aHU12 = 'Н';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
+                            aHD1 = 'Д. 25'
                             break
                         case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                             aHG1 = 'М'; aHG2 = 'О'; aHG3 = 'С'; aHG4 = 'К'; aHG5 = 'О'; aHG6 = 'В'; aHG7 = 'С'; aHG8 = 'К'; aHG9 = 'А'; aHG10 = 'Я'; aHG12 = 'О'; aHG13 = 'Б'; aHG14 = 'Л'; aHG15 = 'А'; aHG16 = 'С'; aHG17 = 'Т'; aHG18 = 'Ь';
                             aHU1 = 'Л'; aHU2 = 'Ю'; aHU3 = 'Б'; aHU4 = 'Е'; aHU5 = 'Р'; aHU6 = 'Ц'; aHU7 = 'Ы';
-                            aHD1 = 'М'; aHD2 = 'И'; aHD3 = 'Р'; aHD4 = 'А';
-                            aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
+                            aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
+                            aHD1 = 'Д. 7'
                             break
                     }
 
@@ -4319,8 +4337,8 @@ function generateReg() {
                         case "Морозова":
                             registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             break
-                        case "Орлова":
-                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                        case "Колпакова":
+                            registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                             break
                     }
 
@@ -4571,8 +4589,8 @@ function generateReg() {
             case "Морозова":
                 registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                 break
-            case "Орлова":
-                registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+            case "Колпакова":
+                registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                 break
         }
 
@@ -5040,9 +5058,9 @@ function generateVisa() {
                             registrationOn1 = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             registrationOn2 = 'Заместитель начальника УМС                                               Морозова О.А.'
                             break
-                        case "Орлова":
-                            registrationOn1 = "Начальник ПВО УМС                                                                        Орлова С.В."
-                            registrationOn2 = 'Начальник ПВО УМС                                                                   Орлова С.В.'
+                        case "Колпакова":
+                            registrationOn1 = "Начальник ПВО УМС                                                                        Колпакова Т.А."
+                            registrationOn2 = 'Начальник ПВО УМС                                                                   Колпакова Т.А.'
                             break
                     }
 
@@ -5326,8 +5344,8 @@ function generateVisa() {
                         case "Морозова":
                             registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             break
-                        case "Орлова":
-                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                        case "Колпакова":
+                            registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                             break
                     }
 
@@ -5677,20 +5695,26 @@ function generateVisa() {
                     //     case "Морозова":
                     //         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                     //         break
-                    //     case "Орлова":
-                    //         registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                    //     case "Колпакова":
+                    //         registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                     //         break
                     // }
                     let regBy = ''
                     switch (document.getElementById('regBy').value) {
-                        case "1":
-                            regBy = '11'
+                        case "Колпакова":
+                            regBy = 'Начальник ПВО УМС                                                Колпакова Т.А.'
                             break
-                        case "2":
-                            regBy = '22'
+                        case "Ключников":
+                            regBy = 'Документовед ПВО УМС                                       Ключников К.В.'
                             break
-                        case "3":
-                            regBy = '33'
+                        case "Елисеев":
+                            regBy = 'Документовед ПВО УМС                                           Елисеев М.О.'
+                            break
+                        case "Нурмухаметова":
+                            regBy = 'Старший инспектор ПВО УМС                       Нурмухаметова Н.А.'
+                            break
+                        case "Зелиховский":
+                            regBy = 'Инспектор ОРСИУ УМС                                     Зелиховский А.А.'
                             break
                     }
 
@@ -5776,8 +5800,8 @@ function generateVisa() {
             case "Морозова":
                 registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                 break
-            case "Орлова":
-                registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+            case "Колпакова":
+                registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                 break
         }
 
@@ -6566,38 +6590,44 @@ function generateRegVisa() {
                         case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                            aHD1 = '88'; aHK1 = 'КОРП. 1'
                             break
                         case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                            aHD1 = '88'; aHK1 = 'КОРП. 2'
                             break
                         case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                            aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
                             break
                         case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                            aHD1 = 'Д. 13'
                             break
                         case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                            aHD1 = 'Д. 9'
                             break
                         case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'Л'; aHU3 = 'А'; aHU4 = 'Р'; aHU5 = 'Ы'; aHU6 = ''; aHU7 = 'Ц'; aHU8 = 'Е'; aHU9 = 'Т'; aHU10 = 'К'; aHU11 = 'И'; aHU12 = 'Н';
-                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
+                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
+                            aHD1 = 'Д. 25'
                             break
                         case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                             aHG1 = 'М'; aHG2 = 'О'; aHG3 = 'С'; aHG4 = 'К'; aHG5 = 'О'; aHG6 = 'В'; aHG7 = 'С'; aHG8 = 'К'; aHG9 = 'А'; aHG10 = 'Я'; aHG12 = 'О'; aHG13 = 'Б'; aHG14 = 'Л'; aHG15 = 'А'; aHG16 = 'С'; aHG17 = 'Т'; aHG18 = 'Ь';
                             aHU1 = 'Л'; aHU2 = 'Ю'; aHU3 = 'Б'; aHU4 = 'Е'; aHU5 = 'Р'; aHU6 = 'Ц'; aHU7 = 'Ы';
-                            aHD1 = 'М'; aHD2 = 'И'; aHD3 = 'Р'; aHD4 = 'А';
-                            aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
+                            aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
+                            aHD1 = 'Д. 7'
                             break
                     }
 
@@ -6980,8 +7010,8 @@ function generateRegVisa() {
                         case "Морозова":
                             registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             break
-                        case "Орлова":
-                            registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                        case "Колпакова":
+                            registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                             break
                     }
 
@@ -7536,9 +7566,9 @@ function generateRegVisa() {
                             registrationOn1 = 'Заместитель начальника УМС                                                    Морозова О.А.'
                             registrationOn2 = 'Заместитель начальника УМС                                               Морозова О.А.'
                             break
-                        case "Орлова":
-                            registrationOn1 = "Начальник ПВО УМС                                                                        Орлова С.В."
-                            registrationOn2 = 'Начальник ПВО УМС                                                                   Орлова С.В.'
+                        case "Колпакова":
+                            registrationOn1 = "Начальник ПВО УМС                                                                        Колпакова Т.А."
+                            registrationOn2 = 'Начальник ПВО УМС                                                                   Колпакова Т.А.'
                             break
                     }
 
@@ -7814,21 +7844,27 @@ function generateRegVisa() {
                     //     case "Морозова":
                     //         registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                     //         break
-                    //     case "Орлова":
-                    //         registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+                    //     case "Колпакова":
+                    //         registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                     //         break
                     // }
 
                     let regBy = ''
                     switch (document.getElementById('regBy').value) {
-                        case "1":
-                            regBy = '11'
+                        case "Колпакова":
+                            regBy = 'Начальник ПВО УМС                                                Колпакова Т.А.'
                             break
-                        case "2":
-                            regBy = '22'
+                        case "Ключников":
+                            regBy = 'Документовед ПВО УМС                                       Ключников К.В.'
                             break
-                        case "3":
-                            regBy = '33'
+                        case "Елисеев":
+                            regBy = 'Документовед ПВО УМС                                           Елисеев М.О.'
+                            break
+                        case "Нурмухаметова":
+                            regBy = 'Старший инспектор ПВО УМС                       Нурмухаметова Н.А.'
+                            break
+                        case "Зелиховский":
+                            regBy = 'Инспектор ОРСИУ УМС                                     Зелиховский А.А.'
                             break
                     }
 
@@ -7915,8 +7951,8 @@ function generateRegVisa() {
             case "Морозова":
                 registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
                 break
-            case "Орлова":
-                registrationOn = "Начальник ПВО УМС                                                                        Орлова С.В."
+            case "Колпакова":
+                registrationOn = "Начальник ПВО УМС                                                                        Колпакова Т.А."
                 break
         }
 
