@@ -2344,44 +2344,79 @@ window.generateRegNotif = function generate() {
                     case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
-                        aHD1 = '88'; aHK1 = 'КОРП. 1'
+                        if (path.includes('new')) {
+                            aHD1 = 'Д. 88'; aHK1 = 'КОРП. 1'
+                        }
+                        else {
+                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                        }                       
                         break
                     case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
-                        aHD1 = '88'; aHK1 = 'КОРП. 2'
+                        if (path.includes('new'))
+                        {
+                            aHD1 = 'Д. 88'; aHK1 = 'КОРП. 2'
+                        }
+                        else {
+                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                        }
                         break
                     case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
-                        aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
+                        if (path.includes('new'))
+                        {
+                            aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
+                        }
+                        else {
+                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                        }
                         break
                     case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
-                        aHD1 = 'Д. 13'
+                        if (path.includes('new'))
+                        {
+                            aHD1 = 'Д. 13'
+                        }
+                        else {
+                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                        }
                         break
                     case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
-                        aHD1 = 'Д. 9'
+                        if (path.includes('new'))
+                        {
+                            aHD1 = 'Д. 9'
+                        }
+                        else {
+                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                        }
                         break
                     case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
                         aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                         aHU1 = 'К'; aHU2 = 'Л'; aHU3 = 'А'; aHU4 = 'Р'; aHU5 = 'Ы'; aHU6 = ''; aHU7 = 'Ц'; aHU8 = 'Е'; aHU9 = 'Т'; aHU10 = 'К'; aHU11 = 'И'; aHU12 = 'Н';
-                        // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
-                        aHD1 = 'Д. 25'
+                        if (path.includes('new'))
+                        {
+                            aHD1 = 'Д. 25'
+                        }
+                        else {
+                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';                                
+                        }
                         break
                     case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                         aHG1 = 'М'; aHG2 = 'О'; aHG3 = 'С'; aHG4 = 'К'; aHG5 = 'О'; aHG6 = 'В'; aHG7 = 'С'; aHG8 = 'К'; aHG9 = 'А'; aHG10 = 'Я'; aHG12 = 'О'; aHG13 = 'Б'; aHG14 = 'Л'; aHG15 = 'А'; aHG16 = 'С'; aHG17 = 'Т'; aHG18 = 'Ь';
                         aHU1 = 'Л'; aHU2 = 'Ю'; aHU3 = 'Б'; aHU4 = 'Е'; aHU5 = 'Р'; aHU6 = 'Ц'; aHU7 = 'Ы';
-                        aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
-                        aHD1 = 'Д. 7'
+                        if (path.includes('new')) {
+                            aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
+                            aHD1 = 'Д. 7'
+                        }
+                        else {
+                            aHD1 = 'М'; aHD2 = 'И'; aHD3 = 'Р'; aHD4 = 'А';
+                            aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
+                        }
                         break
                 }
 
@@ -2438,41 +2473,81 @@ window.generateRegNotif = function generate() {
                     case 'г. Москва, проспект Вернадского, 88 к. 1':
                         mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                         mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                        mAD1 = '8'; mAD2 = '8'
-                        mAK1 = '1'
+                        if (path.includes('new')) {
+                            mAD1 = 'Д. 88'
+                            mAK1 = 'КОРП. 1'
+                        }
+                        else {
+                            mAD1 = '8'; mAD2 = '8'
+                            mAK1 = '1'
+                        }
                         break
                     case 'г. Москва, проспект Вернадского, 88 к. 2':
                         mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                         mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                        mAD1 = '8'; mAD2 = '8'
-                        mAK1 = '2'
+                        if (path.includes('new')) {
+                            mAD1 = 'Д. 88'
+                            mAK1 = 'КОРП. 2'
+                        }
+                        else {
+                            mAD1 = '8'; mAD2 = '8'
+                            mAK1 = '2'
+                        }
                         break
                     case 'г. Москва, проспект Вернадского, 88 к. 3':
                         mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                         mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
+                        if (path.includes('new')) {
+                            mAD1 = 'Д. 88'
+                            mAK1 = 'КОРП. 3'
+                        }
+                        else {
                         mAD1 = '8'; mAD2 = '8'
                         mAK1 = '3'
+                        }
                         break
                     case 'г. Москва, ул. Космонавтов, д. 13':
                         mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                         mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                        mAD1 = '1'; mAD2 = '3'
+                        if (path.includes('new')) {
+                            mAD1 = 'Д. 13'
+                        }
+                        else {
+                            mAD1 = '1'; mAD2 = '3'
+                        }
                         break
                     case 'г. Москва, улица Космонавтов, д. 9':
                         mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                         mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                        mAD2 = '9'
+                        if (path.includes('new')) {
+                            mAD1 = 'Д. 9'
+                        }
+                        else {
+                            mAD2 = '9'
+                        }
                         break
                     case 'г. Москва, ул. Клары Цеткин, д. 25, корп. 1':
                         mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                         mAU1 = 'К'; mAU2 = 'Л'; mAU3 = 'А'; mAU4 = 'Р'; mAU5 = 'Ы'; mAU7 = 'Ц'; mAU8 = 'Е'; mAU9 = 'Т'; mAU10 = 'К'; mAU11 = 'И'; mAU12 = 'Н';
+                        if (path.includes('new')) {
+                            mAD1 = 'Д. 25'
+                            mAK1 = 'КОРП. 1'
+                        }
+                        else {
                         mAD1 = '2'; mAD2 = '5'
                         mAK1 = '1'
+                        }
+
                         break
                     case 'Московская область, г. Люберцы, ул. Мира, д.7':
                         mAO1 = 'М'; mAO2 = 'О'; mAO3 = 'С'; mAO4 = 'К'; mAO5 = 'О'; mAO6 = 'В'; mAO7 = 'С'; mAO8 = 'К'; mAO9 = 'А'; mAO10 = 'Я'; mAO12 = 'О'; mAO13 = 'Б'; mAO14 = 'Л'; mAO15 = 'А'; mAO16 = 'С'; mAO17 = 'Т'; mAO18 = 'Ь';
                         mAG1 = 'Л'; mAG2 = 'Ю'; mAG3 = 'Б'; mAG4 = 'Е'; mAG5 = 'Р'; mAG6 = 'Ц'; mAG7 = 'Ы';
-                        mAD2 = '7'
+                        if (path.includes('new')) {
+                            mAD1 = 'Д. 7'
+                        }
+                        else {
+                            mAD2 = '7'
+                        }
                         break
                 }
 
@@ -3916,44 +3991,79 @@ function generateReg() {
                         case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
-                            aHD1 = '88'; aHK1 = 'КОРП. 1'
+                            if (path.includes('new')) {
+                                aHD1 = 'Д. 88'; aHK1 = 'КОРП. 1'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                            }                       
                             break
                         case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
-                            aHD1 = '88'; aHK1 = 'КОРП. 2'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 88'; aHK1 = 'КОРП. 2'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                            }
                             break
                         case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
-                            aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                            }
                             break
                         case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
-                            aHD1 = 'Д. 13'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 13'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                            }
                             break
                         case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
-                            aHD1 = 'Д. 9'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 9'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                            }
                             break
                         case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'Л'; aHU3 = 'А'; aHU4 = 'Р'; aHU5 = 'Ы'; aHU6 = ''; aHU7 = 'Ц'; aHU8 = 'Е'; aHU9 = 'Т'; aHU10 = 'К'; aHU11 = 'И'; aHU12 = 'Н';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
-                            aHD1 = 'Д. 25'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 25'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';                                
+                            }
                             break
                         case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                             aHG1 = 'М'; aHG2 = 'О'; aHG3 = 'С'; aHG4 = 'К'; aHG5 = 'О'; aHG6 = 'В'; aHG7 = 'С'; aHG8 = 'К'; aHG9 = 'А'; aHG10 = 'Я'; aHG12 = 'О'; aHG13 = 'Б'; aHG14 = 'Л'; aHG15 = 'А'; aHG16 = 'С'; aHG17 = 'Т'; aHG18 = 'Ь';
                             aHU1 = 'Л'; aHU2 = 'Ю'; aHU3 = 'Б'; aHU4 = 'Е'; aHU5 = 'Р'; aHU6 = 'Ц'; aHU7 = 'Ы';
-                            aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
-                            aHD1 = 'Д. 7'
+                            if (path.includes('new')) {
+                                aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
+                                aHD1 = 'Д. 7'
+                            }
+                            else {
+                                aHD1 = 'М'; aHD2 = 'И'; aHD3 = 'Р'; aHD4 = 'А';
+                                aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
+                            }
                             break
                     }
 
@@ -4010,41 +4120,81 @@ function generateReg() {
                         case 'г. Москва, проспект Вернадского, 88 к. 1':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            mAD1 = '8'; mAD2 = '8'
-                            mAK1 = '1'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 88'
+                                mAK1 = 'КОРП. 1'
+                            }
+                            else {
+                                mAD1 = '8'; mAD2 = '8'
+                                mAK1 = '1'
+                            }
                             break
                         case 'г. Москва, проспект Вернадского, 88 к. 2':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            mAD1 = '8'; mAD2 = '8'
-                            mAK1 = '2'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 88'
+                                mAK1 = 'КОРП. 2'
+                            }
+                            else {
+                                mAD1 = '8'; mAD2 = '8'
+                                mAK1 = '2'
+                            }
                             break
                         case 'г. Москва, проспект Вернадского, 88 к. 3':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 88'
+                                mAK1 = 'КОРП. 3'
+                            }
+                            else {
                             mAD1 = '8'; mAD2 = '8'
                             mAK1 = '3'
+                            }
                             break
                         case 'г. Москва, ул. Космонавтов, д. 13':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                            mAD1 = '1'; mAD2 = '3'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 13'
+                            }
+                            else {
+                                mAD1 = '1'; mAD2 = '3'
+                            }
                             break
                         case 'г. Москва, улица Космонавтов, д. 9':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                            mAD2 = '9'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 9'
+                            }
+                            else {
+                                mAD2 = '9'
+                            }
                             break
                         case 'г. Москва, ул. Клары Цеткин, д. 25, корп. 1':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'Л'; mAU3 = 'А'; mAU4 = 'Р'; mAU5 = 'Ы'; mAU7 = 'Ц'; mAU8 = 'Е'; mAU9 = 'Т'; mAU10 = 'К'; mAU11 = 'И'; mAU12 = 'Н';
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 25'
+                                mAK1 = 'КОРП. 1'
+                            }
+                            else {
                             mAD1 = '2'; mAD2 = '5'
                             mAK1 = '1'
+                            }
+    
                             break
                         case 'Московская область, г. Люберцы, ул. Мира, д.7':
                             mAO1 = 'М'; mAO2 = 'О'; mAO3 = 'С'; mAO4 = 'К'; mAO5 = 'О'; mAO6 = 'В'; mAO7 = 'С'; mAO8 = 'К'; mAO9 = 'А'; mAO10 = 'Я'; mAO12 = 'О'; mAO13 = 'Б'; mAO14 = 'Л'; mAO15 = 'А'; mAO16 = 'С'; mAO17 = 'Т'; mAO18 = 'Ь';
                             mAG1 = 'Л'; mAG2 = 'Ю'; mAG3 = 'Б'; mAG4 = 'Е'; mAG5 = 'Р'; mAG6 = 'Ц'; mAG7 = 'Ы';
-                            mAD2 = '7'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 7'
+                            }
+                            else {
+                                mAD2 = '7'
+                            }
                             break
                     }
 
@@ -6590,44 +6740,79 @@ function generateRegVisa() {
                         case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
-                            aHD1 = '88'; aHK1 = 'КОРП. 1'
+                            if (path.includes('new')) {
+                                aHD1 = 'Д. 88'; aHK1 = 'КОРП. 1'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '1';
+                            }                       
                             break
                         case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
-                            aHD1 = '88'; aHK1 = 'КОРП. 2'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 88'; aHK1 = 'КОРП. 2'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '2';
+                            }
                             break
                         case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
-                            aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '8'; aHD6 = '8'; aHD7 = ''; aHD8 = 'К'; aHD9 = 'О'; aHD10 = 'Р'; aHD11 = 'П'; aHD12 = 'У'; aHD13 = 'С'; aHD14 = ''; aHD15 = '3';
+                            }
                             break
                         case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
-                            aHD1 = 'Д. 13'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 13'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '1'; aHD6 = '3';
+                            }
                             break
                         case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
-                            aHD1 = 'Д. 9'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 9'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '9';
+                            }
                             break
                         case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'Л'; aHU3 = 'А'; aHU4 = 'Р'; aHU5 = 'Ы'; aHU6 = ''; aHU7 = 'Ц'; aHU8 = 'Е'; aHU9 = 'Т'; aHU10 = 'К'; aHU11 = 'И'; aHU12 = 'Н';
-                            // aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';
-                            aHD1 = 'Д. 25'
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 25'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '2'; aHD6 = '5';                                
+                            }
                             break
                         case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                             aHG1 = 'М'; aHG2 = 'О'; aHG3 = 'С'; aHG4 = 'К'; aHG5 = 'О'; aHG6 = 'В'; aHG7 = 'С'; aHG8 = 'К'; aHG9 = 'А'; aHG10 = 'Я'; aHG12 = 'О'; aHG13 = 'Б'; aHG14 = 'Л'; aHG15 = 'А'; aHG16 = 'С'; aHG17 = 'Т'; aHG18 = 'Ь';
                             aHU1 = 'Л'; aHU2 = 'Ю'; aHU3 = 'Б'; aHU4 = 'Е'; aHU5 = 'Р'; aHU6 = 'Ц'; aHU7 = 'Ы';
-                            aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
-                            aHD1 = 'Д. 7'
+                            if (path.includes('new')) {
+                                aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
+                                aHD1 = 'Д. 7'
+                            }
+                            else {
+                                aHD1 = 'М'; aHD2 = 'И'; aHD3 = 'Р'; aHD4 = 'А';
+                                aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
+                            }
                             break
                     }
 
@@ -6684,41 +6869,81 @@ function generateRegVisa() {
                         case 'г. Москва, проспект Вернадского, 88 к. 1':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            mAD1 = '8'; mAD2 = '8'
-                            mAK1 = '1'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 88'
+                                mAK1 = 'КОРП. 1'
+                            }
+                            else {
+                                mAD1 = '8'; mAD2 = '8'
+                                mAK1 = '1'
+                            }
                             break
                         case 'г. Москва, проспект Вернадского, 88 к. 2':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            mAD1 = '8'; mAD2 = '8'
-                            mAK1 = '2'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 88'
+                                mAK1 = 'КОРП. 2'
+                            }
+                            else {
+                                mAD1 = '8'; mAD2 = '8'
+                                mAK1 = '2'
+                            }
                             break
                         case 'г. Москва, проспект Вернадского, 88 к. 3':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 88'
+                                mAK1 = 'КОРП. 3'
+                            }
+                            else {
                             mAD1 = '8'; mAD2 = '8'
                             mAK1 = '3'
+                            }
                             break
                         case 'г. Москва, ул. Космонавтов, д. 13':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                            mAD1 = '1'; mAD2 = '3'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 13'
+                            }
+                            else {
+                                mAD1 = '1'; mAD2 = '3'
+                            }
                             break
                         case 'г. Москва, улица Космонавтов, д. 9':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                            mAD2 = '9'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 9'
+                            }
+                            else {
+                                mAD2 = '9'
+                            }
                             break
                         case 'г. Москва, ул. Клары Цеткин, д. 25, корп. 1':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'Л'; mAU3 = 'А'; mAU4 = 'Р'; mAU5 = 'Ы'; mAU7 = 'Ц'; mAU8 = 'Е'; mAU9 = 'Т'; mAU10 = 'К'; mAU11 = 'И'; mAU12 = 'Н';
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 25'
+                                mAK1 = 'КОРП. 1'
+                            }
+                            else {
                             mAD1 = '2'; mAD2 = '5'
                             mAK1 = '1'
+                            }
+    
                             break
                         case 'Московская область, г. Люберцы, ул. Мира, д.7':
                             mAO1 = 'М'; mAO2 = 'О'; mAO3 = 'С'; mAO4 = 'К'; mAO5 = 'О'; mAO6 = 'В'; mAO7 = 'С'; mAO8 = 'К'; mAO9 = 'А'; mAO10 = 'Я'; mAO12 = 'О'; mAO13 = 'Б'; mAO14 = 'Л'; mAO15 = 'А'; mAO16 = 'С'; mAO17 = 'Т'; mAO18 = 'Ь';
                             mAG1 = 'Л'; mAG2 = 'Ю'; mAG3 = 'Б'; mAG4 = 'Е'; mAG5 = 'Р'; mAG6 = 'Ц'; mAG7 = 'Ы';
-                            mAD2 = '7'
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 7'
+                            }
+                            else {
+                                mAD2 = '7'
+                            }
                             break
                     }
 
