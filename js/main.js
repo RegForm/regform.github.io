@@ -3356,10 +3356,10 @@ function generateReg() {
         let ovmRg = document.getElementById('ovmByRegion').value
         let rgOn = document.getElementById('registrationOn').value
         let uvedTemp = document.getElementById('uvedTemp').value
-        path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
+        path_uved = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
         loadFile(
-            path,
+            path_uved,
             function (error, content) {
                 if (error) {
                     throw error;
@@ -3991,7 +3991,7 @@ function generateReg() {
                         case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 aHD1 = 'Д. 88'; aHK1 = 'КОРП. 1'
                             }
                             else {
@@ -4001,7 +4001,7 @@ function generateReg() {
                         case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 88'; aHK1 = 'КОРП. 2'
                             }
@@ -4012,7 +4012,7 @@ function generateReg() {
                         case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
                             }
@@ -4023,7 +4023,7 @@ function generateReg() {
                         case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 13'
                             }
@@ -4034,7 +4034,7 @@ function generateReg() {
                         case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 9'
                             }
@@ -4045,7 +4045,7 @@ function generateReg() {
                         case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'Л'; aHU3 = 'А'; aHU4 = 'Р'; aHU5 = 'Ы'; aHU6 = ''; aHU7 = 'Ц'; aHU8 = 'Е'; aHU9 = 'Т'; aHU10 = 'К'; aHU11 = 'И'; aHU12 = 'Н';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 25'
                             }
@@ -4056,7 +4056,7 @@ function generateReg() {
                         case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                             aHG1 = 'М'; aHG2 = 'О'; aHG3 = 'С'; aHG4 = 'К'; aHG5 = 'О'; aHG6 = 'В'; aHG7 = 'С'; aHG8 = 'К'; aHG9 = 'А'; aHG10 = 'Я'; aHG12 = 'О'; aHG13 = 'Б'; aHG14 = 'Л'; aHG15 = 'А'; aHG16 = 'С'; aHG17 = 'Т'; aHG18 = 'Ь';
                             aHU1 = 'Л'; aHU2 = 'Ю'; aHU3 = 'Б'; aHU4 = 'Е'; aHU5 = 'Р'; aHU6 = 'Ц'; aHU7 = 'Ы';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
                                 aHD1 = 'Д. 7'
                             }
@@ -4120,7 +4120,7 @@ function generateReg() {
                         case 'г. Москва, проспект Вернадского, 88 к. 1':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 88'
                                 mAK1 = 'КОРП. 1'
                             }
@@ -4132,7 +4132,7 @@ function generateReg() {
                         case 'г. Москва, проспект Вернадского, 88 к. 2':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 88'
                                 mAK1 = 'КОРП. 2'
                             }
@@ -4144,7 +4144,7 @@ function generateReg() {
                         case 'г. Москва, проспект Вернадского, 88 к. 3':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 88'
                                 mAK1 = 'КОРП. 3'
                             }
@@ -4156,7 +4156,7 @@ function generateReg() {
                         case 'г. Москва, ул. Космонавтов, д. 13':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 13'
                             }
                             else {
@@ -4166,7 +4166,7 @@ function generateReg() {
                         case 'г. Москва, улица Космонавтов, д. 9':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 9'
                             }
                             else {
@@ -4176,7 +4176,7 @@ function generateReg() {
                         case 'г. Москва, ул. Клары Цеткин, д. 25, корп. 1':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'Л'; mAU3 = 'А'; mAU4 = 'Р'; mAU5 = 'Ы'; mAU7 = 'Ц'; mAU8 = 'Е'; mAU9 = 'Т'; mAU10 = 'К'; mAU11 = 'И'; mAU12 = 'Н';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 25'
                                 mAK1 = 'КОРП. 1'
                             }
@@ -4189,7 +4189,7 @@ function generateReg() {
                         case 'Московская область, г. Люберцы, ул. Мира, д.7':
                             mAO1 = 'М'; mAO2 = 'О'; mAO3 = 'С'; mAO4 = 'К'; mAO5 = 'О'; mAO6 = 'В'; mAO7 = 'С'; mAO8 = 'К'; mAO9 = 'А'; mAO10 = 'Я'; mAO12 = 'О'; mAO13 = 'Б'; mAO14 = 'Л'; mAO15 = 'А'; mAO16 = 'С'; mAO17 = 'Т'; mAO18 = 'Ь';
                             mAG1 = 'Л'; mAG2 = 'Ю'; mAG3 = 'Б'; mAG4 = 'Е'; mAG5 = 'Р'; mAG6 = 'Ц'; mAG7 = 'Ы';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 7'
                             }
                             else {
@@ -6109,10 +6109,10 @@ function generateRegVisa() {
         let ovmRg = document.getElementById('ovmByRegion').value
         let rgOn = document.getElementById('registrationOn').value
         let uvedTemp = document.getElementById('uvedTemp').value
-        path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
+        path_uved = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
         loadFile(
-            path,
+            path_uved,
             function (error, content) {
                 if (error) {
                     throw error;
@@ -6740,7 +6740,7 @@ function generateRegVisa() {
                         case "г. Москва, проспект Вернадского, 88 к. 1 (ОБЩЕЖИТИЕ №1)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 aHD1 = 'Д. 88'; aHK1 = 'КОРП. 1'
                             }
                             else {
@@ -6750,7 +6750,7 @@ function generateRegVisa() {
                         case "г. Москва, проспект Вернадского, 88 к. 2 (ОБЩЕЖИТИЕ №2)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 88'; aHK1 = 'КОРП. 2'
                             }
@@ -6761,7 +6761,7 @@ function generateRegVisa() {
                         case "г. Москва, проспект Вернадского, 88 к. 3 (ОБЩЕЖИТИЕ №3)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'П'; aHU2 = 'Р'; aHU3 = 'О'; aHU4 = 'С'; aHU5 = 'П'; aHU6 = 'Е'; aHU7 = 'К'; aHU8 = 'Т'; aHU10 = 'В'; aHU11 = 'Е'; aHU12 = 'Р'; aHU13 = 'Н'; aHU14 = 'А'; aHU15 = 'Д'; aHU16 = 'С'; aHU17 = 'К'; aHU18 = 'О'; aHU19 = 'Г'; aHU20 = 'О';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 88'; aHK1 = 'КОРП. 3'
                             }
@@ -6772,7 +6772,7 @@ function generateRegVisa() {
                         case "г. Москва, улица Космонавтов, д. 13 (ОБЩЕЖИТИЕ №4)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 13'
                             }
@@ -6783,7 +6783,7 @@ function generateRegVisa() {
                         case "г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'О'; aHU3 = 'С'; aHU4 = 'М'; aHU5 = 'О'; aHU6 = 'Н'; aHU7 = 'А'; aHU8 = 'В'; aHU9 = 'Т'; aHU10 = 'О'; aHU11 = 'В';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 9'
                             }
@@ -6794,7 +6794,7 @@ function generateRegVisa() {
                         case "г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)":
                             aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
                             aHU1 = 'К'; aHU2 = 'Л'; aHU3 = 'А'; aHU4 = 'Р'; aHU5 = 'Ы'; aHU6 = ''; aHU7 = 'Ц'; aHU8 = 'Е'; aHU9 = 'Т'; aHU10 = 'К'; aHU11 = 'И'; aHU12 = 'Н';
-                            if (path.includes('new'))
+                            if (path_uved.includes('new'))
                             {
                                 aHD1 = 'Д. 25'
                             }
@@ -6805,7 +6805,7 @@ function generateRegVisa() {
                         case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                             aHG1 = 'М'; aHG2 = 'О'; aHG3 = 'С'; aHG4 = 'К'; aHG5 = 'О'; aHG6 = 'В'; aHG7 = 'С'; aHG8 = 'К'; aHG9 = 'А'; aHG10 = 'Я'; aHG12 = 'О'; aHG13 = 'Б'; aHG14 = 'Л'; aHG15 = 'А'; aHG16 = 'С'; aHG17 = 'Т'; aHG18 = 'Ь';
                             aHU1 = 'Л'; aHU2 = 'Ю'; aHU3 = 'Б'; aHU4 = 'Е'; aHU5 = 'Р'; aHU6 = 'Ц'; aHU7 = 'Ы';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 aHD11 = 'М'; aHD12 = 'И'; aHD13 = 'Р'; aHD14 = 'А';
                                 aHD1 = 'Д. 7'
                             }
@@ -6869,7 +6869,7 @@ function generateRegVisa() {
                         case 'г. Москва, проспект Вернадского, 88 к. 1':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 88'
                                 mAK1 = 'КОРП. 1'
                             }
@@ -6881,7 +6881,7 @@ function generateRegVisa() {
                         case 'г. Москва, проспект Вернадского, 88 к. 2':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 88'
                                 mAK1 = 'КОРП. 2'
                             }
@@ -6893,7 +6893,7 @@ function generateRegVisa() {
                         case 'г. Москва, проспект Вернадского, 88 к. 3':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'П'; mAU2 = 'Р'; mAU3 = 'О'; mAU4 = 'С'; mAU5 = 'П'; mAU6 = 'Е'; mAU7 = 'К'; mAU8 = 'Т'; mAU10 = 'В'; mAU11 = 'Е'; mAU12 = 'Р'; mAU13 = 'Н'; mAU14 = 'А'; mAU15 = 'Д'; mAU16 = 'С'; mAU17 = 'К'; mAU18 = 'О'; mAU19 = 'Г'; mAU20 = 'О';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 88'
                                 mAK1 = 'КОРП. 3'
                             }
@@ -6905,7 +6905,7 @@ function generateRegVisa() {
                         case 'г. Москва, ул. Космонавтов, д. 13':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 13'
                             }
                             else {
@@ -6915,7 +6915,7 @@ function generateRegVisa() {
                         case 'г. Москва, улица Космонавтов, д. 9':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'О'; mAU3 = 'С'; mAU4 = 'М'; mAU5 = 'О'; mAU6 = 'Н'; mAU7 = 'А'; mAU8 = 'В'; mAU9 = 'Т'; mAU10 = 'О'; mAU11 = 'В';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 9'
                             }
                             else {
@@ -6925,7 +6925,7 @@ function generateRegVisa() {
                         case 'г. Москва, ул. Клары Цеткин, д. 25, корп. 1':
                             mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
                             mAU1 = 'К'; mAU2 = 'Л'; mAU3 = 'А'; mAU4 = 'Р'; mAU5 = 'Ы'; mAU7 = 'Ц'; mAU8 = 'Е'; mAU9 = 'Т'; mAU10 = 'К'; mAU11 = 'И'; mAU12 = 'Н';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 25'
                                 mAK1 = 'КОРП. 1'
                             }
@@ -6938,7 +6938,7 @@ function generateRegVisa() {
                         case 'Московская область, г. Люберцы, ул. Мира, д.7':
                             mAO1 = 'М'; mAO2 = 'О'; mAO3 = 'С'; mAO4 = 'К'; mAO5 = 'О'; mAO6 = 'В'; mAO7 = 'С'; mAO8 = 'К'; mAO9 = 'А'; mAO10 = 'Я'; mAO12 = 'О'; mAO13 = 'Б'; mAO14 = 'Л'; mAO15 = 'А'; mAO16 = 'С'; mAO17 = 'Т'; mAO18 = 'Ь';
                             mAG1 = 'Л'; mAG2 = 'Ю'; mAG3 = 'Б'; mAG4 = 'Е'; mAG5 = 'Р'; mAG6 = 'Ц'; mAG7 = 'Ы';
-                            if (path.includes('new')) {
+                            if (path_uved.includes('new')) {
                                 mAD1 = 'Д. 7'
                             }
                             else {
