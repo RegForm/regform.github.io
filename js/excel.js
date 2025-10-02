@@ -81,7 +81,7 @@ function findInfo(id) {
             let data = event.target.result;
             let workbook = XLSX.read(data,{type:"binary"});
 
-            let indSheet = Object.keys(workbook.Sheets).indexOf('Ответы на форму (1)') // ПОИСК ИНДЕКСА ЛИСТА ПО НАЗВАНИЮ
+            let indSheet = Object.keys(workbook.Sheets).indexOf('ПРИГЛАШЕНИЯ 25.09.2025 - 2026') // ПОИСК ИНДЕКСА ЛИСТА ПО НАЗВАНИЮ
             //console.log(indSheet)
             let sheet = Object.keys(workbook.Sheets)[indSheet]
             
@@ -409,6 +409,7 @@ function updateNameDisplay() {
     }
 
 }
+
 
 
 
