@@ -2555,6 +2555,18 @@ window.generateRegNotif = function generate() {
                             mAD2 = '7'
                         }
                         break
+                    case 'Москва, Кибальчича д. 6 к. 2':
+                        mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
+                        mAU1 = 'К'; mAU2 = 'И'; mAU3 = 'Б'; mAU4 = 'А'; mAU5 = 'Л'; mAU6 = 'Ь'; mAU7 = 'Ч'; mAU8 = 'И'; mAU9 = 'Ч'; mAU10 = 'А';
+                        if (path.includes('new')) {
+                            mAD1 = 'Д. 6'
+                            mAK1 = 'КОРП. 2'
+                        }
+                        else {
+                            mAD2 = '6'
+                            mAK1 = '2'
+                        }
+                        break
                 }
 
 
@@ -4200,6 +4212,18 @@ function generateReg() {
                             }
                             else {
                                 mAD2 = '7'
+                            }
+                            break
+                        case 'Москва, Кибальчича д. 6 к. 2':
+                            mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
+                            mAU1 = 'К'; mAU2 = 'И'; mAU3 = 'Б'; mAU4 = 'А'; mAU5 = 'Л'; mAU6 = 'Ь'; mAU7 = 'Ч'; mAU8 = 'И'; mAU9 = 'Ч'; mAU10 = 'А';
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 6'
+                                mAK1 = 'КОРП. 2'
+                            }
+                            else {
+                                mAD2 = '6'
+                                mAK1 = '2'
                             }
                             break
                     }
@@ -6955,6 +6979,18 @@ function generateRegVisa() {
                             }
                             else {
                                 mAD2 = '7'
+                            }
+                            break
+                        case 'Москва, Кибальчича д. 6 к. 2':
+                            mAG1 = 'М'; mAG2 = 'О'; mAG3 = 'С'; mAG4 = 'К'; mAG5 = 'В'; mAG6 = 'А';
+                            mAU1 = 'К'; mAU2 = 'И'; mAU3 = 'Б'; mAU4 = 'А'; mAU5 = 'Л'; mAU6 = 'Ь'; mAU7 = 'Ч'; mAU8 = 'И'; mAU9 = 'Ч'; mAU10 = 'А';
+                            if (path.includes('new')) {
+                                mAD1 = 'Д. 6'
+                                mAK1 = 'КОРП. 2'
+                            }
+                            else {
+                                mAD2 = '6'
+                                mAK1 = '2'
                             }
                             break
                     }
