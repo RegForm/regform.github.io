@@ -46,6 +46,7 @@
                     <div class="docGroup">
                         <button onclick="generateComplNotice()" class="buttonDoc">Уведомление о завершении</button>
                         <button onclick="generateFlatSolicitaion()" class="buttonDoc">Ходатайство по квартире</button>
+                        <button onclick="generateFlatSolicitaionProdl()" class="buttonDoc">Ходатайство по квартире - продление</button>
                     </div>
                 </div>
 
@@ -144,8 +145,8 @@
                 <select id="regBy" class="selectStyleBig regBy">
                     <option hidden disabled selected value=""></option>
                     <option value="Колпакова">Колпакова</option>
-                    <option value="Черная">Черная</option>
-                    <option value="Сафина">Сафина</option>
+                    <option value="Дзюба">Дзюба</option>
+                    <option value="Щербаков">Щербаков</option>
                     <option value="Елисеев">Елисеев</option>
                     <option value="Вайсман">Вайсман</option>
                     <option value="Скуратовская">Скуратовская</option>
@@ -491,6 +492,7 @@
                                 <option value="г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)">г. Москва, улица Космонавтов, д. 9 (ОБЩЕЖИТИЕ №5)</option>
                                 <option value="г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)">г. Москва, улица Клары Цеткин, д. 25 (ОБЩЕЖИТИЕ №6)</option>
                                 <option value="Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)">Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)</option>
+                                <option value="г. Москва, улица Кибальчича, д. 6 к. 2">г. Москва, улица Кибальчича, д. 6 к. 2</option>
                                 <option value="Я ЖИВУ В КВАРТИРЕ">Квартира</option>
                                 <option value="Я ЖИВУ В ОТЕЛЕ">Отель</option>
                             </select>
@@ -540,11 +542,13 @@
                         <!--notification-->
                         <div class="inputBlock">
                             <span class="labelInput inInfo">С</span>
+                            <p>Нет даты = подписан эл. подписью</p>
                             <input type="date" size="40" id="notificationFrom1"  class="inputStyle inputInInfo">
                         </div>
 
                         <div class="inputBlock">
                             <span class="labelInput inInfo">ПО / Дата окончания визы</span>
+                            <br>
                             <input type="date" size="40" id="notificationUntil1"  class="inputStyle inputInInfo">
                         </div>
 

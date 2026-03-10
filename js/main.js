@@ -378,11 +378,11 @@ window.generateVisaReference = function generate() {
                     case "Колпакова":
                         regBy = 'Начальник ПВО УМС                                              Колпакова Т.А.'
                         break
-                    case "Черная":
-                        regBy = 'Документовед                                                                   Черная Л.С.'
+                    case "Дзюба":
+                        regBy = 'Документовед                                                                   Дзюба Т.Е.'
                         break
-                    case "Сафина":
-                        regBy = 'Документовед                                                                  Сафина А.И.'
+                    case "Щербаков":
+                        regBy = 'Инспектор                                                                  Щербаков Г.Г.'
                         break
                     case "Елисеев":
                         regBy = 'Документовед ПВО УМС                                           Елисеев М.О.'
@@ -796,6 +796,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                 let notificationUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString() : ''
                 let issuedBy = document.getElementById('issuedBy' + indexTab).value != '' ? document.getElementById('issuedBy' + indexTab).value : ''
+                
 
                 // addressResidence
                 let addressResidence = ''
@@ -969,7 +970,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
 
                     notificationFrom: notificationFrom,
                     notificationUntil: notificationUntil,
-                    issuedBy: issuedBy,
+                    issuedBy: notificationFrom == '' ? 'Документ подписан электронной подписью' : issuedBy,
 
                     addressResidence: addressResidence,
                     faculty: faculty,
@@ -2424,6 +2425,17 @@ window.generateRegNotif = function generate() {
                             aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
                         }
                         break
+                    case "г. Москва, улица Кибальчича, д. 6 к. 2":
+                        aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
+                        aHU1 = 'К'; aHU2 = 'И'; aHU3 = 'Б'; aHU4 = 'А'; aHU5 = 'Л'; aHU6 = 'Ь'; aHU7 = 'Ч'; aHU8 = 'И'; aHU9 = 'Ч'; aHU10 = 'А';
+                        if (path.includes('new'))
+                        {
+                            aHD1 = 'Д. 6'; aHK1 = 'КОРП. 2'
+                        }
+                        else {
+                            aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '6'; aHD6 = ''; aHD7 = 'К'; aHD8 = 'О'; aHD9 = 'Р'; aHD10 = 'П'; aHD11 = 'У'; aHD12 = 'С'; aHD13 = ''; aHD14 = '2';
+                        }
+                        break
                 }
 
                 // migrationAddress {mAO1-18} {mAG1-7} {mAU1-20} {mAD1-2} {mAK1}
@@ -3139,6 +3151,324 @@ window.generateFlatSolicitaion = function generate() {
         });
 };
 
+//ходатайство по квартире
+window.generateFlatSolicitaionProdl = function generate() {
+    path = ('../Templates/ходатайство по квартире - продление.docx')
+
+    var zipDocs = new PizZip();
+    loadFile(
+        path,
+        function (error, content) {
+            if (error) {
+                throw error;
+            }
+
+            function replaceErrors(key, value) {
+                if (value instanceof Error) {
+                    return Object.getOwnPropertyNames(value).reduce(function(error, key) {
+                        error[key] = value[key];
+                        return error;
+                    }, {});
+                }
+                return value;
+            }
+            function errorHandler(error) {
+                console.log(JSON.stringify({error: error}, replaceErrors));
+
+                if (error.properties && error.properties.errors instanceof Array) {
+                    const errorMessages = error.properties.errors.map(function (error) {
+                        return error.properties.explanation;
+                    }).join("\n");
+                    console.log('errorMessages', errorMessages);
+                    // errorMessages is a humanly readable message looking like this :
+                    // 'The tag beginning with "foobar" is unopened'
+                }
+                throw error;
+            }
+
+            for (let i =0; i<countTab();i++) {
+                var zip = new PizZip(content);
+                var doc = new window.docxtemplater(zip, {
+                    paragraphLoop: true,
+                    linebreaks: true,
+                });
+
+                let tabs = document.getElementsByClassName('nav-tabs')[0].getElementsByTagName('li')
+                let elem = tabs[i]
+                let indexTab = parseInt(elem.id.match(/\d+/))
+
+
+                //dateUntil
+                let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
+                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+
+
+
+                // purpose
+                let purpose = ''
+                let purposeS = ''
+                switch (document.getElementById('purpose' + indexTab).value) {
+                    case "Учеба":
+                        purpose = "УЧЕБА"
+                        purposeS = "Студент"
+                        break
+                    case "Краткосрочная учеба":
+                        purpose = "КРАТКОСРОЧНАЯ УЧЕБА"
+                        purposeS = "Студент"
+                        break
+                    case "(НТС)":
+                        purpose = "НАУЧНО-ТЕХНИЧЕСКИЕ СВЯЗИ (НТС)"
+                        purposeS = "НТС"
+                        break
+                    case "Трудовая деятельность":
+                        purpose = "ТРУДОВАЯ ДЕЯТЕЛЬНОСТЬ"
+                        purposeS = "Преподаватель"
+                        break
+                }
+
+                // levelEducation
+                let levelEducation = ''
+                switch (document.getElementById('levelEducation' + indexTab).value) {
+                    case "Подготовительный факультет (изучаю русский язык)/ The preparatory faculty":
+                        levelEducation = 'подготовительный факультет'
+                        break
+                    case "бакалавриат/bachelor degree":
+                        levelEducation = 'бакалавриат'
+                        break
+                    case "магистратура/master degree":
+                        levelEducation = 'магистратура'
+                        break
+                    case "аспирантура/post-graduate studies":
+                        levelEducation = 'аспирантура'
+                        break
+                }
+
+                // course
+                let course = ''
+                switch (document.getElementById('course' + indexTab).value) {
+                    case '1':
+                        course = ', 1 курс,'
+                        break
+                    case '2':
+                        course = ', 2 курс,'
+                        break
+                    case '3':
+                        course = ', 3 курс,'
+                        break
+                    case '4':
+                        course = ', 4 курс,'
+                        break
+                    case '5':
+                        course = ', 5 курс,'
+                        break
+                }
+
+                // addressResidence
+                let addressResidence = ''
+                switch (document.getElementById('migrationAddress').value) {
+                    case "Квартира":
+                        addressResidence = document.getElementById('addressResidence' + indexTab).value
+                        break
+                    default:
+                        addressResidence = document.getElementById('migrationAddress').value
+                        break
+                }
+
+                // Passport
+                let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
+                    ? document.getElementById('series' + indexTab).value : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
+                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+
+                // gender
+                let gender = ''
+                switch (document.getElementById('gender' + indexTab).value) {
+                    case "Мужской / Male":
+                        gender = 'м.'
+                        break
+                    case "Женский / Female":
+                        gender = 'ж.'
+                        break
+                }
+
+                // registration On
+                let registrationOn = ''
+                switch (document.getElementById('registrationOn').value) {
+                    case "Круглов":
+                        registrationOn = 'Начальник УМС                                                                            Круглов В.В.'
+                        break
+                    case "Морозова":
+                        registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                        break
+                    case "Колпакова":
+                        registrationOn = "Начальник ПВО УМС                                                                  Колпакова Т.А."
+                        break
+                }
+
+                // visa
+                let typeVisa = ''
+                switch (document.getElementById('typeVisa' + indexTab).value) {
+                    case "ВИЗА":
+                        typeVisa = 'Виза'
+                        break
+                    case "(ВНЖ) ВИД НА ЖИТЕЛЬСТВО РФ":
+                        typeVisa = 'ВНЖ'
+                        break
+                    case "(РВП) РАЗРЕШЕНИЕ НА ВРЕМЕННОЕ ПРОЖИВАНИЕ РФ":
+                        typeVisa = 'РВП'
+                        break
+
+                }
+                let seriesVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('seriesVisa' + indexTab).value)
+                    ? document.getElementById('seriesVisa' + indexTab).value : ''
+                let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
+                    ? document.getElementById('idVisa' + indexTab).value : ''
+
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
+                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
+                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+
+
+                if (dateUntil=='') {
+                    dateUntil = validUntilVisa
+                }
+                
+                // faculty
+                let faculty = ''
+                switch (document.getElementById('faculty' + indexTab).value) {
+                    case "Институт изящных искусств: Факультет музыкального искусства / The Musical Arts Institute":
+                        faculty = 'ИИИ:Музфак'
+                        break
+                    case "Институт изящных искусств: Художественно-графический факультет/ The Institute of Fine Arts":
+                        faculty = 'ИИИ: Худграф'
+                        break
+                    case "Институт социально-гуманитарного образования / The Institute of Social Studies and Humanities":
+                        faculty = 'ИСГО'
+                        break
+                    case "Институт филологии / The Institute of Philology":
+                        faculty = 'ИФ'
+                        break
+                    case "Институт иностранных языков / The Institute of Foreign Languages":
+                        faculty = 'ИИЯ'
+                        break
+                    case "Институт международного образования / The Institute of International Education":
+                        faculty = 'ИМО'
+                        break
+                    case "Институт детства / The Institute of Childhood":
+                        faculty = 'ИД'
+                        break
+                    case "Институт биологии и химии / The Institute of Biology and Chemistry":
+                        faculty = 'ИБХ'
+                        break
+                    case "Институт физики, технологии и информационных систем / The Institute of Physics, Technology, and Informational Systems":
+                        faculty = 'ИФТИС'
+                        break
+                    case "Институт физической культуры, спорта и здоровья /The Institute of Physical Education, Sports and Health":
+                        faculty = 'ИФКСиЗ'
+                        break
+                    case "Географический факультет / The Institute of Geography":
+                        faculty = 'Геофак'
+                        break
+                    case "Институт истории и политики / The Institute of History and Politics":
+                        faculty = 'ИИП'
+                        break
+                    case "Институт математики и информатики / The Institute of Mathematics and Informatics":
+                        faculty = 'ИМИ'
+                        break
+                    case "Факультет дошкольной педагогики и психологии / The Institute of Pre-School Pedagogy and Psychology":
+                        faculty = 'Дош.фак.'
+                        break
+                    case "Институт педагогики и психологии / The Institute of Pedagogy and Psychology":
+                        faculty = 'ИПП'
+                        break
+                    case "Институт журналистики, коммуникаций и медиаобразования / The Institute of Journalism, Communications and Media Education":
+                        faculty = 'ИЖКиМ'
+                        break
+                    case "Институт развития цифрового образования / The Institute of Digital Education Development":
+                        faculty = 'ИРЦО'
+                        break
+                }
+
+                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+
+                doc.setData({
+                    dateInOvm: dateInOvm,
+                    nStud: document.getElementById('nStud' + indexTab).value,
+                    grazd: document.getElementById('grazd' + indexTab).value,
+                    lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
+                    firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
+                    patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
+                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    gender: gender,
+
+                    registrationOn: registrationOn,
+                    dateUntil: dateUntil,
+                    purpose: purpose,
+                    purposeS: purposeS,
+                    levelEducation: levelEducation,
+                    course: course,
+
+                    series: series,
+                    idPassport: document.getElementById('idPassport' + indexTab).value,
+                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    validUntil: validUntil,
+
+                    typeVisa: typeVisa,
+                    seriesVisa: seriesVisa,
+                    idVisa: idVisa,
+                    dateOfIssueVisa: dateOfIssueVisa,
+                    validUntilVisa: validUntilVisa,
+
+                    seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
+                    idMigration: document.getElementById('idMigration' + indexTab).value,
+                    dateArrivalMigration: new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString(),
+
+                    addressResidence: document.getElementById('addressResidence' + indexTab).value,
+                });
+
+
+
+                try {
+                    doc.render();
+                }
+                catch (error) {
+                    // Catch rendering errors (errors relating to the rendering of the template : angularParser throws an error)
+                    errorHandler(error);
+                }
+                var out = doc.getZip().generate();
+                zipDocs.file("ХОДАТАЙСТВО ПО КВАРТИРЕ (ПРОДЛЕНИЕ) - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
+                    document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
+                    document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
+                    document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
+                    dateInOvm +
+                    " - " +
+                    document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
+                    + ".docx"
+                    , out, {base64: true}
+                );
+            } // end for
+
+
+            let nameFile = ''
+            if (countTab()==1) {
+                nameFile = document.getElementById('nStud1').value
+                    +" ХОДАТАЙСТВО ПО КВАРТИРЕ (ПРОДЛЕНИЕ) - " +
+                    document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
+                    +".zip"
+            }
+            else {
+                nameFile = document.getElementById('nStud1').value + '-'+
+                    document.getElementById('nStud'+(lastTab()-1)).value
+                    +" ХОДАТАЙСТВО ПО КВАРТИРЕ (ПРОДЛЕНИЕ) - " +
+                    document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text
+                    + ".zip"
+            }
+            var content = zipDocs.generate({ type: "blob" });
+            saveAs(content,nameFile);
+        });
+};
+
 
 // new
 //уведомление о завершении
@@ -3217,6 +3547,9 @@ window.generateComplNotice = function generate() {
                     case "Московская область, г. Люберцы, ул. Мира, д.7 (ОБЩЕЖИТИЕ №7)":
                         addressHostel = 'Московская область, г. Люберцы, ул. Мира, д.7'
                         break
+                    case "г. Москва, улица Кибальчича, д. 6 к. 2":
+                        addressHostel = 'г. Москва, улица Кибальчича, д. 6 к. 2'
+                        break
                     default:
                         addressHostel = document.getElementById('addressResidence'+indexTab).value
                 }
@@ -3277,7 +3610,11 @@ window.generateComplNotice = function generate() {
                 let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
                     ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
 
-                
+                let notificationFrom =  /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString())
+                        ? new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString() : ''
+                let notificationN1 = notificationFrom == '' ? "Выдано" : ''
+                let notificationN2 = notificationFrom == '' ? "Документ подписан электронной подписью" : ''
+
                 doc.setData({
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
                     firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
@@ -3297,8 +3634,9 @@ window.generateComplNotice = function generate() {
                     validUntil: validUntil,
 
                     addressHostel: addressHostel,
-                    notificationFrom: /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString() : '',
+                    notificationFrom:notificationFrom,
+                    notificationN1: notificationN1,
+                    notificationN2: notificationN2,
                     notificationUntil: /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString())
                         ? new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString() : '',
 
@@ -4081,6 +4419,17 @@ function generateReg() {
                             else {
                                 aHD1 = 'М'; aHD2 = 'И'; aHD3 = 'Р'; aHD4 = 'А';
                                 aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
+                            }
+                            break
+                        case "г. Москва, улица Кибальчича, д. 6 к. 2":
+                            aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
+                            aHU1 = 'К'; aHU2 = 'И'; aHU3 = 'Б'; aHU4 = 'А'; aHU5 = 'Л'; aHU6 = 'Ь'; aHU7 = 'Ч'; aHU8 = 'И'; aHU9 = 'Ч'; aHU10 = 'А';
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 6'; aHK1 = 'КОРП. 2'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '6'; aHD6 = ''; aHD7 = 'К'; aHD8 = 'О'; aHD9 = 'Р'; aHD10 = 'П'; aHD11 = 'У'; aHD12 = 'С'; aHD13 = ''; aHD14 = '2';
                             }
                             break
                     }
@@ -5659,7 +6008,7 @@ function generateVisa() {
 
                         notificationFrom: notificationFrom,
                         notificationUntil: notificationUntil,
-                        issuedBy: issuedBy,
+                        issuedBy: notificationFrom == '' ? 'Документ подписан электронной подписью' : issuedBy,
 
                         addressResidence: addressResidence,
                         faculty: faculty,
@@ -5884,11 +6233,11 @@ function generateVisa() {
                         case "Колпакова":
                             regBy = 'Начальник ПВО УМС                                              Колпакова Т.А.'
                             break
-                        case "Черная":
-                            regBy = 'Документовед                                                                   Черная Л.С.'
+                        case "Дзюба":
+                            regBy = 'Документовед                                                                   Дзюба Т.Е.'
                             break
-                        case "Сафина":
-                            regBy = 'Документовед                                                                  Сафина А.И.'
+                        case "Щербаков":
+                            regBy = 'Инспектор                                                                  Щербаков Г.Г.'
                             break
                         case "Елисеев":
                             regBy = 'Документовед ПВО УМС                                           Елисеев М.О.'
@@ -6848,6 +7197,17 @@ function generateRegVisa() {
                             else {
                                 aHD1 = 'М'; aHD2 = 'И'; aHD3 = 'Р'; aHD4 = 'А';
                                 aHK1 = 'Д'; aHK2 = 'О'; aHK3 = 'М'; aHK4 = ''; aHK5 = '7';
+                            }
+                            break
+                        case "г. Москва, улица Кибальчича, д. 6 к. 2":
+                            aHG1 = 'М'; aHG2 = "О"; aHG3 = "С"; aHG4 = "К"; aHG5 = "В"; aHG6 = "А"
+                            aHU1 = 'К'; aHU2 = 'И'; aHU3 = 'Б'; aHU4 = 'А'; aHU5 = 'Л'; aHU6 = 'Ь'; aHU7 = 'Ч'; aHU8 = 'И'; aHU9 = 'Ч'; aHU10 = 'А';
+                            if (path.includes('new'))
+                            {
+                                aHD1 = 'Д. 6'; aHK1 = 'КОРП. 2'
+                            }
+                            else {
+                                aHD1 = 'Д'; aHD2 = 'О'; aHD3 = 'М'; aHD4 = ''; aHD5 = '6'; aHD6 = ''; aHD7 = 'К'; aHD8 = 'О'; aHD9 = 'Р'; aHD10 = 'П'; aHD11 = 'У'; aHD12 = 'С'; aHD13 = ''; aHD14 = '2';
                             }
                             break
                     }
@@ -8127,11 +8487,11 @@ function generateRegVisa() {
                         case "Колпакова":
                             regBy = 'Начальник ПВО УМС                                              Колпакова Т.А.'
                             break
-                        case "Черная":
-                            regBy = 'Документовед                                                                   Черная Л.С.'
+                        case "Дзюба":
+                            regBy = 'Документовед                                                                   Дзюба Т.Е.'
                             break
-                        case "Сафина":
-                            regBy = 'Документовед                                                                  Сафина А.И.'
+                        case "Щербаков":
+                            regBy = 'Инспектор                                                                  Щербаков Г.Г.'
                             break
                         case "Елисеев":
                             regBy = 'Документовед ПВО УМС                                           Елисеев М.О.'
