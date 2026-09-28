@@ -1,12 +1,45 @@
 function loadFile(url, callback) {
-    PizZipUtils.getBinaryContent(url, callback);
+    // Resolve only after the template has loaded AND the caller has rendered it.
+    return new Promise((resolve, reject) => {
+        if (!url) return reject(new Error('Не выбран шаблон документа'));
+        PizZipUtils.getBinaryContent(url, (error, content) => {
+            if (error) return reject(error);
+            try {
+                callback(null, content);
+                resolve();
+            } catch (renderError) {
+                reject(renderError);
+            }
+        });
+    });
+}
+
+// Surface failures from individually downloaded documents as well.
+if (typeof window.addEventListener === 'function') {
+    window.addEventListener('unhandledrejection', event => {
+        console.error('Ошибка генерации документа', event.reason);
+        alert('Не удалось сформировать документ: ' + (event.reason?.message || event.reason));
+    });
+}
+
+async function finishExport(generators, zip) {
+    try {
+        await Promise.all(generators.map(generate => generate()));
+        const first = document.getElementById('nStud1').value;
+        const last = document.getElementById('nStud' + (lastTab() - 1)).value;
+        const name = countTab() === 1 ? first + ' Студент.zip' : first + '-' + last + ' Студенты.zip';
+        saveAs(zip.generate({type: 'blob'}), name);
+    } catch (error) {
+        console.error('Ошибка экспорта', error);
+        alert('Не удалось сформировать полный архив: ' + error.message);
+    }
 }
 
 //виза
 
 //визовая анкета
 window.generateVisaApplication = function generate() {
-    path = ('../Templates/виза/визовая анкета.docx')
+    let path = ('Templates/виза/визовая анкета.docx')
     var zipDocs = new PizZip();
     loadFile(
         path,
@@ -59,7 +92,7 @@ window.generateVisaApplication = function generate() {
                         purposeU = "X"
                         purposeS = "Студент"
                         break
-                    case "Краткосрочная учеба":
+                    case "Краткосрочное обучение":
                         purposeU = "X"
                         purposeS = "Студент"
                         break
@@ -75,8 +108,8 @@ window.generateVisaApplication = function generate() {
                 // Passport
                 let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                     ? document.getElementById('series' + indexTab).value : ''
-                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                 // gender
                 let genM = ''
@@ -100,10 +133,10 @@ window.generateVisaApplication = function generate() {
                 let numInvVisa = document.getElementById('numInvVisa' + indexTab).value
                     ? document.getElementById('numInvVisa' + indexTab).value : ''
 
-                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
 
                 // OVM
@@ -140,7 +173,7 @@ window.generateVisaApplication = function generate() {
 
                 }
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                 doc.setData({
 
@@ -153,7 +186,7 @@ window.generateVisaApplication = function generate() {
                     firstNameRu: document.getElementById('firstNameRu' + indexTab).value.toUpperCase(),
                     firstNameEn: document.getElementById('firstNameEn' + indexTab).value.toUpperCase(),
                     patronymicRu: document.getElementById('patronymicRu' + indexTab).value.toUpperCase(),
-                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                     placeStateBirth: document.getElementById('placeStateBirth' + indexTab).value.toUpperCase(),
                     genM: genM,
                     genW: genW,
@@ -161,7 +194,7 @@ window.generateVisaApplication = function generate() {
                     // documentPerson: document.getElementById('documentPerson' + indexTab).text,
                     series: series,
                     idPassport: document.getElementById('idPassport' + indexTab).value,
-                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                     validUntil: validUntil,
 
                     infHost1: infHost1,
@@ -221,7 +254,7 @@ window.generateVisaApplication = function generate() {
 
 //справка
 window.generateVisaReference = function generate() {
-    path = ('../Templates/виза/справка.docx')
+    let path = ('Templates/виза/справка.docx')
     var zipDocs = new PizZip();
     loadFile(
         path,
@@ -270,7 +303,7 @@ window.generateVisaReference = function generate() {
                     case "Учеба":
                         purpose = "студентом"
                         break
-                    case "Краткосрочная учеба":
+                    case "Краткосрочное обучение":
                         purpose = "студентом"
                         break
                     case "(НТС)":
@@ -342,8 +375,8 @@ window.generateVisaReference = function generate() {
                 // Passport
                 let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                     ? document.getElementById('series' + indexTab).value : ''
-                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
 
 
@@ -398,8 +431,8 @@ window.generateVisaReference = function generate() {
                         break
                 }
 
-                let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                 doc.setData({
 
@@ -411,7 +444,7 @@ window.generateVisaReference = function generate() {
                     faculty: faculty.toUpperCase(),
                     series: series,
                     idPassport: document.getElementById('idPassport' + indexTab).value,
-                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                     validUntil: validUntil,
                     dateUntil: dateUnt,
                     ovmByRegion: ovmByRegion,
@@ -459,7 +492,7 @@ window.generateVisaReference = function generate() {
 
 //ходатайство ВИЗА ТРОПАРЕВО-НИКУЛИНО
 window.generateVisaSolicitaionTroparevo = function generate() {
-    path = ('../Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+    let path = ('Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
     var zipDocs = new PizZip();
     loadFile(
         path,
@@ -504,8 +537,8 @@ window.generateVisaSolicitaionTroparevo = function generate() {
 
 
                 //dateUntil
-                let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
                 // purpose
                 let purpose = ''
@@ -513,8 +546,8 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                     case "Учеба":
                         purpose = "обучением в МПГУ"
                         break
-                    case "Краткосрочная учеба":
-                        purpose = "обучением в МПГУ"
+                    case "Краткосрочное обучение":
+                        purpose = "краткосрочным обучением в МПГУ"
                         break
                     case "(НТС)":
                         purpose = "посещением МПГУ в качестве приглашенного гостя (НТС)"
@@ -527,8 +560,8 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                 // Passport
                 let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                     ? document.getElementById('series' + indexTab).value : ''
-                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                 // gender
                 let genM = ''
@@ -568,18 +601,18 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                 let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                     ? document.getElementById('idVisa' + indexTab).value : ''
 
-                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
                 // order
                 let numOrder = document.getElementById('numOrder' + indexTab).value
                     ? document.getElementById('numOrder' + indexTab).value : ''
-                let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
-                let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                    ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
+                let orderUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('orderUntil' + indexTab).value) : ''
 
                 // contract
                 let typeFunding = ''
@@ -596,13 +629,13 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                 let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                     document.getElementById('contractFrom' + indexTab).value : ''
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                 let validUntilVisaAQ = ''
                 if (document.getElementById('validUntilVisa' + indexTab).value) {
                     validUntilVisaAQ = new Date(document.getElementById('validUntilVisa' + indexTab).value)
                     validUntilVisaAQ.setDate(validUntilVisaAQ.getDate()+1)
-                    validUntilVisaAQ = validUntilVisaAQ.toLocaleDateString()
+                    validUntilVisaAQ = formatDateRU(validUntilVisaAQ)
                 }
 
                 doc.setData({
@@ -616,7 +649,7 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                     firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                     firstNameEn: document.getElementById('firstNameEn' + indexTab).value,
                     patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                     registrationOn1: registrationOn1,
                     registrationOn2: registrationOn2,
                     dateUntil: dateUntil,
@@ -626,7 +659,7 @@ window.generateVisaSolicitaionTroparevo = function generate() {
 
                     series: series,
                     idPassport: document.getElementById('idPassport' + indexTab).value,
-                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                     validUntil: validUntil,
 
                     seriesVisa: seriesVisa,
@@ -683,7 +716,7 @@ window.generateVisaSolicitaionTroparevo = function generate() {
 
 //ходатайство ВИЗА ХАМОВНИКИ
 window.generateVisaSolicitaionKhamovniki = function generate() {
-    path = ('../Templates/виза/ходатайство ХАМОВНИКИ.docx')
+    let path = ('Templates/виза/ходатайство ХАМОВНИКИ.docx')
     var zipDocs = new PizZip();
     loadFile(
         path,
@@ -728,8 +761,8 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
 
 
                 //dateUntil
-                let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
                 // purpose
                 let purpose = ''
@@ -739,8 +772,8 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                         purpose = "УЧЕБА"
                         purposeS = "Студент"
                         break
-                    case "Краткосрочная учеба":
-                        purpose = "КРАТКОСРОЧНАЯ УЧЕБА"
+                    case "Краткосрочное обучение":
+                        purpose = "КРАТКОСРОЧНОЕ ОБУЧЕНИЕ"
                         purposeS = "Студент"
                         break
                     case "(НТС)":
@@ -791,10 +824,10 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                 }
 
                 // norification
-                let notificationFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString() : ''
-                let notificationUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString() : ''
+                let notificationFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('notificationFrom' + indexTab).value))
+                    ? formatDateRU(document.getElementById('notificationFrom' + indexTab).value) : ''
+                let notificationUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('notificationUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('notificationUntil' + indexTab).value) : ''
                 let issuedBy = document.getElementById('issuedBy' + indexTab).value != '' ? document.getElementById('issuedBy' + indexTab).value : ''
                 
 
@@ -812,8 +845,8 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                 // Passport
                 let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                     ? document.getElementById('series' + indexTab).value : ''
-                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                 // gender
                 let gender = ''
@@ -846,16 +879,16 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                 let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                     ? document.getElementById('idVisa' + indexTab).value : ''
 
-                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
                 // order
                 let numOrder = document.getElementById('numOrder' + indexTab).value
                     ? document.getElementById('numOrder' + indexTab).value : ''
-                let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
+                let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                    ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
 
                 // faculty
                 let faculty = ''
@@ -933,7 +966,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                     ? document.getElementById('numContract' + indexTab).value : ''
                 let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                     document.getElementById('contractFrom' + indexTab).value : ''
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
 
 
@@ -944,7 +977,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
                     firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                     patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                     gender: gender,
 
                     registrationOn: registrationOn,
@@ -956,7 +989,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
 
                     series: series,
                     idPassport: document.getElementById('idPassport' + indexTab).value,
-                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                     validUntil: validUntil,
 
                     seriesVisa: seriesVisa,
@@ -966,7 +999,7 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
 
                     seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
                     idMigration: document.getElementById('idMigration' + indexTab).value,
-                    dateArrivalMigration: new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString(),
+                    dateArrivalMigration: formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value),
 
                     notificationFrom: notificationFrom,
                     notificationUntil: notificationUntil,
@@ -1028,13 +1061,14 @@ function generateVisaSolic(x) {
         generateVisaSolicitaionTroparevo()
     }
     else if (x=='Хамовники') {
-        generateVisaSolicitaionKhamovniki()
+        return generateVisaSolicitaionKhamovniki()
     }
+    else alert('Для выбранного ОВМ нет шаблона визового ходатайства');
 }
 
 //опись ВИЗА
 window.generateInventoryVisa = function generate() {
-    path = ('../Templates/виза/опись виза.docx')
+    let path = ('Templates/виза/опись виза.docx')
 
     let students = []
 
@@ -1088,11 +1122,11 @@ window.generateInventoryVisa = function generate() {
 
 
 
-        let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-            ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
+        let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+            ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
 
         let dateUntil = document.getElementById('dateUntil' + indexTab).value != '-' ?
-            new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+            formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
         //students
         students.push({
@@ -1121,7 +1155,7 @@ window.generateInventoryVisa = function generate() {
                 linebreaks: true,
             });
 
-            let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+            let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
             doc.render({
                 dateInOvm: dateInOvm,
                 nStud1: nStud1,
@@ -1181,19 +1215,19 @@ window.generateInventoryVisa = function generate() {
 
 //ходатайство РЕГИСТРАЦИЯ
 window.generateRegSolicitaion = function generate() {
-    path = ("")
+    let path = ("")
     switch (document.getElementById('ovmByRegion').value) {
         case "Алексеевский":
-            path = ('../Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
+            path = ('Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
             break
         case "Войковский":
-            path = ('../Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
+            path = ('Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
             break
         case "МУ МВД РФ Люберецкое":
-            path = ('../Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
+            path = ('Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
             break
         case "Тропарево-Никулино":
-            path = ('../Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+            path = ('Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
             break
     }
 
@@ -1241,8 +1275,8 @@ window.generateRegSolicitaion = function generate() {
 
 
                 //dateUntil
-                let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
                 // purpose
                 let purpose = ''
@@ -1252,8 +1286,8 @@ window.generateRegSolicitaion = function generate() {
                         purpose = "УЧЕБА"
                         purposeS = "Студент"
                         break
-                    case "Краткосрочная учеба":
-                        purpose = "КРАТКОСРОЧНАЯ УЧЕБА"
+                    case "Краткосрочное обучение":
+                        purpose = "КРАТКОСРОЧНОЕ ОБУЧЕНИЕ"
                         purposeS = "Студент"
                         break
                     case "(НТС)":
@@ -1317,8 +1351,8 @@ window.generateRegSolicitaion = function generate() {
                 // Passport
                 let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                     ? document.getElementById('series' + indexTab).value : ''
-                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                 // gender
                 let gender = ''
@@ -1364,21 +1398,21 @@ window.generateRegSolicitaion = function generate() {
                 let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                     ? document.getElementById('idVisa' + indexTab).value : ''
 
-                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
                 // order
                 let numOrder = document.getElementById('numOrder' + indexTab).value
                     ? document.getElementById('numOrder' + indexTab).value : ''
-                let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
+                let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                    ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
 
 
                 //07.09
-                let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                let orderUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('orderUntil' + indexTab).value) : ''
                 switch (document.getElementById('ovmByRegion').value) {
                     case "Алексеевский":
                         orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
@@ -1473,7 +1507,7 @@ window.generateRegSolicitaion = function generate() {
 
                 let numRental = document.getElementById('numRental' + indexTab).value != "-" ? document.getElementById('numRental' + indexTab).value : ''
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
 
                 doc.setData({
@@ -1483,7 +1517,7 @@ window.generateRegSolicitaion = function generate() {
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
                     firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                     patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                     gender: gender,
 
                     registrationOn: registrationOn,
@@ -1495,7 +1529,7 @@ window.generateRegSolicitaion = function generate() {
 
                     series: series,
                     idPassport: document.getElementById('idPassport' + indexTab).value,
-                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                     validUntil: validUntil,
 
                     typeVisa: typeVisa,
@@ -1506,7 +1540,7 @@ window.generateRegSolicitaion = function generate() {
 
                     seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
                     idMigration: document.getElementById('idMigration' + indexTab).value,
-                    dateArrivalMigration: new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString(),
+                    dateArrivalMigration: formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value),
 
 
 
@@ -1573,7 +1607,7 @@ window.generateRegSolicitaion = function generate() {
 
 //опись РЕГИСТРАЦИЯ
 window.generateInventoryReg = function generate() {
-    path = ('../Templates/регистрация/опись регистрация.docx')
+    let path = ('Templates/регистрация/опись регистрация.docx')
 
     let students = []
 
@@ -1628,9 +1662,9 @@ window.generateInventoryReg = function generate() {
 
 
         let dateUntil = document.getElementById('dateUntil' + indexTab).value != '-' ?
-            new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+            formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
-        let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+        let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
         //students
         students.push({
@@ -1659,7 +1693,7 @@ window.generateInventoryReg = function generate() {
                 linebreaks: true,
             });
 
-            let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+            let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
             doc.render({
                 dateInOvm: dateInOvm,
                 nStud1: nStud1,
@@ -1716,7 +1750,7 @@ window.generateRegNotif = function generate() {
     let ovmRg = document.getElementById('ovmByRegion').value
     let rgOn = document.getElementById('registrationOn').value
     let uvedTemp = document.getElementById('uvedTemp').value
-    path = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
+    let path = (`Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
     var zipDocs = new PizZip();
     loadFile(
@@ -1927,7 +1961,7 @@ window.generateRegNotif = function generate() {
                 let grazd25 = (grazd[24]) ? (grazd[24]) : ''
 
                 // dateOfBirth {dOB1-8}
-                let dOB = new Date(document.getElementById('dateOfBirth'+indexTab).value).toLocaleDateString().split('.')
+                let dOB = formatDateRU(document.getElementById('dateOfBirth'+indexTab).value).split('.')
                 let dOB1 = (dOB) ? (dOB[0][0]) : ''
                 let dOB2 = (dOB) ? (dOB[0][1]) : ''
                 let dOB3 = (dOB) ? (dOB[1][0]) : ''
@@ -2071,7 +2105,7 @@ window.generateRegNotif = function generate() {
                 let idP10 = (idP[9]) ? (idP[9]) : ''
 
                 // dateOfIssue {dOI1-8}
-                let dOI = new Date(document.getElementById('dateOfIssue'+indexTab).value).toLocaleDateString().split('.')
+                let dOI = formatDateRU(document.getElementById('dateOfIssue'+indexTab).value).split('.')
                 let dOI1 = (dOI) ? (dOI[0][0]) : ''
                 let dOI2 = (dOI) ? (dOI[0][1]) : ''
                 let dOI3 = (dOI) ? (dOI[1][0]) : ''
@@ -2083,8 +2117,8 @@ window.generateRegNotif = function generate() {
 
 
                 // validUntil {vU1-8}
-                let vU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString().split(".") : ''
+                let vU = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value).split(".") : ''
                 let vU1 = (vU) ? (vU[0][0]) : ''
                 let vU2 = (vU) ? (vU[0][1]) : ''
                 let vU3 = (vU) ? (vU[1][0]) : ''
@@ -2159,8 +2193,8 @@ window.generateRegNotif = function generate() {
                 let idV15 = (idV[14]) ? (idV[14]) : ''
 
                 // dateOfIssueVisa {dOIV1-8}
-                let dOIV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString().split(".") : ''
+                let dOIV = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value).split(".") : ''
                 let dOIV1 = (dOIV) ? (dOIV[0][0]) : ''
                 let dOIV2 = (dOIV) ? (dOIV[0][1]) : ''
                 let dOIV3 = (dOIV) ? (dOIV[1][0]) : ''
@@ -2171,8 +2205,8 @@ window.generateRegNotif = function generate() {
                 let dOIV8 = (dOIV) ? (dOIV[2][3]) : ''
 
                 // validUntilVisa {vUV1-8}
-                let vUV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString().split(".") : ''
+                let vUV = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value).split(".") : ''
                 let vUV1 = (vUV) ? (vUV[0][0]) : ''
                 let vUV2 = (vUV) ? (vUV[0][1]) : ''
                 let vUV3 = (vUV) ? (vUV[1][0]) : ''
@@ -2204,7 +2238,7 @@ window.generateRegNotif = function generate() {
                         purposeU = "X"
                         purp1 = 'С'; purp2='Т'; purp3='У'; purp4="Д"; purp5 ='Е';purp6 = 'Н';purp7='Т'
                         break
-                    case "Краткосрочная учеба":
+                    case "Краткосрочное обучение":
                         purposeU = "X"
                         purp1 = 'С'; purp2='Т'; purp3='У'; purp4="Д"; purp5 ='Е';purp6 = 'Н';purp7='Т'
                         break
@@ -2219,8 +2253,8 @@ window.generateRegNotif = function generate() {
                 }
 
                 // dateArrivalMigration {dAM1-8}
-                let dAM = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString().split(".") : ''
+                let dAM = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value).split(".") : ''
                 let dAM1 = (dAM) ? (dAM[0][0]) : ''
                 let dAM2 = (dAM) ? (dAM[0][1]) : ''
                 let dAM3 = (dAM) ? (dAM[1][0]) : ''
@@ -2231,8 +2265,8 @@ window.generateRegNotif = function generate() {
                 let dAM8 = (dAM) ? (dAM[2][3]) : ''
 
                 // dateUntil {dU1-8}
-                let dU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString().split(".") : ''
+                let dU = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateUntil' + indexTab).value).split(".") : ''
 
                 let dU1 = (dU) ? (dU[0][0]) : ''
                 let dU2 = (dU) ? (dU[0][1]) : ''
@@ -2614,7 +2648,7 @@ window.generateRegNotif = function generate() {
 
 
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
 
 
@@ -2711,7 +2745,7 @@ window.generateRegNotif = function generate() {
 
 //опись
 window.generateInventoryRegVisa = function generate() {
-    path = ('../Templates/регистрация И виза/опись.docx')
+    let path = ('Templates/регистрация И виза/опись.docx')
 
     let students = []
 
@@ -2745,11 +2779,11 @@ window.generateInventoryRegVisa = function generate() {
         let indexTab = parseInt(elem.id.match(/\d+/))
 
 
-        let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-            ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
+        let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+            ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
 
         let dateUntil = document.getElementById('dateUntil' + indexTab).value != '-' ?
-            new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+            formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
         //students
         students.push({
@@ -2778,7 +2812,7 @@ window.generateInventoryRegVisa = function generate() {
                 linebreaks: true,
             });
 
-            let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+            let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
             doc.render({
                 dateInOvm: dateInOvm,
                 nStud1: nStud1,
@@ -2835,7 +2869,7 @@ window.generateInventoryRegVisa = function generate() {
 
 //ходатайство по квартире
 window.generateFlatSolicitaion = function generate() {
-    path = ('../Templates/ходатайство по квартире.docx')
+    let path = ('Templates/ходатайство по квартире.docx')
 
     var zipDocs = new PizZip();
     loadFile(
@@ -2881,8 +2915,8 @@ window.generateFlatSolicitaion = function generate() {
 
 
                 //dateUntil
-                let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
 
 
@@ -2894,8 +2928,8 @@ window.generateFlatSolicitaion = function generate() {
                         purpose = "УЧЕБА"
                         purposeS = "Студент"
                         break
-                    case "Краткосрочная учеба":
-                        purpose = "КРАТКОСРОЧНАЯ УЧЕБА"
+                    case "Краткосрочное обучение":
+                        purpose = "КРАТКОСРОЧНОЕ ОБУЧЕНИЕ"
                         purposeS = "Студент"
                         break
                     case "(НТС)":
@@ -2959,8 +2993,8 @@ window.generateFlatSolicitaion = function generate() {
                 // Passport
                 let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                     ? document.getElementById('series' + indexTab).value : ''
-                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                 // gender
                 let gender = ''
@@ -3006,10 +3040,10 @@ window.generateFlatSolicitaion = function generate() {
                 let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                     ? document.getElementById('idVisa' + indexTab).value : ''
 
-                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
 
                 if (dateUntil=='') {
@@ -3072,7 +3106,7 @@ window.generateFlatSolicitaion = function generate() {
                         break
                 }
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                 doc.setData({
                     dateInOvm: dateInOvm,
@@ -3081,7 +3115,7 @@ window.generateFlatSolicitaion = function generate() {
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
                     firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                     patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                     gender: gender,
 
                     registrationOn: registrationOn,
@@ -3093,7 +3127,7 @@ window.generateFlatSolicitaion = function generate() {
 
                     series: series,
                     idPassport: document.getElementById('idPassport' + indexTab).value,
-                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                     validUntil: validUntil,
 
                     typeVisa: typeVisa,
@@ -3104,7 +3138,7 @@ window.generateFlatSolicitaion = function generate() {
 
                     seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
                     idMigration: document.getElementById('idMigration' + indexTab).value,
-                    dateArrivalMigration: new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString(),
+                    dateArrivalMigration: formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value),
 
                     addressResidence: document.getElementById('addressResidence' + indexTab).value,
                 });
@@ -3153,7 +3187,7 @@ window.generateFlatSolicitaion = function generate() {
 
 //ходатайство по квартире
 window.generateFlatSolicitaionProdl = function generate() {
-    path = ('../Templates/ходатайство по квартире - продление.docx')
+    let path = ('Templates/ходатайство по квартире - продление.docx')
 
     var zipDocs = new PizZip();
     loadFile(
@@ -3199,8 +3233,8 @@ window.generateFlatSolicitaionProdl = function generate() {
 
 
                 //dateUntil
-                let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
 
 
@@ -3212,8 +3246,8 @@ window.generateFlatSolicitaionProdl = function generate() {
                         purpose = "УЧЕБА"
                         purposeS = "Студент"
                         break
-                    case "Краткосрочная учеба":
-                        purpose = "КРАТКОСРОЧНАЯ УЧЕБА"
+                    case "Краткосрочное обучение":
+                        purpose = "КРАТКОСРОЧНОЕ ОБУЧЕНИЕ"
                         purposeS = "Студент"
                         break
                     case "(НТС)":
@@ -3277,8 +3311,8 @@ window.generateFlatSolicitaionProdl = function generate() {
                 // Passport
                 let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                     ? document.getElementById('series' + indexTab).value : ''
-                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                 // gender
                 let gender = ''
@@ -3324,10 +3358,10 @@ window.generateFlatSolicitaionProdl = function generate() {
                 let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                     ? document.getElementById('idVisa' + indexTab).value : ''
 
-                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
 
                 if (dateUntil=='') {
@@ -3390,7 +3424,7 @@ window.generateFlatSolicitaionProdl = function generate() {
                         break
                 }
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                 doc.setData({
                     dateInOvm: dateInOvm,
@@ -3399,7 +3433,7 @@ window.generateFlatSolicitaionProdl = function generate() {
                     lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
                     firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                     patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                     gender: gender,
 
                     registrationOn: registrationOn,
@@ -3411,7 +3445,7 @@ window.generateFlatSolicitaionProdl = function generate() {
 
                     series: series,
                     idPassport: document.getElementById('idPassport' + indexTab).value,
-                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                     validUntil: validUntil,
 
                     typeVisa: typeVisa,
@@ -3422,7 +3456,7 @@ window.generateFlatSolicitaionProdl = function generate() {
 
                     seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
                     idMigration: document.getElementById('idMigration' + indexTab).value,
-                    dateArrivalMigration: new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString(),
+                    dateArrivalMigration: formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value),
 
                     addressResidence: document.getElementById('addressResidence' + indexTab).value,
                 });
@@ -3473,7 +3507,7 @@ window.generateFlatSolicitaionProdl = function generate() {
 // new
 //уведомление о завершении
 window.generateComplNotice = function generate() {
-    path = ('../Templates/Уведомление о завершении.docx')
+    let path = ('Templates/Уведомление о завершении.docx')
 
     var zipDocs = new PizZip();
     loadFile(
@@ -3517,8 +3551,8 @@ window.generateComplNotice = function generate() {
 
 
                 //dateUntil
-                let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
 
 
@@ -3557,8 +3591,8 @@ window.generateComplNotice = function generate() {
                 // Passport
                 let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                     ? document.getElementById('series' + indexTab).value : ''
-                let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                 // gender
                 let genM = ''
@@ -3605,13 +3639,13 @@ window.generateComplNotice = function generate() {
                 let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                     ? document.getElementById('idVisa' + indexTab).value : ''
 
-                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                    ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                    ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
-                let notificationFrom =  /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString() : ''
+                let notificationFrom =  /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('notificationFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('notificationFrom' + indexTab).value) : ''
                 let notificationN1 = notificationFrom == '' ? "Выдано" : ''
                 let notificationN2 = notificationFrom == '' ? "Документ подписан электронной подписью" : ''
 
@@ -3621,7 +3655,7 @@ window.generateComplNotice = function generate() {
                     patronymicRu: document.getElementById('patronymicRu' + indexTab).value?document.getElementById('patronymicRu' + indexTab).value: "-",
                     firstNameEn: document.getElementById('firstNameEn' + indexTab).value,
                     lastNameEn: document.getElementById('lastNameEn' + indexTab).value,
-                    dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                    dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                     placeStateBirth: document.getElementById('placeStateBirth' + indexTab).value,
                     grazd: document.getElementById('grazd' + indexTab).value,
 
@@ -3630,15 +3664,15 @@ window.generateComplNotice = function generate() {
 
                     series: series,
                     idPassport: document.getElementById('idPassport' + indexTab).value,
-                    dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                    dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                     validUntil: validUntil,
 
                     addressHostel: addressHostel,
                     notificationFrom:notificationFrom,
                     notificationN1: notificationN1,
                     notificationN2: notificationN2,
-                    notificationUntil: /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString() : '',
+                    notificationUntil: /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('notificationUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('notificationUntil' + indexTab).value) : '',
 
                     identifierVisa: document.getElementById('identifierVisa' + indexTab).value
                         ? document.getElementById('identifierVisa' + indexTab).value : '',
@@ -3653,7 +3687,7 @@ window.generateComplNotice = function generate() {
                     contractFrom: document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : '',
                     registrationOn:registrationOn,
-                    dateInOvm: document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : "",
+                    dateInOvm: document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : "",
 
                 });
 
@@ -3712,9 +3746,9 @@ function generateReg() {
         let ovmRg = document.getElementById('ovmByRegion').value
         let rgOn = document.getElementById('registrationOn').value
         let uvedTemp = document.getElementById('uvedTemp').value
-        path_uved = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
+        let path_uved = (`Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
-        loadFile(
+        return loadFile(
             path_uved,
             function (error, content) {
                 if (error) {
@@ -3925,7 +3959,7 @@ function generateReg() {
                     let grazd25 = (grazd[24]) ? (grazd[24]) : ''
 
                     // dateOfBirth {dOB1-8}
-                    let dOB = new Date(document.getElementById('dateOfBirth'+indexTab).value).toLocaleDateString().split('.')
+                    let dOB = formatDateRU(document.getElementById('dateOfBirth'+indexTab).value).split('.')
                     let dOB1 = (dOB) ? (dOB[0][0]) : ''
                     let dOB2 = (dOB) ? (dOB[0][1]) : ''
                     let dOB3 = (dOB) ? (dOB[1][0]) : ''
@@ -4068,7 +4102,7 @@ function generateReg() {
                     let idP10 = (idP[9]) ? (idP[9]) : ''
 
                     // dateOfIssue {dOI1-8}
-                    let dOI = new Date(document.getElementById('dateOfIssue'+indexTab).value).toLocaleDateString().split('.')
+                    let dOI = formatDateRU(document.getElementById('dateOfIssue'+indexTab).value).split('.')
                     let dOI1 = (dOI) ? (dOI[0][0]) : ''
                     let dOI2 = (dOI) ? (dOI[0][1]) : ''
                     let dOI3 = (dOI) ? (dOI[1][0]) : ''
@@ -4080,8 +4114,8 @@ function generateReg() {
 
 
                     // validUntil {vU1-8}
-                    let vU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let vU = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value).split(".") : ''
                     let vU1 = (vU) ? (vU[0][0]) : ''
                     let vU2 = (vU) ? (vU[0][1]) : ''
                     let vU3 = (vU) ? (vU[1][0]) : ''
@@ -4156,8 +4190,8 @@ function generateReg() {
                     let idV15 = (idV[14]) ? (idV[14]) : ''
 
                     // dateOfIssueVisa {dOIV1-8}
-                    let dOIV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let dOIV = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value).split(".") : ''
                     let dOIV1 = (dOIV) ? (dOIV[0][0]) : ''
                     let dOIV2 = (dOIV) ? (dOIV[0][1]) : ''
                     let dOIV3 = (dOIV) ? (dOIV[1][0]) : ''
@@ -4168,8 +4202,8 @@ function generateReg() {
                     let dOIV8 = (dOIV) ? (dOIV[2][3]) : ''
 
                     // validUntilVisa {vUV1-8}
-                    let vUV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let vUV = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value).split(".") : ''
                     let vUV1 = (vUV) ? (vUV[0][0]) : ''
                     let vUV2 = (vUV) ? (vUV[0][1]) : ''
                     let vUV3 = (vUV) ? (vUV[1][0]) : ''
@@ -4201,7 +4235,7 @@ function generateReg() {
                             purposeU = "X"
                             purp1 = 'С'; purp2='Т'; purp3='У'; purp4="Д"; purp5 ='Е';purp6 = 'Н';purp7='Т'
                             break
-                        case "Краткосрочная учеба":
+                        case "Краткосрочное обучение":
                             purposeU = "X"
                             purp1 = 'С'; purp2='Т'; purp3='У'; purp4="Д"; purp5 ='Е';purp6 = 'Н';purp7='Т'
                             break
@@ -4216,8 +4250,8 @@ function generateReg() {
                     }
 
                     // dateArrivalMigration {dAM1-8}
-                    let dAM = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let dAM = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value).split(".") : ''
                     let dAM1 = (dAM) ? (dAM[0][0]) : ''
                     let dAM2 = (dAM) ? (dAM[0][1]) : ''
                     let dAM3 = (dAM) ? (dAM[1][0]) : ''
@@ -4228,8 +4262,8 @@ function generateReg() {
                     let dAM8 = (dAM) ? (dAM[2][3]) : ''
 
                     // dateUntil {dU1-8}
-                    let dU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let dU = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateUntil' + indexTab).value).split(".") : ''
                     let dU1 = (dU) ? (dU[0][0]) : ''
                     let dU2 = (dU) ? (dU[0][1]) : ''
                     let dU3 = (dU) ? (dU[1][0]) : ''
@@ -4609,7 +4643,7 @@ function generateReg() {
 
 
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
 
 
@@ -4708,23 +4742,23 @@ function generateReg() {
 
 //ходатайство РЕГИСТРАЦИЯ
     window.generateRegSolicitaionTotal = function generate() {
-        path = ("")
+        let path = ("")
         switch (document.getElementById('ovmByRegion').value) {
             case "Алексеевский":
-                path = ('../Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
+                path = ('Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
                 break
             case "Войковский":
-                path = ('../Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
+                path = ('Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
                 break
             case "МУ МВД РФ Люберецкое":
-                path = ('../Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
+                path = ('Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
                 break
             case "Тропарево-Никулино":
-                path = ('../Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+                path = ('Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
                 break
         }
 
-        loadFile(
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -4767,8 +4801,8 @@ function generateReg() {
 
 
                     //dateUntil
-                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
                     // purpose
                     let purpose = ''
@@ -4778,8 +4812,8 @@ function generateReg() {
                             purpose = "УЧЕБА"
                             purposeS = "Студент"
                             break
-                        case "Краткосрочная учеба":
-                            purpose = "КРАТКОСРОЧНАЯ УЧЕБА"
+                        case "Краткосрочное обучение":
+                            purpose = "КРАТКОСРОЧНОЕ ОБУЧЕНИЕ"
                             purposeS = "Студент"
                             break
                         case "(НТС)":
@@ -4843,8 +4877,8 @@ function generateReg() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                     // gender
                     let gender = ''
@@ -4890,20 +4924,20 @@ function generateReg() {
                     let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                         ? document.getElementById('idVisa' + indexTab).value : ''
 
-                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
                     // order
                     let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
-                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
+                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
                     
                     // 07.09
-                    let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                    let orderUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderUntil' + indexTab).value) : ''
                     switch (document.getElementById('ovmByRegion').value) {
                         case "Алексеевский":
                             orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
@@ -4998,7 +5032,7 @@ function generateReg() {
                     let numRental = document.getElementById('numRental' + indexTab).value != "-" ? document.getElementById('numRental' + indexTab).value : ''
 
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
                     doc.setData({
                         dateInOvm: dateInOvm,
                         nStud: document.getElementById('nStud' + indexTab).value,
@@ -5006,7 +5040,7 @@ function generateReg() {
                         lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
                         firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                         patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                        dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                        dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                         gender: gender,
 
                         registrationOn: registrationOn,
@@ -5018,7 +5052,7 @@ function generateReg() {
 
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
 
                         typeVisa: typeVisa,
@@ -5029,7 +5063,7 @@ function generateReg() {
 
                         seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
                         idMigration: document.getElementById('idMigration' + indexTab).value,
-                        dateArrivalMigration: new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString(),
+                        dateArrivalMigration: formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value),
 
 
 
@@ -5105,7 +5139,7 @@ function generateReg() {
 
 //опись РЕГИСТРАЦИЯ
     window.generateInventoryRegTotal = function generate() {
-        path = ('../Templates/регистрация/опись регистрация.docx')
+        let path = ('Templates/регистрация/опись регистрация.docx')
 
         let students = []
 
@@ -5160,9 +5194,9 @@ function generateReg() {
 
 
             let dateUntil = document.getElementById('dateUntil' + indexTab).value != '-' ?
-                new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
-            let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+            let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
             //students
             students.push({
                 nStud: document.getElementById('nStud' + indexTab).value,
@@ -5179,7 +5213,7 @@ function generateReg() {
 
 
 
-        loadFile(
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -5191,7 +5225,7 @@ function generateReg() {
                     linebreaks: true,
                 });
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
                 doc.render({
                     dateInOvm: dateInOvm,
                     nStud1: nStud1,
@@ -5245,8 +5279,7 @@ function generateReg() {
                         document.getElementById('nStud'+(lastTab()-1)).value
                         +" Студенты.zip"
                 }
-
-                saveAs(content, nameZip)
+                // Saved once after every document completes.
             }
         );
     };
@@ -5254,9 +5287,7 @@ function generateReg() {
 
 
 
-    setTimeout(generateRegNotifTotal, 60)
-    setTimeout(generateRegSolicitaionTotal, 60)
-    setTimeout(generateInventoryRegTotal, 300)
+    return finishExport([generateRegNotifTotal, generateRegSolicitaionTotal, generateInventoryRegTotal], zipTotal);
 }
 
 
@@ -5270,8 +5301,8 @@ function generateVisa() {
 
 //визовая анкета
     window.generateVisaApplicationTotal = function generate() {
-        path = ('../Templates/виза/визовая анкета.docx')
-        loadFile(
+        let path = ('Templates/виза/визовая анкета.docx')
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -5322,7 +5353,7 @@ function generateVisa() {
                             purposeU = "X"
                             purposeS = "Студент"
                             break
-                        case "Краткосрочная учеба":
+                        case "Краткосрочное обучение":
                             purposeU = "X"
                             purposeS = "Студент"
                             break
@@ -5338,8 +5369,8 @@ function generateVisa() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                     // gender
                     let genM = ''
@@ -5363,10 +5394,10 @@ function generateVisa() {
                     let numInvVisa = document.getElementById('numInvVisa' + indexTab).value
                         ? document.getElementById('numInvVisa' + indexTab).value : ''
 
-                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
 
                     // OVM
@@ -5403,7 +5434,7 @@ function generateVisa() {
 
                     }
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
                     doc.setData({
 
 
@@ -5415,7 +5446,7 @@ function generateVisa() {
                         firstNameRu: document.getElementById('firstNameRu' + indexTab).value.toUpperCase(),
                         firstNameEn: document.getElementById('firstNameEn' + indexTab).value.toUpperCase(),
                         patronymicRu: document.getElementById('patronymicRu' + indexTab).value.toUpperCase(),
-                        dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                        dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                         placeStateBirth: document.getElementById('placeStateBirth' + indexTab).value.toUpperCase(),
                         genM: genM,
                         genW: genW,
@@ -5423,7 +5454,7 @@ function generateVisa() {
                         // documentPerson: document.getElementById('documentPerson' + indexTab).text,
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
 
                         infHost1: infHost1,
@@ -5490,9 +5521,9 @@ function generateVisa() {
 
 //ходатайство ВИЗА ТРОПАРЕВО-НИКУЛИНО
     window.generateVisaSolicitaionTroparevoTotal = function generate() {
-        path = ('../Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+        let path = ('Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
 
-        loadFile(
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -5535,8 +5566,8 @@ function generateVisa() {
 
 
                     //dateUntil
-                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
                     // purpose
                     let purpose = ''
@@ -5544,8 +5575,8 @@ function generateVisa() {
                         case "Учеба":
                             purpose = "обучением в МПГУ"
                             break
-                        case "Краткосрочная учеба":
-                            purpose = "обучением в МПГУ"
+                        case "Краткосрочное обучение":
+                            purpose = "краткосрочным обучением в МПГУ"
                             break
                         case "(НТС)":
                             purpose = "посещением МПГУ в качестве приглашенного гостя (НТС)"
@@ -5558,8 +5589,8 @@ function generateVisa() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                     // gender
                     let genM = ''
@@ -5599,18 +5630,18 @@ function generateVisa() {
                     let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                         ? document.getElementById('idVisa' + indexTab).value : ''
 
-                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
                     // order
                     let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
-                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
-                    let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
+                    let orderUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderUntil' + indexTab).value) : ''
 
                     // contract
                     let typeFunding = ''
@@ -5630,13 +5661,13 @@ function generateVisa() {
 
 
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                     let validUntilVisaAQ = ''
                     if (document.getElementById('validUntilVisa' + indexTab).value) {
                         validUntilVisaAQ = new Date(document.getElementById('validUntilVisa' + indexTab).value)
                         validUntilVisaAQ.setDate(validUntilVisaAQ.getDate()+1)
-                        validUntilVisaAQ = validUntilVisaAQ.toLocaleDateString()
+                        validUntilVisaAQ = formatDateRU(validUntilVisaAQ)
                     }
 
                     doc.setData({
@@ -5649,7 +5680,7 @@ function generateVisa() {
                         firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                         firstNameEn: document.getElementById('firstNameEn' + indexTab).value,
                         patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                        dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                        dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                         registrationOn1: registrationOn1,
                         registrationOn2: registrationOn2,
                         dateUntil: dateUntil,
@@ -5659,7 +5690,7 @@ function generateVisa() {
 
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
 
                         seriesVisa: seriesVisa,
@@ -5722,9 +5753,9 @@ function generateVisa() {
 
 //ходатайство ВИЗА ХАМОВНИКИ
     window.generateVisaSolicitaionKhamovnikiTotal = function generate() {
-        path = ('../Templates/виза/ходатайство ХАМОВНИКИ.docx')
+        let path = ('Templates/виза/ходатайство ХАМОВНИКИ.docx')
 
-        loadFile(
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -5767,8 +5798,8 @@ function generateVisa() {
 
 
                     //dateUntil
-                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
                     // purpose
                     let purpose = ''
@@ -5778,8 +5809,8 @@ function generateVisa() {
                             purpose = "УЧЕБА"
                             purposeS = "Студент"
                             break
-                        case "Краткосрочная учеба":
-                            purpose = "КРАТКОСРОЧНАЯ УЧЕБА"
+                        case "Краткосрочное обучение":
+                            purpose = "КРАТКОСРОЧНОЕ ОБУЧЕНИЕ"
                             purposeS = "Студент"
                             break
                         case "(НТС)":
@@ -5830,10 +5861,10 @@ function generateVisa() {
                     }
 
                     // norification
-                    let notificationFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('notificationFrom' + indexTab).value).toLocaleDateString() : ''
-                    let notificationUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('notificationUntil' + indexTab).value).toLocaleDateString() : ''
+                    let notificationFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('notificationFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('notificationFrom' + indexTab).value) : ''
+                    let notificationUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('notificationUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('notificationUntil' + indexTab).value) : ''
                     let issuedBy = document.getElementById('issuedBy' + indexTab).value != '' ? document.getElementById('issuedBy' + indexTab).value : ''
 
                     // addressResidence
@@ -5850,8 +5881,8 @@ function generateVisa() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                     // gender
                     let gender = ''
@@ -5884,16 +5915,16 @@ function generateVisa() {
                     let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                         ? document.getElementById('idVisa' + indexTab).value : ''
 
-                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
                     // order
                     let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
-                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
+                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
 
                     // faculty
                     let faculty = ''
@@ -5972,7 +6003,7 @@ function generateVisa() {
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
 
                     doc.setData({
@@ -5982,7 +6013,7 @@ function generateVisa() {
                         lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
                         firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                         patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                        dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                        dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                         gender: gender,
 
                         registrationOn: registrationOn,
@@ -5994,7 +6025,7 @@ function generateVisa() {
 
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
 
                         seriesVisa: seriesVisa,
@@ -6004,7 +6035,7 @@ function generateVisa() {
 
                         seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
                         idMigration: document.getElementById('idMigration' + indexTab).value,
-                        dateArrivalMigration: new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString(),
+                        dateArrivalMigration: formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value),
 
                         notificationFrom: notificationFrom,
                         notificationUntil: notificationUntil,
@@ -6069,18 +6100,19 @@ function generateVisa() {
 // выбор функции для ходатайства, относительно выбора ОВМ
     function generateVisaSolicTotal() {
         if (document.getElementById('ovmByRegion').value =='Тропарево-Никулино') {
-            generateVisaSolicitaionTroparevoTotal()
+            return generateVisaSolicitaionTroparevoTotal()
         }
         else if (document.getElementById('ovmByRegion').value =='Хамовники') {
-            generateVisaSolicitaionKhamovnikiTotal()
+            return generateVisaSolicitaionKhamovnikiTotal()
         }
+        throw new Error('Для выбранного ОВМ нет шаблона визового ходатайства');
     }
 
 
 //справка
     window.generateVisaReferenceTotal = function generate() {
-        path = ('../Templates/виза/справка.docx')
-        loadFile(
+        let path = ('Templates/виза/справка.docx')
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -6127,7 +6159,7 @@ function generateVisa() {
                         case "Учеба":
                             purpose = "студентом"
                             break
-                        case "Краткосрочная учеба":
+                        case "Краткосрочное обучение":
                             purpose = "студентом"
                             break
                         case "(НТС)":
@@ -6199,8 +6231,8 @@ function generateVisa() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
 
 
@@ -6253,9 +6285,9 @@ function generateVisa() {
                             break
                     }
 
-                    let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                    let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                     doc.setData({
 
@@ -6267,7 +6299,7 @@ function generateVisa() {
                         faculty: faculty.toUpperCase(),
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
                         dateUntil: dateUnt,
                         ovmByRegion: ovmByRegion,
@@ -6322,7 +6354,7 @@ function generateVisa() {
 
 //опись ВИЗА
     window.generateInventoryVisaTotal = function generate() {
-        path = ('../Templates/виза/опись виза.docx')
+        let path = ('Templates/виза/опись виза.docx')
 
         let students = []
 
@@ -6376,11 +6408,11 @@ function generateVisa() {
 
 
 
-            let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
+            let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
 
             let dateUntil = document.getElementById('dateUntil' + indexTab).value != '-' ?
-                new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
             //students
             students.push({
@@ -6397,7 +6429,7 @@ function generateVisa() {
         }
 
 
-        loadFile(
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -6409,7 +6441,7 @@ function generateVisa() {
                     linebreaks: true,
                 });
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
                 doc.render({
                     dateInOvm: dateInOvm,
                     nStud1: nStud1,
@@ -6466,19 +6498,14 @@ function generateVisa() {
                         document.getElementById('nStud'+(lastTab()-1)).value
                         +" Студенты.zip"
                 }
-
-                saveAs(content, nameZip)
+                // Saved once after every document completes.
             }
         );
     };
 
 
 
-    setTimeout(generateVisaApplicationTotal, 60)
-    setTimeout(generateVisaSolicTotal, 60)
-    setTimeout(generateVisaReferenceTotal, 60)
-    setTimeout(generateInventoryVisaTotal, 300)
-
+    return finishExport([generateVisaApplicationTotal, generateVisaSolicTotal, generateVisaReferenceTotal, generateInventoryVisaTotal], zipTotal);
 }
 
 
@@ -6494,9 +6521,9 @@ function generateRegVisa() {
         let ovmRg = document.getElementById('ovmByRegion').value
         let rgOn = document.getElementById('registrationOn').value
         let uvedTemp = document.getElementById('uvedTemp').value
-        path_uved = (`../Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
+        let path_uved = (`Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
-        loadFile(
+        return loadFile(
             path_uved,
             function (error, content) {
                 if (error) {
@@ -6703,7 +6730,7 @@ function generateRegVisa() {
                     let grazd25 = (grazd[24]) ? (grazd[24]) : ''
 
                     // dateOfBirth {dOB1-8}
-                    let dOB = new Date(document.getElementById('dateOfBirth'+indexTab).value).toLocaleDateString().split('.')
+                    let dOB = formatDateRU(document.getElementById('dateOfBirth'+indexTab).value).split('.')
                     let dOB1 = (dOB) ? (dOB[0][0]) : ''
                     let dOB2 = (dOB) ? (dOB[0][1]) : ''
                     let dOB3 = (dOB) ? (dOB[1][0]) : ''
@@ -6846,7 +6873,7 @@ function generateRegVisa() {
                     let idP10 = (idP[9]) ? (idP[9]) : ''
 
                     // dateOfIssue {dOI1-8}
-                    let dOI = new Date(document.getElementById('dateOfIssue'+indexTab).value).toLocaleDateString().split('.')
+                    let dOI = formatDateRU(document.getElementById('dateOfIssue'+indexTab).value).split('.')
                     let dOI1 = (dOI) ? (dOI[0][0]) : ''
                     let dOI2 = (dOI) ? (dOI[0][1]) : ''
                     let dOI3 = (dOI) ? (dOI[1][0]) : ''
@@ -6858,8 +6885,8 @@ function generateRegVisa() {
 
 
                     // validUntil {vU1-8}
-                    let vU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let vU = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value).split(".") : ''
                     let vU1 = (vU) ? (vU[0][0]) : ''
                     let vU2 = (vU) ? (vU[0][1]) : ''
                     let vU3 = (vU) ? (vU[1][0]) : ''
@@ -6934,8 +6961,8 @@ function generateRegVisa() {
                     let idV15 = (idV[14]) ? (idV[14]) : ''
 
                     // dateOfIssueVisa {dOIV1-8}
-                    let dOIV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let dOIV = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value).split(".") : ''
                     let dOIV1 = (dOIV) ? (dOIV[0][0]) : ''
                     let dOIV2 = (dOIV) ? (dOIV[0][1]) : ''
                     let dOIV3 = (dOIV) ? (dOIV[1][0]) : ''
@@ -6946,8 +6973,8 @@ function generateRegVisa() {
                     let dOIV8 = (dOIV) ? (dOIV[2][3]) : ''
 
                     // validUntilVisa {vUV1-8}
-                    let vUV = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let vUV = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value).split(".") : ''
                     let vUV1 = (vUV) ? (vUV[0][0]) : ''
                     let vUV2 = (vUV) ? (vUV[0][1]) : ''
                     let vUV3 = (vUV) ? (vUV[1][0]) : ''
@@ -6979,7 +7006,7 @@ function generateRegVisa() {
                             purposeU = "X"
                             purp1 = 'С'; purp2='Т'; purp3='У'; purp4="Д"; purp5 ='Е';purp6 = 'Н';purp7='Т'
                             break
-                        case "Краткосрочная учеба":
+                        case "Краткосрочное обучение":
                             purposeU = "X"
                             purp1 = 'С'; purp2='Т'; purp3='У'; purp4="Д"; purp5 ='Е';purp6 = 'Н';purp7='Т'
                             break
@@ -6994,8 +7021,8 @@ function generateRegVisa() {
                     }
 
                     // dateArrivalMigration {dAM1-8}
-                    let dAM = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let dAM = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value).split(".") : ''
                     let dAM1 = (dAM) ? (dAM[0][0]) : ''
                     let dAM2 = (dAM) ? (dAM[0][1]) : ''
                     let dAM3 = (dAM) ? (dAM[1][0]) : ''
@@ -7006,8 +7033,8 @@ function generateRegVisa() {
                     let dAM8 = (dAM) ? (dAM[2][3]) : ''
 
                     // dateUntil {dU1-8}
-                    let dU = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString().split(".") : ''
+                    let dU = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateUntil' + indexTab).value).split(".") : ''
                     let dU1 = (dU) ? (dU[0][0]) : ''
                     let dU2 = (dU) ? (dU[0][1]) : ''
                     let dU3 = (dU) ? (dU[1][0]) : ''
@@ -7387,7 +7414,7 @@ function generateRegVisa() {
 
 
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
 
                     doc.setData({
@@ -7485,23 +7512,23 @@ function generateRegVisa() {
 
 //ходатайство РЕГИСТРАЦИЯ
     window.generateRegSolicitaionTot = function generate() {
-        path = ("")
+        let path = ("")
         switch (document.getElementById('ovmByRegion').value) {
             case "Алексеевский":
-                path = ('../Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
+                path = ('Templates/регистрация/ходатайство АЛЕКСЕЕВСКИЙ.docx')
                 break
             case "Войковский":
-                path = ('../Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
+                path = ('Templates/регистрация/ходатайство ВОЙКОВСКИЙ.docx')
                 break
             case "МУ МВД РФ Люберецкое":
-                path = ('../Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
+                path = ('Templates/регистрация/ходатайство МУ МВД РФ ЛЮБЕРЕЦКОЕ.docx')
                 break
             case "Тропарево-Никулино":
-                path = ('../Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+                path = ('Templates/регистрация/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
                 break
         }
 
-        loadFile(
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -7544,8 +7571,8 @@ function generateRegVisa() {
 
 
                     //dateUntil
-                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
                     // purpose
                     let purpose = ''
@@ -7555,8 +7582,8 @@ function generateRegVisa() {
                             purpose = "УЧЕБА"
                             purposeS = "Студент"
                             break
-                        case "Краткосрочная учеба":
-                            purpose = "КРАТКОСРОЧНАЯ УЧЕБА"
+                        case "Краткосрочное обучение":
+                            purpose = "КРАТКОСРОЧНОЕ ОБУЧЕНИЕ"
                             purposeS = "Студент"
                             break
                         case "(НТС)":
@@ -7620,8 +7647,8 @@ function generateRegVisa() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                     // gender
                     let gender = ''
@@ -7667,20 +7694,20 @@ function generateRegVisa() {
                     let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                         ? document.getElementById('idVisa' + indexTab).value : ''
 
-                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
                     // order
                     let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
-                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
+                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
                     
                     // 07.09
-                    let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                    let orderUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderUntil' + indexTab).value) : ''
                     switch (document.getElementById('ovmByRegion').value) {
                         case "Алексеевский":
                             orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).getFullYear())
@@ -7774,7 +7801,7 @@ function generateRegVisa() {
 
                     let numRental = document.getElementById('numRental' + indexTab).value != "-" ? document.getElementById('numRental' + indexTab).value : ''
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                     doc.setData({
                         dateInOvm: dateInOvm,
@@ -7783,7 +7810,7 @@ function generateRegVisa() {
                         lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
                         firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                         patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                        dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                        dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                         gender: gender,
 
                         registrationOn: registrationOn,
@@ -7795,7 +7822,7 @@ function generateRegVisa() {
 
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
 
                         typeVisa: typeVisa,
@@ -7806,7 +7833,7 @@ function generateRegVisa() {
 
                         seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
                         idMigration: document.getElementById('idMigration' + indexTab).value,
-                        dateArrivalMigration: new Date(document.getElementById('dateArrivalMigration' + indexTab).value).toLocaleDateString(),
+                        dateArrivalMigration: formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value),
 
 
 
@@ -7882,8 +7909,8 @@ function generateRegVisa() {
 
 //визовая анкета
     window.generateVisaApplicationTot = function generate() {
-        path = ('../Templates/виза/визовая анкета.docx')
-        loadFile(
+        let path = ('Templates/виза/визовая анкета.docx')
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -7934,7 +7961,7 @@ function generateRegVisa() {
                             purposeU = "X"
                             purposeS = "Студент"
                             break
-                        case "Краткосрочная учеба":
+                        case "Краткосрочное обучение":
                             purposeU = "X"
                             purposeS = "Студент"
                             break
@@ -7950,8 +7977,8 @@ function generateRegVisa() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                     // gender
                     let genM = ''
@@ -7975,10 +8002,10 @@ function generateRegVisa() {
                     let numInvVisa = document.getElementById('numInvVisa' + indexTab).value
                         ? document.getElementById('numInvVisa' + indexTab).value : ''
 
-                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
 
                     // OVM
@@ -8015,7 +8042,7 @@ function generateRegVisa() {
 
                     }
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
                     doc.setData({
 
 
@@ -8027,7 +8054,7 @@ function generateRegVisa() {
                         firstNameRu: document.getElementById('firstNameRu' + indexTab).value.toUpperCase(),
                         firstNameEn: document.getElementById('firstNameEn' + indexTab).value.toUpperCase(),
                         patronymicRu: document.getElementById('patronymicRu' + indexTab).value.toUpperCase(),
-                        dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                        dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                         placeStateBirth: document.getElementById('placeStateBirth' + indexTab).value.toUpperCase(),
                         genM: genM,
                         genW: genW,
@@ -8035,7 +8062,7 @@ function generateRegVisa() {
                         // documentPerson: document.getElementById('documentPerson' + indexTab).text,
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
 
                         infHost1: infHost1,
@@ -8102,9 +8129,9 @@ function generateRegVisa() {
 
 //ходатайство ВИЗА ТРОПАРЕВО-НИКУЛИНО
     window.generateVisaSolicitaionTroparevoTot = function generate() {
-        path = ('../Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
+        let path = ('Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
 
-        loadFile(
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -8147,8 +8174,8 @@ function generateRegVisa() {
 
 
                     //dateUntil
-                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
                     // purpose
                     let purpose = ''
@@ -8156,8 +8183,8 @@ function generateRegVisa() {
                         case "Учеба":
                             purpose = "обучением в МПГУ"
                             break
-                        case "Краткосрочная учеба":
-                            purpose = "обучением в МПГУ"
+                        case "Краткосрочное обучение":
+                            purpose = "краткосрочным обучением в МПГУ"
                             break
                         case "(НТС)":
                             purpose = "посещением МПГУ в качестве приглашенного гостя (НТС)"
@@ -8170,8 +8197,8 @@ function generateRegVisa() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
                     // gender
                     let genM = ''
@@ -8211,18 +8238,18 @@ function generateRegVisa() {
                     let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
                         ? document.getElementById('idVisa' + indexTab).value : ''
 
-                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
-                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntilVisa' + indexTab).value).toLocaleDateString() : ''
+                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
 
                     // order
                     let numOrder = document.getElementById('numOrder' + indexTab).value
                         ? document.getElementById('numOrder' + indexTab).value : ''
-                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderFrom' + indexTab).value).toLocaleDateString() : ''
-                    let orderUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('orderUntil' + indexTab).value).toLocaleDateString() : ''
+                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
+                    let orderUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderUntil' + indexTab).value) : ''
 
                     // contract
                     let typeFunding = ''
@@ -8239,14 +8266,14 @@ function generateRegVisa() {
                     let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
                         document.getElementById('contractFrom' + indexTab).value : ''
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
 
                     let validUntilVisaAQ = ''
                     if (document.getElementById('validUntilVisa' + indexTab).value) {
                         validUntilVisaAQ = new Date(document.getElementById('validUntilVisa' + indexTab).value)
                         validUntilVisaAQ.setDate(validUntilVisaAQ.getDate()+1)
-                        validUntilVisaAQ = validUntilVisaAQ.toLocaleDateString()
+                        validUntilVisaAQ = formatDateRU(validUntilVisaAQ)
                     }
 
                     doc.setData({
@@ -8259,7 +8286,7 @@ function generateRegVisa() {
                         firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
                         firstNameEn: document.getElementById('firstNameEn' + indexTab).value,
                         patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
-                        dateOfBirth: new Date(document.getElementById('dateOfBirth' + indexTab).value).toLocaleDateString(),
+                        dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
                         registrationOn1: registrationOn1,
                         registrationOn2: registrationOn2,
                         dateUntil: dateUntil,
@@ -8269,7 +8296,7 @@ function generateRegVisa() {
 
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
 
                         seriesVisa: seriesVisa,
@@ -8330,10 +8357,363 @@ function generateRegVisa() {
             });
     };
 
+    window.generateVisaSolicitaionKhamovnikiTot = function generate() {
+        let path = ('Templates/виза/ходатайство ХАМОВНИКИ.docx')
+
+        return loadFile(
+            path,
+            function (error, content) {
+                if (error) {
+                    throw error;
+                }
+
+                function replaceErrors(key, value) {
+                    if (value instanceof Error) {
+                        return Object.getOwnPropertyNames(value).reduce(function(error, key) {
+                            error[key] = value[key];
+                            return error;
+                        }, {});
+                    }
+                    return value;
+                }
+                function errorHandler(error) {
+                    console.log(JSON.stringify({error: error}, replaceErrors));
+
+                    if (error.properties && error.properties.errors instanceof Array) {
+                        const errorMessages = error.properties.errors.map(function (error) {
+                            return error.properties.explanation;
+                        }).join("\n");
+                        console.log('errorMessages', errorMessages);
+                        // errorMessages is a humanly readable message looking like this :
+                        // 'The tag beginning with "foobar" is unopened'
+                    }
+                    throw error;
+                }
+
+                for (let i =0; i<countTab();i++) {
+                    var zip = new PizZip(content);
+                    var doc = new window.docxtemplater(zip, {
+                        paragraphLoop: true,
+                        linebreaks: true,
+                    });
+
+                    let tabs = document.getElementsByClassName('nav-tabs')[0].getElementsByTagName('li')
+                    let elem = tabs[i]
+                    let indexTab = parseInt(elem.id.match(/\d+/))
+
+
+                    //dateUntil
+                    let dateUntil= /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
+
+                    // purpose
+                    let purpose = ''
+                    let purposeS = ''
+                    switch (document.getElementById('purpose' + indexTab).value) {
+                        case "Учеба":
+                            purpose = "УЧЕБА"
+                            purposeS = "Студент"
+                            break
+                        case "Краткосрочное обучение":
+                            purpose = "КРАТКОСРОЧНОЕ ОБУЧЕНИЕ"
+                            purposeS = "Студент"
+                            break
+                        case "(НТС)":
+                            purpose = "НАУЧНО-ТЕХНИЧЕСКИЕ СВЯЗИ (НТС)"
+                            purposeS = "НТС"
+                            break
+                        case "Трудовая деятельность":
+                            purpose = "ТРУДОВАЯ ДЕЯТЕЛЬНОСТЬ"
+                            purposeS = "Преподаватель"
+                            break
+                    }
+
+                    // levelEducation
+                    let levelEducation = ''
+                    switch (document.getElementById('levelEducation' + indexTab).value) {
+                        case "Подготовительный факультет (изучаю русский язык)/ The preparatory faculty":
+                            levelEducation = 'подготовительный факультет'
+                            break
+                        case "бакалавриат/bachelor degree":
+                            levelEducation = 'бакалавриат'
+                            break
+                        case "магистратура/master degree":
+                            levelEducation = 'магистратура'
+                            break
+                        case "аспирантура/post-graduate studies":
+                            levelEducation = 'аспирантура'
+                            break
+                    }
+
+                    // course
+                    let course = ''
+                    switch (document.getElementById('course' + indexTab).value) {
+                        case '1':
+                            course = ', 1 курс,'
+                            break
+                        case '2':
+                            course = ', 2 курс,'
+                            break
+                        case '3':
+                            course = ', 3 курс,'
+                            break
+                        case '4':
+                            course = ', 4 курс,'
+                            break
+                        case '5':
+                            course = ', 5 курс,'
+                            break
+                    }
+
+                    // norification
+                    let notificationFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('notificationFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('notificationFrom' + indexTab).value) : ''
+                    let notificationUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('notificationUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('notificationUntil' + indexTab).value) : ''
+                    let issuedBy = document.getElementById('issuedBy' + indexTab).value != '' ? document.getElementById('issuedBy' + indexTab).value : ''
+
+                    // addressResidence
+                    let addressResidence = ''
+                    switch (document.getElementById('migrationAddress').value) {
+                        case "Квартира":
+                            addressResidence = document.getElementById('addressResidence' + indexTab).value
+                            break
+                        default:
+                            addressResidence = document.getElementById('migrationAddress').value
+                            break
+                    }
+
+                    // Passport
+                    let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
+                        ? document.getElementById('series' + indexTab).value : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
+
+                    // gender
+                    let gender = ''
+                    switch (document.getElementById('gender' + indexTab).value) {
+                        case "Мужской / Male":
+                            gender = 'м.'
+                            break
+                        case "Женский / Female":
+                            gender = 'ж.'
+                            break
+                    }
+
+                    // registration On
+                    let registrationOn = ''
+                    switch (document.getElementById('registrationOn').value) {
+                        case "Круглов":
+                            registrationOn = 'Начальник УМС                                                                            Круглов В.В.'
+                            break
+                        case "Морозова":
+                            registrationOn = 'Заместитель начальника УМС                                                    Морозова О.А.'
+                            break
+                        case "Колпакова":
+                            registrationOn = "Начальник ПВО УМС                                                                  Колпакова Т.А."
+                            break
+                    }
+
+                    // visa
+                    let seriesVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('seriesVisa' + indexTab).value)
+                        ? document.getElementById('seriesVisa' + indexTab).value : ''
+                    let idVisa = /^[a-zA-Z0-9.]+$/.test(document.getElementById('idVisa' + indexTab).value)
+                        ? document.getElementById('idVisa' + indexTab).value : ''
+
+                    let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
+                    let validUntilVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntilVisa' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntilVisa' + indexTab).value) : ''
+
+                    // order
+                    let numOrder = document.getElementById('numOrder' + indexTab).value
+                        ? document.getElementById('numOrder' + indexTab).value : ''
+                    let orderFrom = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('orderFrom' + indexTab).value))
+                        ? formatDateRU(document.getElementById('orderFrom' + indexTab).value) : ''
+
+                    // faculty
+                    let faculty = ''
+                    switch (document.getElementById('faculty' + indexTab).value) {
+                        case "Институт изящных искусств: Факультет музыкального искусства / The Musical Arts Institute":
+                            faculty = 'ИИИ:Музфак'
+                            break
+                        case "Институт изящных искусств: Художественно-графический факультет/ The Institute of Fine Arts":
+                            faculty = 'ИИИ: Худграф'
+                            break
+                        case "Институт социально-гуманитарного образования / The Institute of Social Studies and Humanities":
+                            faculty = 'ИСГО'
+                            break
+                        case "Институт филологии / The Institute of Philology":
+                            faculty = 'ИФ'
+                            break
+                        case "Институт иностранных языков / The Institute of Foreign Languages":
+                            faculty = 'ИИЯ'
+                            break
+                        case "Институт международного образования / The Institute of International Education":
+                            faculty = 'ИМО'
+                            break
+                        case "Институт детства / The Institute of Childhood":
+                            faculty = 'ИД'
+                            break
+                        case "Институт биологии и химии / The Institute of Biology and Chemistry":
+                            faculty = 'ИБХ'
+                            break
+                        case "Институт физики, технологии и информационных систем / The Institute of Physics, Technology, and Informational Systems":
+                            faculty = 'ИФТИС'
+                            break
+                        case "Институт физической культуры, спорта и здоровья /The Institute of Physical Education, Sports and Health":
+                            faculty = 'ИФКСиЗ'
+                            break
+                        case "Географический факультет / The Institute of Geography":
+                            faculty = 'Геофак'
+                            break
+                        case "Институт истории и политики / The Institute of History and Politics":
+                            faculty = 'ИИП'
+                            break
+                        case "Институт математики и информатики / The Institute of Mathematics and Informatics":
+                            faculty = 'ИМИ'
+                            break
+                        case "Факультет дошкольной педагогики и психологии / The Institute of Pre-School Pedagogy and Psychology":
+                            faculty = 'Дош.фак.'
+                            break
+                        case "Институт педагогики и психологии / The Institute of Pedagogy and Psychology":
+                            faculty = 'ИПП'
+                            break
+                        case "Институт журналистики, коммуникаций и медиаобразования / The Institute of Journalism, Communications and Media Education":
+                            faculty = 'ИЖКиМ'
+                            break
+                        case "Институт развития цифрового образования / The Institute of Digital Education Development":
+                            faculty = 'ИРЦО'
+                            break
+                    }
+
+
+                    // contract
+                    let typeFundingDog1 = ""
+                    let typeFundingDog2 = ""
+                    let typeFundingNap1 = ""
+                    let typeFundingNap2 = ""
+                    switch (document.getElementById('typeFunding' + indexTab).value) {
+                        case "бюджет (Государство оплачивает мое обучение)/ state funded (The state pays for my education)":
+                            typeFundingDog2 = "Договор"
+                            typeFundingNap2 = "направление"
+                            break
+                        case 'договор ( я плачу за обучение)/paid tuition (I pay for my education)':
+                            typeFundingDog1 = "Договор"
+                            typeFundingNap1 = "направление"
+                            break
+                    }
+                    let numContract = document.getElementById('numContract' + indexTab).value
+                        ? document.getElementById('numContract' + indexTab).value : ''
+                    let contractFrom = document.getElementById('contractFrom' + indexTab).value != '-' ?
+                        document.getElementById('contractFrom' + indexTab).value : ''
+
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
+
+
+                    doc.setData({
+                        dateInOvm: dateInOvm,
+                        nStud: document.getElementById('nStud' + indexTab).value,
+                        grazd: document.getElementById('grazd' + indexTab).value,
+                        lastNameRu: document.getElementById('lastNameRu' + indexTab).value,
+                        firstNameRu: document.getElementById('firstNameRu' + indexTab).value,
+                        patronymicRu: document.getElementById('patronymicRu' + indexTab).value,
+                        dateOfBirth: formatDateRU(document.getElementById('dateOfBirth' + indexTab).value),
+                        gender: gender,
+
+                        registrationOn: registrationOn,
+                        dateUntil: dateUntil,
+                        purpose: purpose,
+                        purposeS: purposeS,
+                        levelEducation: levelEducation,
+                        course: course,
+
+                        series: series,
+                        idPassport: document.getElementById('idPassport' + indexTab).value,
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
+                        validUntil: validUntil,
+
+                        seriesVisa: seriesVisa,
+                        idVisa: idVisa,
+                        dateOfIssueVisa: dateOfIssueVisa,
+                        validUntilVisa: validUntilVisa,
+
+                        seriesMigration: document.getElementById('seriesMigration' + indexTab).value,
+                        idMigration: document.getElementById('idMigration' + indexTab).value,
+                        dateArrivalMigration: formatDateRU(document.getElementById('dateArrivalMigration' + indexTab).value),
+
+                        notificationFrom: notificationFrom,
+                        notificationUntil: notificationUntil,
+                        issuedBy: notificationFrom == '' ? 'Документ подписан электронной подписью' : issuedBy,
+
+                        addressResidence: addressResidence,
+                        faculty: faculty,
+                        numOrder: numOrder,
+                        orderFrom: orderFrom,
+                        typeFundingDog1: typeFundingDog1,
+                        typeFundingDog2: typeFundingDog2,
+                        typeFundingNap1: typeFundingNap1,
+                        typeFundingNap2: typeFundingNap2,
+
+                        numContract: numContract,
+                        contractFrom: contractFrom,
+
+                    });
+
+
+
+                    try {
+                        doc.render();
+                    }
+                    catch (error) {
+                        // Catch rendering errors (errors relating to the rendering of the template : angularParser throws an error)
+                        errorHandler(error);
+                    }
+                    var out = doc.getZip().generate();
+                    zipTotal.file(
+                        document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
+                        document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
+                        document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
+                        dateInOvm +
+                        " - " + "ОВМ ХАМОВНИКИ" + "/" +
+                        "ХОДАТАЙСТВО (ВИЗА) - (" + document.getElementById('grazd'+indexTab).value.toUpperCase() + ") " +
+                        document.getElementById('lastNameRu'+indexTab).value.toUpperCase() + ' ' +
+                        document.getElementById('firstNameRu'+indexTab).value.toUpperCase() + ' ' +
+                        document.getElementById('patronymicRu'+indexTab).value.toUpperCase() + " - " +
+                        dateInOvm +
+                        " - " + "ОВМ ХАМОВНИКИ" + ".docx"
+                        , out, {base64: true}
+                    );
+                } // end for
+
+
+                // let nameFile = ''
+                // if (countTab()==1) {
+                //     nameFile = document.getElementById('nStud1').value
+                //         +" ХОДАТАЙСТВО (ВИЗА) - ОВМ ХАМОВНИКИ.zip"
+                // }
+                // else {
+                //     nameFile = document.getElementById('nStud1').value + '-'+
+                //         document.getElementById('nStud'+(lastTab()-1)).value
+                //         +" ХОДАТАЙСТВО (ВИЗА) - ОВМ ХАМОВНИКИ.zip"
+                // }
+                var content = zipTotal.generate({ type: "blob" });
+                //saveAs(content,nameFile);
+            });
+    };
+
+
+    function generateVisaSolicTot() {
+        const ovm = document.getElementById('ovmByRegion').value;
+        if (ovm === 'Тропарево-Никулино') return generateVisaSolicitaionTroparevoTot();
+        if (ovm === 'Хамовники') return generateVisaSolicitaionKhamovnikiTot();
+        throw new Error('Для выбранного ОВМ нет шаблона визового ходатайства');
+    }
+
     //справка
     window.generateVisaReferenceTot = function generate() {
-        path = ('../Templates/виза/справка.docx')
-        loadFile(
+        let path = ('Templates/виза/справка.docx')
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -8380,7 +8760,7 @@ function generateRegVisa() {
                         case "Учеба":
                             purpose = "студентом"
                             break
-                        case "Краткосрочная учеба":
+                        case "Краткосрочное обучение":
                             purpose = "студентом"
                             break
                         case "(НТС)":
@@ -8452,8 +8832,8 @@ function generateRegVisa() {
                     // Passport
                     let series = /^[a-zA-Z0-9.]+$/.test(document.getElementById('series' + indexTab).value)
                         ? document.getElementById('series' + indexTab).value : ''
-                    let validUntil = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString())
-                        ? new Date(document.getElementById('validUntil' + indexTab).value).toLocaleDateString() : ''
+                    let validUntil = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('validUntil' + indexTab).value))
+                        ? formatDateRU(document.getElementById('validUntil' + indexTab).value) : ''
 
 
 
@@ -8507,9 +8887,9 @@ function generateRegVisa() {
                             break
                     }
 
-                    let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                    let dateUnt =  document.getElementById('dateUntil' + indexTab).value ? formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
-                    let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                    let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
 
                     doc.setData({
 
@@ -8521,7 +8901,7 @@ function generateRegVisa() {
                         faculty: faculty.toUpperCase(),
                         series: series,
                         idPassport: document.getElementById('idPassport' + indexTab).value,
-                        dateOfIssue: new Date(document.getElementById('dateOfIssue' + indexTab).value).toLocaleDateString(),
+                        dateOfIssue: formatDateRU(document.getElementById('dateOfIssue' + indexTab).value),
                         validUntil: validUntil,
                         dateUntil: dateUnt,
                         ovmByRegion: ovmByRegion,
@@ -8577,7 +8957,7 @@ function generateRegVisa() {
 
     //опись
     window.generateInventoryRegTot = function generate() {
-        path = ('../Templates/регистрация И виза/опись.docx')
+        let path = ('Templates/регистрация И виза/опись.docx')
 
         let students = []
 
@@ -8611,11 +8991,11 @@ function generateRegVisa() {
             let indexTab = parseInt(elem.id.match(/\d+/))
 
 
-            let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString())
-                ? new Date(document.getElementById('dateOfIssueVisa' + indexTab).value).toLocaleDateString() : ''
+            let dateOfIssueVisa = /^[a-zA-Z0-9.]+$/.test(formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value))
+                ? formatDateRU(document.getElementById('dateOfIssueVisa' + indexTab).value) : ''
 
             let dateUntil = document.getElementById('dateUntil' + indexTab).value != '-' ?
-                new Date(document.getElementById('dateUntil' + indexTab).value).toLocaleDateString() : ''
+                formatDateRU(document.getElementById('dateUntil' + indexTab).value) : ''
 
             //students
             students.push({
@@ -8632,7 +9012,7 @@ function generateRegVisa() {
         }
 
 
-        loadFile(
+        return loadFile(
             path,
             function (error, content) {
                 if (error) {
@@ -8644,7 +9024,7 @@ function generateRegVisa() {
                     linebreaks: true,
                 });
 
-                let dateInOvm = document.getElementById('dateInOvm').value ? new Date(document.getElementById('dateInOvm').value).toLocaleDateString() : ""
+                let dateInOvm = document.getElementById('dateInOvm').value ? formatDateRU(document.getElementById('dateInOvm').value) : ""
                 doc.render({
                     dateInOvm: dateInOvm,
                     nStud1: nStud1,
@@ -8700,20 +9080,14 @@ function generateRegVisa() {
                         document.getElementById('nStud'+(lastTab()-1)).value
                         +" Студенты.zip"
                 }
-
-                saveAs(content, nameZip)
+                // Saved once after every document completes.
             }
         );
     };
 
 
 
-    setTimeout(generateRegNotifTot, 60)
-    setTimeout(generateRegSolicitaionTot, 60)
-    setTimeout(generateVisaApplicationTot, 60)
-    setTimeout(generateVisaSolicitaionTroparevoTot, 60)
-    setTimeout(generateVisaReferenceTot, 60)
-    setTimeout(generateInventoryRegTot, 300)
+    return finishExport([generateRegNotifTot, generateRegSolicitaionTot, generateVisaApplicationTot, generateVisaSolicTot, generateVisaReferenceTot, generateInventoryRegTot], zipTotal);
 }
 
 

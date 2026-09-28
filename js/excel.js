@@ -1,17 +1,18 @@
 let selectedFile;
-let totalInfo = []; // file contents EXCEL
-//let nStud = document.getElementById('nStud1')
+let totalInfo = [];
+let excelCachePromise = null;
 
-// console.log(window.XLSX)
-
-
-document.getElementById('excel').addEventListener("change",(event)=>{
+document.getElementById('excel').addEventListener('change', event => {
     selectedFile = event.target.files[0];
-})
+    excelCachePromise = selectedFile ? readExcel(selectedFile, PREFERRED_SHEET, NUMBER_COLUMN) : null;
+    // A rejected promise is handled when Find is clicked; prevent unhandled rejection meanwhile.
+    if (excelCachePromise) excelCachePromise.catch(() => {});
+});
+const PREFERRED_SHEET = 'Ответы на форму (1)';
+const NUMBER_COLUMN = 'Порядковый номер';
 
-function findInfo(id) {
+async function findInfo(id) {
 
-    let personFinded = 0
 
     id = parseInt(id.match(/\d+/)) // if id="find1" => id=1
     let nStud = document.querySelector('#nStud'+id)
@@ -73,42 +74,29 @@ function findInfo(id) {
     let deleteButton = document.querySelector("#deleteButton"+id)
 
 
-    // document.getElementById('find1').addEventListener('click',()=> {
-    if (selectedFile && nStud.value!=0){
-        let fileReader = new FileReader();
-        fileReader.readAsBinaryString(selectedFile);
-        fileReader.onload = (event)=>{
-            let data = event.target.result;
-            let workbook = XLSX.read(data,{type:"binary"});
-
-            let indSheet = Object.keys(workbook.Sheets).indexOf('Ответы на форму (1)') // ПОИСК ИНДЕКСА ЛИСТА ПО НАЗВАНИЮ
-            //console.log(indSheet)
-            let sheet = Object.keys(workbook.Sheets)[indSheet]
-            
-
-            
-            
-            let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
-            //console.log(rowObject)
-            totalInfo = JSON.stringify(rowObject, undefined, 1)
-
-            totalInfo = JSON.parse(totalInfo)
-
-            //console.log(totalInfo)
-            for (let i = 0; i<totalInfo.length; i++) {
-                if (totalInfo[i]['Порядковый номер'] == nStud.value) {
-
-                    personFinded = 1 // for print error
-
-                    let dateStart = new Date(1900,0,0)
-                    let dateEnd = new Date(dateStart)
+    if (!excelCachePromise || !nStud.value.trim()) {
+        alert('Выберите Excel и укажите номер студента');
+        return;
+    }
+    try {
+        const parsed = await excelCachePromise;
+        totalInfo = parsed.rows;
+        const row = parsed.byNumber.get(String(nStud.value).trim());
+        if (!row) {
+            alert('Студент с номером ' + nStud.value + ' не найден');
+            return;
+        }
 
 
 
 
 
-                    //purpose.value	=	totalInfo[i]['']
-                    switch (totalInfo[i]['Гражданство (подданство)/ Citizenship']) {
+
+
+
+
+                    //purpose.value	=	row['']
+                    switch (row['Гражданство (подданство)/ Citizenship']) {
                         case 'Китай/ China':
                             grazd.value = "Китай"
                             break
@@ -140,183 +128,159 @@ function findInfo(id) {
                             grazd.value ="Украина (ДНР)"
                             break
                         default:
-                            grazd.value = totalInfo[i]['Гражданство (подданство)/ Citizenship']
+                            grazd.value = row['Гражданство (подданство)/ Citizenship']
                             break
                     }
 
 
 
 
-                    if (totalInfo[i]['Зачислен Приказом от']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Зачислен Приказом от'])
-                        orderFrom.value = dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
-                    }
-                    else {orderFrom.value = new Date()}
+                    if (excelDateToISO(row['Зачислен Приказом от'], parsed.date1904)) {
 
-                    if (totalInfo[i]['СРОК ОБУЧЕНИЯ ДО']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['СРОК ОБУЧЕНИЯ ДО'])
-                        orderUntil.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
+                        orderFrom.value = excelDateToISO(row['Зачислен Приказом от'], parsed.date1904)
+                    }
+                    else {orderFrom.value = ''}
+
+                    if (excelDateToISO(row['СРОК ОБУЧЕНИЯ ДО'], parsed.date1904)) {
+
+                        orderUntil.value = excelDateToISO(row['СРОК ОБУЧЕНИЯ ДО'], parsed.date1904)
                     }
                     else {
-                        orderUntil.value = new Date()}
+                        orderUntil.value = ''}
 
                     /* new */
-                    if (totalInfo[i]['ПО']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['ПО'])
-                        dateUntil.value = dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
+                    if (excelDateToISO(row['ПО'], parsed.date1904)) {
+
+                        dateUntil.value = excelDateToISO(row['ПО'], parsed.date1904)
                     }
                     else {
-                        dateUntil.value = new Date()
+                        dateUntil.value = ''
                     }
 
                     /* !new */
-                    if (totalInfo[i]['Срок действия (если есть) / Date of expiry']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия (если есть) / Date of expiry'])
-                        validUntil.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
-                    }
-                    else {validUntil.value = new Date()}
-                    if (totalInfo[i]['Дата выдачи / Date of issue *']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Дата выдачи / Date of issue *'])
-                        dateOfIssueVisa.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
-                    }
-                    else {dateOfIssueVisa.value = new Date()}
-                    if (totalInfo[i]['Срок действия / Date of expiry *']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия / Date of expiry *'])
-                        validUntilVisa.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
+                    if (excelDateToISO(row['Срок действия (если есть) / Date of expiry'], parsed.date1904)) {
 
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок действия / Date of expiry *'])
-                        notificationUntil.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
+                        validUntil.value = excelDateToISO(row['Срок действия (если есть) / Date of expiry'], parsed.date1904)
                     }
-                    else {validUntilVisa.value = new Date()
-                        notificationUntil.value = new Date()}
-                    if (totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА С ...']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА С ...'])
-                        notificationFrom.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
-                    }
-                    else {notificationFrom.value = new Date()}
+                    else {validUntil.value = ''}
+                    if (excelDateToISO(row['Дата выдачи / Date of issue *'], parsed.date1904)) {
 
-                    if (totalInfo[i]['Срок пребывания: С /Duration of stay: From'] > 20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Срок пребывания: С /Duration of stay: From'])
-                        dateArrivalMigration.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
-                    } else {dateArrivalMigration.value = new Date()}
+                        dateOfIssueVisa.value = excelDateToISO(row['Дата выдачи / Date of issue *'], parsed.date1904)
+                    }
+                    else {dateOfIssueVisa.value = ''}
+                    if (excelDateToISO(row['Срок действия / Date of expiry *'], parsed.date1904)) {
+
+                        validUntilVisa.value = excelDateToISO(row['Срок действия / Date of expiry *'], parsed.date1904)
+
+                        notificationUntil.value = excelDateToISO(row['Срок действия / Date of expiry *'], parsed.date1904)
+                    }
+                    else {validUntilVisa.value = ''
+                        notificationUntil.value = ''}
+                    if (excelDateToISO(row['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА С ...'], parsed.date1904)) {
+
+                        notificationFrom.value = excelDateToISO(row['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА С ...'], parsed.date1904)
+                    }
+                    else {notificationFrom.value = ''}
+
+                    if (excelDateToISO(row['Срок пребывания: С /Duration of stay: From'], parsed.date1904)) {
+
+                        dateArrivalMigration.value = excelDateToISO(row['Срок пребывания: С /Duration of stay: From'], parsed.date1904)
+                    } else {dateArrivalMigration.value = ''}
 
 
-                    if (totalInfo[i]['Дата выдачи / Date of issue'] > 20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Дата выдачи / Date of issue'])
-                        dateOfIssue.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
+                    if (excelDateToISO(row['Дата выдачи / Date of issue'], parsed.date1904)) {
+
+                        dateOfIssue.value = excelDateToISO(row['Дата выдачи / Date of issue'], parsed.date1904)
                     }
 
-                    else {dateOfIssue.value = new Date()}
+                    else {dateOfIssue.value = ''}
 
-                    if (totalInfo[i]['Год рождения / Date of birth']>20000) {
-                        dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Год рождения / Date of birth'])
-                        dateOfBirth.value	=	dateEnd.toISOString().slice(0,10)
-                        dateEnd = new Date(dateStart)
+                    if (excelDateToISO(row['Год рождения / Date of birth'], parsed.date1904)) {
+
+                        dateOfBirth.value = excelDateToISO(row['Год рождения / Date of birth'], parsed.date1904)
                     }
-                    else {dateOfBirth.value = new Date()}
+                    else {dateOfBirth.value = ''}
 
 
 
-                    faculty.value	=	totalInfo[i]['Институт & Факультет  / Institute & Faculty ']
-                    levelEducation.value	=	totalInfo[i]['УРОВЕНЬ ОБРАЗОВАНИЯ/ LEVEL OF EDUCATION']
-                    course.value	=	totalInfo[i]['КУРС ОБУЧЕНИЯ/YEAR OF STUDYING']
+                    faculty.value	=	row['Институт & Факультет  / Institute & Faculty ']
+                    levelEducation.value	=	row['УРОВЕНЬ ОБРАЗОВАНИЯ/ LEVEL OF EDUCATION']
+                    course.value	=	row['КУРС ОБУЧЕНИЯ/YEAR OF STUDYING']
 
 
-                    numOrder.value	=	totalInfo[i]['№ Приказа'] ? totalInfo[i]['№ Приказа'] : ''
-
-
-
+                    numOrder.value	=	row['№ Приказа'] ? row['№ Приказа'] : ''
 
 
 
 
-                    typeFunding.value	=	totalInfo[i]['Тип финансирования/Type of Funding (state funded / paid tuition)'] ? totalInfo[i]['Тип финансирования/Type of Funding (state funded / paid tuition)'] : ''
-                    numContract.value	=	totalInfo[i]['№ ДОГОВОРА ОБ ОКАЗАНИИ ПЛАТНЫХ ОБРАЗОВАТЕЛЬНЫХ УСЛУГ'] ? totalInfo[i]['№ ДОГОВОРА ОБ ОКАЗАНИИ ПЛАТНЫХ ОБРАЗОВАТЕЛЬНЫХ УСЛУГ'] : ""
 
-                    if (totalInfo[i]['Договор от']>20000) {
-                        let dateStartCont = new Date(1900,0,-1)
-                        let dateEndCont = new Date(dateStart)
-                        dateEndCont.setDate(dateStartCont.getDate()+totalInfo[i]['Договор от'])
-                        contractFrom.value = dateEndCont.toLocaleDateString()
-                        dateEndCont = new Date(dateStartCont)
+
+
+                    typeFunding.value	=	row['Тип финансирования/Type of Funding (state funded / paid tuition)'] ? row['Тип финансирования/Type of Funding (state funded / paid tuition)'] : ''
+                    numContract.value	=	row['№ ДОГОВОРА ОБ ОКАЗАНИИ ПЛАТНЫХ ОБРАЗОВАТЕЛЬНЫХ УСЛУГ'] ? row['№ ДОГОВОРА ОБ ОКАЗАНИИ ПЛАТНЫХ ОБРАЗОВАТЕЛЬНЫХ УСЛУГ'] : ""
+
+                    if (excelDateToISO(row['Договор от'], parsed.date1904)) {
+                        contractFrom.value = formatDateRU(excelDateToISO(row['Договор от'], parsed.date1904))
                     }
                     else {
                         contractFrom.value	=	""
                     }
 
 
-                    lastNameRu.value	=	totalInfo[i]['ФАМИЛИЯ (На русском языке) /SECOND NAME (in Russian)'] ? totalInfo[i]['ФАМИЛИЯ (На русском языке) /SECOND NAME (in Russian)'] : ""
-                    firstNameRu.value	=	totalInfo[i]['ИМЯ  (На русском языке) / FIRST NAME (in Russian)'] ? totalInfo[i]['ИМЯ  (На русском языке) / FIRST NAME (in Russian)'] : ""
-                    patronymicRu.value	=	totalInfo[i]['ОТЧЕСТВО  (На русском языке) '] ? totalInfo[i]['ОТЧЕСТВО  (На русском языке) '] : ""
-                    lastNameEn.value	=	totalInfo[i]['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)'] ? totalInfo[i]['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)'] : ''
-                    firstNameEn.value	=	totalInfo[i]['ИМЯ  (На английском языке) / FIRST NAME (in English)'] ? totalInfo[i]['ИМЯ  (На английском языке) / FIRST NAME (in English)'] : ''
+                    lastNameRu.value	=	row['ФАМИЛИЯ (На русском языке) /SECOND NAME (in Russian)'] ? row['ФАМИЛИЯ (На русском языке) /SECOND NAME (in Russian)'] : ""
+                    firstNameRu.value	=	row['ИМЯ  (На русском языке) / FIRST NAME (in Russian)'] ? row['ИМЯ  (На русском языке) / FIRST NAME (in Russian)'] : ""
+                    patronymicRu.value	=	row['ОТЧЕСТВО  (На русском языке) '] ? row['ОТЧЕСТВО  (На русском языке) '] : ""
+                    lastNameEn.value	=	row['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)'] ? row['ФАМИЛИЯ (На английском языке)/ SECOND NAME (in English)'] : ''
+                    firstNameEn.value	=	row['ИМЯ  (На английском языке) / FIRST NAME (in English)'] ? row['ИМЯ  (На английском языке) / FIRST NAME (in English)'] : ''
 
 
 
-                    gender.value	=	totalInfo[i]['Пол / Sex']
-                    // documentPerson.value	=	totalInfo[i]['ДОКУМЕНТ, УДОСТОВЕРЯЮЩИЙ ЛИЧНОСТЬ/IDENTITY DOCUMENT']
-                    placeStateBirth.value	=	totalInfo[i]['Место рождения (Страна, город) / Place of birth (Country, city/town)'] ? totalInfo[i]['Место рождения (Страна, город) / Place of birth (Country, city/town)'] : ""
-                    series.value	=	totalInfo[i]['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *'] ? totalInfo[i]['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *'] : ""
-                    idPassport.value	=	totalInfo[i]['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *'] ? totalInfo[i]['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *'] : ""
-
-
-
-
-
-
-                    typeVisa.value	=	totalInfo[i]['ВИД И РЕКВИЗИТЫ ДОКУМЕНТА, ПОДТВЕРЖДАЮЩЕГО ПРАВО НА ПРЕБЫВАНИЕ (ПРОЖИВАНИЕ) В РОССИЙСКОЙ ФЕДЕРАЦИИ ']
-                    seriesVisa.value	=	totalInfo[i]['СЕРИЯ ВИЗЫ/VISA SERIES *'] ? totalInfo[i]['СЕРИЯ ВИЗЫ/VISA SERIES *'] : ''
-                    idVisa.value	=	totalInfo[i]['НОМЕР ВИЗЫ №/ VISA NUMBER № *'] ? totalInfo[i]['НОМЕР ВИЗЫ №/ VISA NUMBER № *'] : ''
+                    gender.value	=	row['Пол / Sex']
+                    // documentPerson.value	=	row['ДОКУМЕНТ, УДОСТОВЕРЯЮЩИЙ ЛИЧНОСТЬ/IDENTITY DOCUMENT']
+                    placeStateBirth.value	=	row['Место рождения (Страна, город) / Place of birth (Country, city/town)'] ? row['Место рождения (Страна, город) / Place of birth (Country, city/town)'] : ""
+                    series.value	=	row['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *'] ? row['СЕРИЯ ПАСПОРТА/PASSPORT SERIES *'] : ""
+                    idPassport.value	=	row['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *'] ? row['НОМЕР ПАСПОРТА № /  PASSPORT NUMBER № *'] : ""
 
 
 
 
 
-                    identifierVisa.value	=	totalInfo[i]['Идентификатор визы/ Visa ID №'] ? totalInfo[i]['Идентификатор визы/ Visa ID №'] : ''
-                    numInvVisa.value	=	totalInfo[i]['№ приглашения'] ? totalInfo[i]['№ приглашения'] : ""
-                    seriesMigration.value	=	totalInfo[i]['СЕРИЯ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD SERIES'] ? totalInfo[i]['СЕРИЯ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD SERIES'] : ""
-                    idMigration.value	=	totalInfo[i]['№ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD NUMBER'] ? totalInfo[i]['№ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD NUMBER'] : ""
+
+                    typeVisa.value	=	row['ВИД И РЕКВИЗИТЫ ДОКУМЕНТА, ПОДТВЕРЖДАЮЩЕГО ПРАВО НА ПРЕБЫВАНИЕ (ПРОЖИВАНИЕ) В РОССИЙСКОЙ ФЕДЕРАЦИИ ']
+                    seriesVisa.value	=	row['СЕРИЯ ВИЗЫ/VISA SERIES *'] ? row['СЕРИЯ ВИЗЫ/VISA SERIES *'] : ''
+                    idVisa.value	=	row['НОМЕР ВИЗЫ №/ VISA NUMBER № *'] ? row['НОМЕР ВИЗЫ №/ VISA NUMBER № *'] : ''
 
 
 
-                    homeAddress.value	=	totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\n1)Cтрана/Country of origin\n2)Провинция (или область) / Province\n3)Город / City \n4)Улица / Street\n5)№ дома / building №\n6)№ Квартиры / Apt №"] ?
-                        totalInfo[i]["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\n1)Cтрана/Country of origin\n2)Провинция (или область) / Province\n3)Город / City \n4)Улица / Street\n5)№ дома / building №\n6)№ Квартиры / Apt №"] : ""
+
+
+                    identifierVisa.value	=	row['Идентификатор визы/ Visa ID №'] ? row['Идентификатор визы/ Visa ID №'] : ''
+                    numInvVisa.value	=	row['№ приглашения'] ? row['№ приглашения'] : ""
+                    seriesMigration.value	=	row['СЕРИЯ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD SERIES'] ? row['СЕРИЯ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD SERIES'] : ""
+                    idMigration.value	=	row['№ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD NUMBER'] ? row['№ МИГРАЦИОННОЙ КАРТЫ/ MIGRATION CARD NUMBER'] : ""
+
+
+
+                    homeAddress.value	=	row["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\n1)Cтрана/Country of origin\n2)Провинция (или область) / Province\n3)Город / City \n4)Улица / Street\n5)№ дома / building №\n6)№ Квартиры / Apt №"] ?
+                        row["АДРЕС В СТРАНЕ ПОСТОЯННОГО ПРОЖИВАНИЯ (НА РОДИНЕ)\n1)Cтрана/Country of origin\n2)Провинция (или область) / Province\n3)Город / City \n4)Улица / Street\n5)№ дома / building №\n6)№ Квартиры / Apt №"] : ""
                     
-                    addressHostel.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)'] ? totalInfo[i]['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)'] : ""
-                    numRoom.value	=	totalInfo[i]['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *'] ? totalInfo[i]['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *'] : ""
-                    numRental.value	=	totalInfo[i]['№ Договора найма *'] ? totalInfo[i]['№ Договора найма *'] : ""
-                    addressResidence.value	=	totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] ? totalInfo[i]['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] :  ""
-                    infHost.value	=	totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЗАПОЛНИТЕ ЭТО ПОЛЕ ТОЛЬКО ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] ? totalInfo[i]['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЗАПОЛНИТЕ ЭТО ПОЛЕ ТОЛЬКО ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] : ""
-                    phone.value	=	totalInfo[i]['Номер телефона/Phone number '] ? totalInfo[i]['Номер телефона/Phone number '] : ""
-                    mail.value	=	totalInfo[i]['Ваш E-mail '] ? totalInfo[i]['Ваш E-mail '] : ""
+                    addressHostel.value	=	row['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)'] ? row['АДРЕС ПРОЖИВАНИЯ (ОБЩЕЖИТИЕ)'] : ""
+                    numRoom.value	=	row['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *'] ? row['№ КОМНАТЫ В ОБЩЕЖИТИИ МПГУ *'] : ""
+                    numRental.value	=	row['№ Договора найма *'] ? row['№ Договора найма *'] : ""
+                    addressResidence.value	=	row['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] ? row['АДРЕС ПРОЖИВАНИЯ В КВАРТИРЕ/ОТЕЛЕ:'] :  ""
+                    infHost.value	=	row['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЗАПОЛНИТЕ ЭТО ПОЛЕ ТОЛЬКО ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] ? row['СВЕДЕНИЯ О ПРИНИМАЮЩЕЙ СТОРОНЕ ( ЗАПОЛНИТЕ ЭТО ПОЛЕ ТОЛЬКО ЕСЛИ ВЫ ЖИВЕТЕ В КВАРТИРЕ)'] : ""
+                    phone.value	=	row['Номер телефона/Phone number '] ? row['Номер телефона/Phone number '] : ""
+                    mail.value	=	row['Ваш E-mail '] ? row['Ваш E-mail '] : ""
 
 
 
 
 
 
-                    issuedBy.value	=	totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА (КЕМ ВЫДАН ДОКУМЕНТ)'] ? totalInfo[i]['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА (КЕМ ВЫДАН ДОКУМЕНТ)'] : ""
-
-
-
-
-
-                    // dateEnd.setDate(dateStart.getDate()+totalInfo[i]['Год рождения / Date of birth '])
-                    // dateOfBirth.value = dateEnd.toLocaleDateString()
-                    // dateEnd = new Date(dateStart)
+                    issuedBy.value	=	row['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА (КЕМ ВЫДАН ДОКУМЕНТ)'] ? row['УВЕДОМЛЕНИЕ О ПРИБЫТИИ ИНОСТРАННОГО ГРАЖДАНИНА (КЕМ ВЫДАН ДОКУМЕНТ)'] : ""
                     //
-                    // //series.value = totalInfo[i]['']
-                    // idPassport.value = totalInfo[i]['№ паспорта / Passport №']
+                    // //series.value = row['']
+                    // idPassport.value = row['№ паспорта / Passport №']
 
 
 
@@ -339,20 +303,12 @@ function findInfo(id) {
                         course.text = ''
                         course.selected = true
                     }
-                }
-            }
-            if (personFinded == 0) {
-                alert('Студент с номером '+nStud.value+ ' не найден')
-            }
-
-        }
+                
+    } catch (error) {
+        console.error('Ошибка импорта Excel', error);
+        alert('Не удалось прочитать Excel: ' + error.message);
     }
-
-    // });
 }
-
-
-
 
 function updateNameDisplay() {
     var input = document.querySelector('#excel');
@@ -382,7 +338,7 @@ function updateNameDisplay() {
             para.textContent = 'File name ' + curFiles[0].name;
             var image = document.createElement('img');
             image.className = 'iconFile'
-            image.src = '../excel.png';
+            image.src = 'excel.png';
 
             preview.appendChild(image);
             preview.appendChild(para);

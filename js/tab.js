@@ -57,6 +57,8 @@ function createTab() {
     newTabDiv.id = 'tab' + indexNewTab
     let tapContentDiv = document.querySelector('div.tab-content')
 
+    const originalIdByElement = new Map([...newTabDiv.querySelectorAll('[id]')].map(element => [element, element.id]));
+
     // change name of all input
     let nStud=newTabDiv.querySelector('#nStud1')
     nStud.id =  'nStud' + indexNewTab
@@ -161,6 +163,16 @@ function createTab() {
 
 
 
+
+    // Rename any new fields added to the first tab, including their labels.
+    newTabDiv.querySelectorAll('[id]').forEach(element => {
+        const original = originalIdByElement.get(element);
+        if (element.id === original && original.endsWith('1')) element.id = original.slice(0, -1) + indexNewTab;
+    });
+    newTabDiv.querySelectorAll('[for]').forEach(element => {
+        const target = element.getAttribute('for');
+        if (target.endsWith('1')) element.setAttribute('for', target.slice(0, -1) + indexNewTab);
+    });
 
     let aInput = [nStud,
         dateUntil,
@@ -283,7 +295,7 @@ function countTab() {
 //
 //     let tabs = document.getElementsByClassName('nav-tabs')[0].getElementsByTagName('li')
 //
-//     if (chPurpose.value == 'Учеба' || chPurpose.value == "Краткосрочная учеба") {
+//     if (chPurpose.value == 'Учеба' || chPurpose.value == "Краткосрочное обучение") {
 //         for (let i=0; i<countTab(); i++) {
 //             let indexTab = parseInt(tabs[i].id.match(/\d+/))
 //             fillingSelect(selTypeVisaUch, 'typeVisa'+indexTab)
