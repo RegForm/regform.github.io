@@ -537,3 +537,30 @@ input[type="date" i] {
 
 
 
+
+
+/* Progress of document generation, based on completed files in the archive. */
+.export-progress {
+    position: fixed;
+    z-index: 1000;
+    right: 24px;
+    bottom: 24px;
+    width: min(440px, calc(100vw - 32px));
+    padding: 20px 22px;
+    border-radius: 18px;
+    background: #1b3546;
+    color: #fff;
+    box-shadow: 0 16px 42px rgba(13, 30, 42, .24);
+}
+.export-progress[hidden], .export-progress__close[hidden] { display: none; }
+.export-progress__header { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.export-progress__icon { display: grid; place-items: center; width: 35px; height: 35px; flex: 0 0 35px; font-size: 23px; border-radius: 8px; background: rgba(255,255,255,.12); }
+.export-progress__text { display: grid; gap: 2px; flex: 1; min-width: 0; }
+.export-progress__title { font-size: 17px; font-weight: 600; line-height: 1.3; }
+.export-progress__status { font-size: 13px; opacity: .88; overflow-wrap: anywhere; }
+.export-progress__close { align-self: flex-start; border: 0; border-radius: 8px; background: rgba(255,255,255,.13); color: white; font-size: 25px; line-height: 32px; width: 34px; cursor: pointer; }
+.export-progress__track { height: 8px; margin-top: 16px; border-radius: 10px; background: rgba(255,255,255,.2); overflow: hidden; }
+.export-progress__fill { display: block; width: 0; height: 100%; border-radius: inherit; background: #f5fbff; transition: width .2s ease; }
+.export-progress--error .export-progress__fill { background: #ffbaac; }
+@media (max-width: 500px) { .export-progress { right: 16px; bottom: 16px; padding: 16px; } }
+@media (prefers-reduced-motion: reduce) { .export-progress__fill { transition: none; } }

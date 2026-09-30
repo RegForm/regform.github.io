@@ -18,20 +18,39 @@ function loadFile(url, callback) {
 if (typeof window.addEventListener === 'function') {
     window.addEventListener('unhandledrejection', event => {
         console.error('Ошибка генерации документа', event.reason);
+        ExportProgress.fail(event.reason);
         alert('Не удалось сформировать документ: ' + (event.reason?.message || event.reason));
     });
 }
 
-async function finishExport(generators, zip) {
+function createTrackedZip() {
+    const zip = new PizZip();
+    if (countTab() > 1 && ExportProgress.start(countTab(), 'Формирование документов')) {
+        ExportProgress.trackZip(zip);
+    }
+    return zip;
+}
+
+async function finishExport(generators, zip, expectedFiles, label) {
+    if (!ExportProgress.start(expectedFiles, label)) return;
+    const restoreFile = ExportProgress.trackZip(zip);
     try {
         await Promise.all(generators.map(generate => generate()));
+        if (ExportProgress.completed() !== expectedFiles) {
+            throw new Error(`Готово ${ExportProgress.completed()} из ${expectedFiles} документов`);
+        }
         const first = document.getElementById('nStud1').value;
         const last = document.getElementById('nStud' + (lastTab() - 1)).value;
         const name = countTab() === 1 ? first + ' Студент.zip' : first + '-' + last + ' Студенты.zip';
+        ExportProgress.packing();
         saveAs(zip.generate({type: 'blob'}), name);
+        ExportProgress.done();
     } catch (error) {
         console.error('Ошибка экспорта', error);
+        ExportProgress.fail(error);
         alert('Не удалось сформировать полный архив: ' + error.message);
+    } finally {
+        restoreFile();
     }
 }
 
@@ -40,7 +59,7 @@ async function finishExport(generators, zip) {
 //визовая анкета
 window.generateVisaApplication = function generate() {
     let path = ('Templates/виза/визовая анкета.docx')
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -248,14 +267,15 @@ window.generateVisaApplication = function generate() {
                     +" ВИЗОВАЯ АНКЕТА - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text +".zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 
 //справка
 window.generateVisaReference = function generate() {
     let path = ('Templates/виза/справка.docx')
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -486,14 +506,15 @@ window.generateVisaReference = function generate() {
                     +" СПРАВКА - " + document.getElementById('ovmByRegion').options[document.getElementById('ovmByRegion').selectedIndex].text + ".zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 
 //ходатайство ВИЗА ТРОПАРЕВО-НИКУЛИНО
 window.generateVisaSolicitaionTroparevo = function generate() {
     let path = ('Templates/виза/ходатайство ТРОПАРЕВО-НИКУЛИНО.docx')
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -710,14 +731,15 @@ window.generateVisaSolicitaionTroparevo = function generate() {
                     +" ХОДАТАЙСТВО (ВИЗА) - ОВМ ТРОПАРЕВО-НИКУЛИНО.zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 
 //ходатайство ВИЗА ХАМОВНИКИ
 window.generateVisaSolicitaionKhamovniki = function generate() {
     let path = ('Templates/виза/ходатайство ХАМОВНИКИ.docx')
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -1051,7 +1073,8 @@ window.generateVisaSolicitaionKhamovniki = function generate() {
                     +" ХОДАТАЙСТВО (ВИЗА) - ОВМ ХАМОВНИКИ.zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 
@@ -1231,7 +1254,7 @@ window.generateRegSolicitaion = function generate() {
             break
     }
 
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -1601,7 +1624,8 @@ window.generateRegSolicitaion = function generate() {
                     + ".zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 
@@ -1752,7 +1776,7 @@ window.generateRegNotif = function generate() {
     let uvedTemp = document.getElementById('uvedTemp').value
     let path = (`Templates/регистрация/уведомление ${ovmRg} ${rgOn}${uvedTemp}.docx`)
 
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -2732,7 +2756,8 @@ window.generateRegNotif = function generate() {
                     + ".zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 
@@ -2871,7 +2896,7 @@ window.generateInventoryRegVisa = function generate() {
 window.generateFlatSolicitaion = function generate() {
     let path = ('Templates/ходатайство по квартире.docx')
 
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -3181,7 +3206,8 @@ window.generateFlatSolicitaion = function generate() {
                     + ".zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 
@@ -3189,7 +3215,7 @@ window.generateFlatSolicitaion = function generate() {
 window.generateFlatSolicitaionProdl = function generate() {
     let path = ('Templates/ходатайство по квартире - продление.docx')
 
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -3499,7 +3525,8 @@ window.generateFlatSolicitaionProdl = function generate() {
                     + ".zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 
@@ -3509,7 +3536,7 @@ window.generateFlatSolicitaionProdl = function generate() {
 window.generateComplNotice = function generate() {
     let path = ('Templates/Уведомление о завершении.docx')
 
-    var zipDocs = new PizZip();
+    var zipDocs = createTrackedZip();
     loadFile(
         path,
         function (error, content) {
@@ -3723,7 +3750,8 @@ window.generateComplNotice = function generate() {
                     + ".zip"
             }
             var content = zipDocs.generate({ type: "blob" });
-            saveAs(content,nameFile);
+            saveAs(content, nameFile);
+            ExportProgress.done();
         });
 };
 //!new
@@ -5287,7 +5315,7 @@ function generateReg() {
 
 
 
-    return finishExport([generateRegNotifTotal, generateRegSolicitaionTotal, generateInventoryRegTotal], zipTotal);
+    return finishExport([generateRegNotifTotal, generateRegSolicitaionTotal, generateInventoryRegTotal], zipTotal, countTab() * 2 + 1, 'Регистрация');
 }
 
 
@@ -6505,7 +6533,7 @@ function generateVisa() {
 
 
 
-    return finishExport([generateVisaApplicationTotal, generateVisaSolicTotal, generateVisaReferenceTotal, generateInventoryVisaTotal], zipTotal);
+    return finishExport([generateVisaApplicationTotal, generateVisaSolicTotal, generateVisaReferenceTotal, generateInventoryVisaTotal], zipTotal, countTab() * 3 + 1, 'Виза');
 }
 
 
@@ -9087,7 +9115,7 @@ function generateRegVisa() {
 
 
 
-    return finishExport([generateRegNotifTot, generateRegSolicitaionTot, generateVisaApplicationTot, generateVisaSolicTot, generateVisaReferenceTot, generateInventoryRegTot], zipTotal);
+    return finishExport([generateRegNotifTot, generateRegSolicitaionTot, generateVisaApplicationTot, generateVisaSolicTot, generateVisaReferenceTot, generateInventoryRegTot], zipTotal, countTab() * 5 + 1, 'Регистрация и виза');
 }
 
 
